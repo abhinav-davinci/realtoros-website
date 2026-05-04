@@ -2292,6 +2292,32 @@
   [data-theme="light"] .booked-foot .ok { color: var(--mint-300); }
   [data-theme="light"] .journey-activity { border-top-color: var(--line); }
 
+  /* Capture lead inbox in light theme — warm cream tray holding white
+     row cards. The container's tone is clearly distinct from the viz's
+     white but stays in the warm off-white family so it never reads as
+     gray; rows float on top as discrete cards with hairline borders. */
+  [data-theme="light"] .stream {
+    background: #F4F3EC;
+    border-color: var(--line-2);
+    padding: 6px;
+    box-shadow: 0 1px 2px rgba(10,10,18,0.03) inset;
+  }
+  [data-theme="light"] .stream-row {
+    background: white;
+    border: 1px solid rgba(10,10,18,0.05);
+    border-radius: 9px;
+    margin-bottom: 4px;
+    box-shadow: 0 1px 2px rgba(10,10,18,0.03);
+    transition: transform .18s, box-shadow .18s, border-color .18s;
+  }
+  [data-theme="light"] .stream-row:last-child { margin-bottom: 0; }
+  [data-theme="light"] .stream-row:hover {
+    border-color: rgba(10,10,18,0.10);
+    box-shadow: 0 4px 14px rgba(10,10,18,0.06);
+    transform: translateY(-1px);
+  }
+  [data-theme="light"] .stream-head .live { color: var(--mint-300); }
+
   /* Score pills — saturated for legibility on white */
   [data-theme="light"] .score-pill.hot,
   [data-theme="light"] .lc-pill.hot {
