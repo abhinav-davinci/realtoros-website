@@ -1,0 +1,3516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RealtorOS — The operating system for builders</title>
+<meta name="description" content="One OS. Every lead, every channel, every unit. Capture from 6 channels, score by intent, route by SLA, and sync live to Trythat.ai. Built for Indian builders running 2–3 active projects." />
+<script>
+  /* Set theme as early as possible to prevent FOUC */
+  (function() {
+    try {
+      var stored = localStorage.getItem('realtoros-theme');
+      var sysLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      document.documentElement.dataset.theme = stored || (sysLight ? 'light' : 'dark');
+    } catch (e) {
+      document.documentElement.dataset.theme = 'dark';
+    }
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     RealtorOS — Futuristic Landing
+     Design system: ink-dark canvas, warm cream type, electric indigo
+     accent, amber for "hot" moments, mono for technical authenticity.
+     ============================================================ */
+
+  :root {
+    /* Surface scale — a warm-undertone neutral spectrum */
+    --bg:           #07070C;     /* page canvas */
+    --bg-2:         #0B0B14;     /* section alt */
+    --bg-3:         #11111E;     /* elevated panel */
+    --bg-4:         #161629;     /* card */
+    --bg-5:         #1F1F36;     /* card hover */
+    --line:         rgba(255,255,255,0.06);
+    --line-2:       rgba(255,255,255,0.10);
+    --line-3:       rgba(255,255,255,0.16);
+
+    /* Type scale — warm cream/whites */
+    --fg:           #F4F1EA;     /* primary text */
+    --fg-2:         #C7C4D1;     /* secondary */
+    --fg-3:         #908DA0;     /* tertiary */
+    --fg-4:         #5C5A6E;     /* quaternary */
+    --fg-5:         #36364A;     /* faint, dividers / labels */
+
+    /* Brand */
+    --indigo-50:    #ECEAFF;
+    --indigo-100:   #C7BEFF;
+    --indigo-300:   #9785FF;
+    --indigo-400:   #7C5CFF;     /* primary accent */
+    --indigo-500:   #5A38E6;
+    --indigo-600:   #3D1FB7;
+
+    --amber-100:    #FFE4B5;
+    --amber-300:    #FFB04A;
+    --amber-400:    #FF8C28;
+
+    --rose-300:     #FF6A6A;
+    --rose-400:     #E54848;
+
+    --mint-300:     #4ADE9A;
+    --mint-400:     #16C775;
+
+    --sky-300:      #5DADE2;
+
+    /* Aurora — radial blends used in section backgrounds */
+    --aurora-1:     radial-gradient(60% 60% at 25% 0%, rgba(124,92,255,0.22) 0%, transparent 60%);
+    --aurora-2:     radial-gradient(50% 50% at 80% 30%, rgba(255,176,74,0.10) 0%, transparent 60%);
+    --aurora-3:     radial-gradient(45% 45% at 50% 100%, rgba(255,106,106,0.10) 0%, transparent 60%);
+
+    /* Radii */
+    --r-xs: 6px;
+    --r-sm: 10px;
+    --r-md: 14px;
+    --r-lg: 20px;
+    --r-xl: 28px;
+    --r-2xl: 36px;
+
+    /* Shadow */
+    --shadow-1: 0 1px 2px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    --shadow-2: 0 8px 24px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.05) inset;
+    --shadow-3: 0 20px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06) inset;
+    --shadow-glow: 0 0 80px rgba(124,92,255,0.35), 0 30px 80px rgba(0,0,0,0.5);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    font-feature-settings: 'cv11', 'ss03', 'ss04';
+  }
+
+  ::selection { background: var(--indigo-400); color: white; }
+
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; background: none; border: none; cursor: pointer; color: inherit; }
+  img, svg { display: block; max-width: 100%; }
+
+  /* ============== TYPE PRIMITIVES ============== */
+  .display {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.96;
+    color: var(--fg);
+  }
+  .editorial {
+    font-family: 'Fraunces', 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+  .mono {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-feature-settings: 'cv02', 'cv03', 'cv04';
+  }
+  .label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  .label-accent { color: var(--indigo-300); }
+
+  /* ============== LAYOUT ============== */
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  .wrap-narrow { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+  .wrap-tight { max-width: 880px; margin: 0 auto; padding: 0 32px; }
+
+  section { position: relative; }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line-2) 20%, var(--line-2) 80%, transparent);
+  }
+
+  /* ============== NAV ============== */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    background: rgba(7,7,12,0.72);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-row {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; max-width: 1280px; margin: 0 auto; padding: 0 32px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 600; font-size: 15px; letter-spacing: -0.01em;
+  }
+  .brand-mark {
+    width: 26px; height: 26px;
+    border-radius: 7px;
+    background:
+      radial-gradient(120% 120% at 0% 0%, var(--indigo-300) 0%, var(--indigo-500) 60%, var(--indigo-600) 100%);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.12) inset,
+      0 0 14px rgba(124,92,255,0.55);
+    position: relative;
+    overflow: hidden;
+  }
+  .brand-mark::after {
+    content: ''; position: absolute; inset: 4px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.32) 0%, transparent 50%);
+  }
+  .brand-mark::before {
+    content: ''; position: absolute; right: 4px; bottom: 4px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--mint-300);
+    box-shadow: 0 0 8px var(--mint-300);
+  }
+  .brand small {
+    color: var(--fg-3); font-weight: 500; font-size: 11px;
+    margin-left: 6px;
+    padding: 2px 6px;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+  }
+  .nav-links {
+    display: flex; gap: 4px; align-items: center;
+  }
+  .nav-links a {
+    font-size: 13.5px; color: var(--fg-2); font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: color .18s, background .18s;
+  }
+  .nav-links a:hover { color: var(--fg); background: var(--line); }
+
+  .nav-actions { display: flex; align-items: center; gap: 8px; }
+
+  .kbd {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 8px;
+    border: 1px solid var(--line-2);
+    background: var(--bg-3);
+    border-radius: 7px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-3);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+    transition: all .18s ease;
+    line-height: 1; white-space: nowrap;
+    border: 1px solid transparent;
+  }
+  .btn-pri {
+    background: var(--fg);
+    color: #0A0A12;
+    font-weight: 600;
+  }
+  .btn-pri:hover {
+    background: white;
+    box-shadow: 0 8px 32px rgba(244,241,234,0.2);
+    transform: translateY(-1px);
+  }
+  .btn-ghost { color: var(--fg-2); border-color: var(--line-2); }
+  .btn-ghost:hover { color: var(--fg); border-color: var(--line-3); background: rgba(255,255,255,0.03); }
+  .btn-glow {
+    background: linear-gradient(135deg, var(--indigo-400), var(--indigo-500));
+    color: white;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.18) inset,
+      0 8px 24px rgba(124,92,255,0.4);
+  }
+  .btn-glow:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.22) inset,
+      0 14px 40px rgba(124,92,255,0.55);
+  }
+  .btn-lg { padding: 13px 22px; font-size: 14.5px; }
+  .arrow-r {
+    width: 14px; height: 14px;
+    transition: transform .2s;
+  }
+  .btn:hover .arrow-r { transform: translateX(2px); }
+
+  /* ============== HERO ============== */
+  .hero {
+    position: relative;
+    padding: 80px 0 0;
+    overflow: hidden;
+  }
+  .hero-aurora {
+    position: absolute; inset: -20% -10% auto -10%;
+    height: 1100px;
+    background:
+      var(--aurora-1),
+      var(--aurora-2),
+      var(--aurora-3);
+    pointer-events: none;
+    z-index: 0;
+    animation: aurora-drift 24s ease-in-out infinite alternate;
+  }
+  @keyframes aurora-drift {
+    0%   { transform: translate3d(0,0,0) scale(1); }
+    50%  { transform: translate3d(-20px, 30px, 0) scale(1.05); }
+    100% { transform: translate3d(20px, -10px, 0) scale(1); }
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 35%, black 30%, transparent 80%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-noise {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: .25;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.18 0'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.5'/></svg>");
+  }
+
+  .hero-inner { position: relative; z-index: 1; }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 6px 14px 6px 8px;
+    border: 1px solid var(--line-2);
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    border-radius: 999px;
+    font-size: 12.5px;
+    color: var(--fg-2);
+    backdrop-filter: blur(6px);
+  }
+  .hero-tag .pulse {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--mint-300);
+    box-shadow: 0 0 0 0 rgba(74,222,154,0.6);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  .hero-tag em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--fg);
+  }
+  .hero-tag .tag-dot {
+    width: 4px; height: 4px; border-radius: 50%; background: var(--fg-4);
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(74,222,154,0.55); }
+    70%  { box-shadow: 0 0 0 10px rgba(74,222,154,0); }
+    100% { box-shadow: 0 0 0 0 rgba(74,222,154,0); }
+  }
+
+  .hero-row {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    padding: 56px 0 32px;
+    align-items: center;
+  }
+  .hero-copy { max-width: 640px; }
+
+  h1.h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: clamp(48px, 7.2vw, 92px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: var(--fg);
+    margin: 28px 0 24px;
+  }
+  h1.h1 .ink {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    background: linear-gradient(135deg, #F4F1EA 0%, #C7BEFF 60%, #7C5CFF 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  h1.h1 .strike-thru {
+    position: relative; display: inline-block;
+    color: var(--fg-3);
+  }
+  h1.h1 .strike-thru::after {
+    content: '';
+    position: absolute; left: -2px; right: -2px; top: 52%;
+    height: 4px;
+    background: var(--rose-400);
+    transform: rotate(-2deg);
+    border-radius: 2px;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--fg-2);
+    line-height: 1.55;
+    max-width: 560px;
+    margin-bottom: 36px;
+  }
+  .hero-sub strong { color: var(--fg); font-weight: 500; }
+
+  .hero-cta-row {
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    margin-bottom: 36px;
+  }
+
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 0; align-items: center;
+    color: var(--fg-3); font-size: 13px;
+  }
+  .hero-meta-item {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 16px 6px 0;
+    border-right: 1px solid var(--line);
+    margin-right: 16px;
+  }
+  .hero-meta-item:last-child { border-right: none; margin-right: 0; }
+  .hero-meta svg { color: var(--mint-300); width: 14px; height: 14px; }
+
+  /* ============== HERO PRODUCT — LIVE LEAD STREAM ============== */
+  .hero-product {
+    position: relative;
+    perspective: 2200px;
+  }
+  .hero-window {
+    position: relative;
+    border-radius: var(--r-xl);
+    background: linear-gradient(180deg, #14142A 0%, #0C0C18 100%);
+    border: 1px solid var(--line-2);
+    box-shadow:
+      0 40px 80px rgba(0,0,0,0.55),
+      0 0 0 1px rgba(255,255,255,0.04) inset,
+      0 0 80px rgba(124,92,255,0.25);
+    overflow: hidden;
+    transform: rotateX(8deg) rotateY(-8deg);
+    transform-style: preserve-3d;
+    transition: transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .hero-product:hover .hero-window { transform: rotateX(2deg) rotateY(-2deg); }
+
+  .win-bar {
+    height: 36px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 8px;
+    padding: 0 14px;
+  }
+  .win-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .win-dot.r { background: #FF5F57; }
+  .win-dot.y { background: #FEBC2E; }
+  .win-dot.g { background: #28C840; }
+  .win-url {
+    margin-left: 12px;
+    flex: 1;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-3);
+    letter-spacing: 0.02em;
+  }
+  .win-url .dot { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--mint-300); margin-right: 6px; vertical-align: middle; box-shadow: 0 0 6px var(--mint-300); }
+
+  .win-body {
+    display: grid;
+    grid-template-columns: 168px 1fr;
+    min-height: 480px;
+  }
+  .win-side {
+    border-right: 1px solid var(--line);
+    background: rgba(255,255,255,0.015);
+    padding: 14px 10px;
+  }
+  .side-grp { padding: 4px 8px; margin-top: 8px; font-size: 10px; color: var(--fg-4); letter-spacing: 0.12em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
+  .side-grp:first-child { margin-top: 0; }
+  .side-item {
+    display: flex; align-items: center; gap: 9px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    color: var(--fg-2);
+    font-size: 12.5px;
+    margin-bottom: 1px;
+  }
+  .side-item.active {
+    background: rgba(124,92,255,0.16);
+    color: var(--fg);
+    border: 1px solid rgba(124,92,255,0.3);
+    box-shadow: 0 0 0 1px rgba(124,92,255,0.1) inset;
+  }
+  .side-item .ico { width: 14px; height: 14px; color: var(--fg-3); flex-shrink: 0; }
+  .side-item.active .ico { color: var(--indigo-300); }
+  .side-item .badge {
+    margin-left: auto;
+    background: var(--indigo-400);
+    color: white;
+    font-size: 9.5px; font-weight: 600;
+    padding: 1px 6px; border-radius: 999px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.15) inset;
+  }
+  .side-item .small-pulse {
+    margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--mint-300); box-shadow: 0 0 6px var(--mint-300);
+  }
+
+  .win-main {
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+  .win-greet {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px; flex-wrap: wrap;
+  }
+  .win-greet h4 {
+    font-size: 14px; font-weight: 600; color: var(--fg);
+    letter-spacing: -0.01em;
+  }
+  .win-greet h4 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: var(--fg-2); }
+  .win-greet .sub { font-size: 11px; color: var(--fg-3); margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+  .win-segctl {
+    display: flex; gap: 0; padding: 2px;
+    border: 1px solid var(--line-2);
+    border-radius: 8px;
+    background: rgba(0,0,0,0.4);
+  }
+  .win-segctl span {
+    font-size: 10.5px; padding: 4px 10px; border-radius: 6px;
+    color: var(--fg-3); cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .win-segctl span.on { background: rgba(255,255,255,0.08); color: var(--fg); }
+
+  .stat-row {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  }
+  .stat {
+    background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    padding: 9px 11px;
+    overflow: hidden;
+    position: relative;
+  }
+  .stat-l { font-size: 9.5px; color: var(--fg-3); letter-spacing: 0.06em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
+  .stat-v { font-size: 19px; font-weight: 600; color: var(--fg); margin-top: 3px; letter-spacing: -0.02em; }
+  .stat-d { font-size: 10px; color: var(--mint-300); margin-top: 1px; font-family: 'JetBrains Mono', monospace; }
+  .stat-d.warn { color: var(--amber-300); }
+  .stat-spark {
+    position: absolute; right: 8px; bottom: 8px; opacity: 0.7;
+  }
+
+  /* Live lead stream */
+  .stream-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 4px 2px;
+  }
+  .stream-head h5 { font-size: 11.5px; font-weight: 600; color: var(--fg-2); letter-spacing: 0.02em; }
+  .stream-head .live {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--mint-300);
+  }
+  .stream-head .live::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--mint-300); box-shadow: 0 0 8px var(--mint-300);
+    animation: pulse-d 1.6s infinite;
+  }
+  @keyframes pulse-d { 50% { opacity: .35; } }
+
+  .stream {
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: rgba(0,0,0,0.25);
+    overflow: hidden;
+    position: relative;
+  }
+  .stream-row {
+    display: grid;
+    grid-template-columns: 28px 1fr auto auto;
+    align-items: center; gap: 10px;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--line);
+    font-size: 12px;
+    animation: slide-in 0.5s ease both;
+  }
+  @keyframes slide-in {
+    from { transform: translateY(-8px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .stream-row:last-child { border-bottom: none; }
+  .stream-row .src {
+    width: 22px; height: 22px; border-radius: 6px;
+    display: grid; place-items: center;
+    font-size: 9.5px; font-weight: 700;
+    color: white;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset;
+  }
+  .src-tt { background: linear-gradient(135deg, #7C5CFF, #3D1FB7); }
+  .src-wa { background: linear-gradient(135deg, #25D366, #128C7E); }
+  .src-fb { background: linear-gradient(135deg, #1877F2, #0857C7); }
+  .src-ig { background: linear-gradient(135deg, #F58529, #DD2A7B 50%, #8134AF); }
+  .src-go { background: linear-gradient(135deg, #4285F4, #1967D2); }
+  .src-cp { background: linear-gradient(135deg, #FFB04A, #FF8C28); }
+  .src-99 { background: linear-gradient(135deg, #C53030, #831A1A); }
+  .src-mb { background: linear-gradient(135deg, #FF6B6B, #C92A2A); }
+  .src-web { background: linear-gradient(135deg, #6E6C7E, #1F1F36); }
+
+  .stream-info { min-width: 0; }
+  .stream-name {
+    font-size: 12px; color: var(--fg); font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .stream-meta {
+    font-size: 10.5px; color: var(--fg-3);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .score-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; font-weight: 600;
+    padding: 2px 7px; border-radius: 999px;
+    border: 1px solid;
+  }
+  .score-pill.hot { background: rgba(255,106,106,0.12); color: var(--rose-300); border-color: rgba(255,106,106,0.3); }
+  .score-pill.warm { background: rgba(255,176,74,0.12); color: var(--amber-300); border-color: rgba(255,176,74,0.3); }
+  .score-pill.cold { background: rgba(93,173,226,0.12); color: var(--sky-300); border-color: rgba(93,173,226,0.3); }
+  .score-pill.book { background: rgba(74,222,154,0.14); color: var(--mint-300); border-color: rgba(74,222,154,0.35); }
+
+  .stream-time {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-4);
+  }
+
+  /* Floating chips around the window — depth */
+  .float-chip {
+    position: absolute;
+    padding: 8px 12px;
+    background: rgba(20,20,42,0.7);
+    border: 1px solid var(--line-2);
+    border-radius: 12px;
+    backdrop-filter: blur(14px);
+    font-size: 12px;
+    color: var(--fg-2);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+    display: flex; align-items: center; gap: 8px;
+    z-index: 2;
+    animation: float 6s ease-in-out infinite;
+  }
+  .float-chip .ic {
+    width: 18px; height: 18px;
+    border-radius: 5px;
+    display: grid; place-items: center;
+    color: white; font-size: 9px; font-weight: 700;
+  }
+  .float-chip .ic.pri { background: linear-gradient(135deg, var(--indigo-400), var(--indigo-500)); }
+  .float-chip .ic.amber { background: linear-gradient(135deg, var(--amber-300), var(--amber-400)); }
+  .float-chip .ic.mint { background: linear-gradient(135deg, var(--mint-300), var(--mint-400)); }
+  .float-chip strong { color: var(--fg); font-weight: 600; }
+  .float-chip .mt { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-3); }
+
+  .chip-1 {
+    top: -16px; left: -56px;
+    animation-delay: 0s;
+  }
+  .chip-2 {
+    top: 38%; right: -64px;
+    animation-delay: 1.2s;
+  }
+  .chip-3 {
+    bottom: -14px; left: 16%;
+    animation-delay: 2.4s;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* ============== CHANNELS TICKER ============== */
+  .channels {
+    padding: 56px 0 48px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-2);
+    overflow: hidden;
+    position: relative;
+  }
+  .channels-label {
+    text-align: center; margin-bottom: 26px;
+    font-size: 13px;
+    color: var(--fg-3);
+  }
+  .channels-label em { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--fg); }
+  .marquee {
+    display: flex; gap: 48px;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+  .marquee-track {
+    display: flex; gap: 56px; align-items: center;
+    animation: marquee 36s linear infinite;
+    flex-shrink: 0;
+    padding-right: 56px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .channel {
+    display: flex; align-items: center; gap: 12px;
+    flex-shrink: 0;
+    padding: 10px 18px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.02);
+  }
+  .channel .src {
+    width: 26px; height: 26px; border-radius: 8px;
+    display: grid; place-items: center;
+    color: white; font-size: 10px; font-weight: 700;
+  }
+  .channel-name { font-size: 13.5px; color: var(--fg); font-weight: 500; }
+  .channel-cat { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-3); }
+
+  /* ============== MANIFESTO / OVERTURE ============== */
+  .overture {
+    padding: 140px 0 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .overture-aurora {
+    position: absolute; inset: 0;
+    background: radial-gradient(60% 50% at 50% 50%, rgba(124,92,255,0.10) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .overture-content { position: relative; z-index: 1; text-align: center; }
+  .overture-eyebrow {
+    margin-bottom: 32px;
+  }
+  h2.h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: clamp(40px, 6vw, 80px);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    color: var(--fg);
+  }
+  h2.h2 .ink {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    background: linear-gradient(135deg, #F4F1EA 0%, #C7BEFF 60%, #FFB04A 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.025em;
+  }
+  .overture h2 {
+    max-width: 1000px;
+    margin: 0 auto 40px;
+  }
+  .overture-sub {
+    max-width: 680px;
+    margin: 0 auto 64px;
+    font-size: 19px;
+    color: var(--fg-2);
+    line-height: 1.55;
+  }
+
+  /* Stat-row — bold numbers */
+  .overture-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .ov-stat {
+    background: var(--bg);
+    padding: 36px 28px;
+    text-align: left;
+  }
+  .ov-stat .num {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 56px;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--fg);
+    margin-bottom: 10px;
+  }
+  .ov-stat .num em {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+    color: var(--indigo-300);
+  }
+  .ov-stat .num .small { font-size: 24px; color: var(--fg-3); }
+  .ov-stat .lbl { font-size: 13.5px; color: var(--fg-2); line-height: 1.4; max-width: 200px; }
+
+  /* ============== MODULES OVERVIEW ============== */
+  .modules {
+    padding: 100px 0;
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .section-head {
+    max-width: 760px;
+    margin: 0 auto 64px;
+    text-align: center;
+  }
+  .section-head h2 {
+    font-size: clamp(36px, 4.8vw, 56px);
+    margin-bottom: 18px;
+  }
+  .section-head .sub {
+    font-size: 18px;
+    color: var(--fg-2);
+    line-height: 1.55;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .modules-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+  }
+  .mod {
+    background: var(--bg-2);
+    padding: 32px 28px 28px;
+    position: relative;
+    transition: background .25s;
+  }
+  .mod:hover { background: var(--bg-3); }
+  .mod-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-4);
+    letter-spacing: 0.1em;
+  }
+  .mod-num em { color: var(--indigo-300); font-style: normal; }
+  .mod-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, rgba(124,92,255,0.18), rgba(124,92,255,0.04));
+    border: 1px solid rgba(124,92,255,0.25);
+    color: var(--indigo-300);
+    margin: 18px 0 16px;
+  }
+  .mod:nth-child(2) .mod-icon { background: linear-gradient(135deg, rgba(255,176,74,0.18), rgba(255,176,74,0.04)); border-color: rgba(255,176,74,0.25); color: var(--amber-300); }
+  .mod:nth-child(3) .mod-icon { background: linear-gradient(135deg, rgba(74,222,154,0.18), rgba(74,222,154,0.04)); border-color: rgba(74,222,154,0.25); color: var(--mint-300); }
+  .mod:nth-child(4) .mod-icon { background: linear-gradient(135deg, rgba(255,106,106,0.18), rgba(255,106,106,0.04)); border-color: rgba(255,106,106,0.25); color: var(--rose-300); }
+  .mod:nth-child(5) .mod-icon { background: linear-gradient(135deg, rgba(93,173,226,0.18), rgba(93,173,226,0.04)); border-color: rgba(93,173,226,0.25); color: var(--sky-300); }
+  .mod-title {
+    font-size: 22px; font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--fg); margin-bottom: 8px;
+  }
+  .mod-title em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; color: var(--indigo-300); }
+  .mod-desc {
+    font-size: 14px; color: var(--fg-2); line-height: 1.55;
+    margin-bottom: 18px;
+  }
+  .mod-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .mod-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    color: var(--fg-2);
+    border: 1px solid var(--line-2);
+  }
+
+  /* ============== FEATURE BLOCK (ALTERNATING) ============== */
+  .feat {
+    padding: 120px 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .feat-aurora {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background: radial-gradient(50% 50% at 80% 50%, rgba(124,92,255,0.08) 0%, transparent 70%);
+  }
+  .feat:nth-child(even) .feat-aurora {
+    background: radial-gradient(50% 50% at 20% 50%, rgba(255,176,74,0.06) 0%, transparent 70%);
+  }
+  .feat-row {
+    display: grid;
+    grid-template-columns: 0.95fr 1.1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative; z-index: 1;
+  }
+  .feat-row.flip { grid-template-columns: 1.1fr 0.95fr; direction: rtl; }
+  .feat-row.flip > * { direction: ltr; }
+  .feat-copy { max-width: 520px; }
+  .feat-eyebrow { margin-bottom: 18px; }
+  h3.h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    color: var(--fg);
+    margin-bottom: 18px;
+  }
+  h3.h3 .ink {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    background: linear-gradient(135deg, #F4F1EA 0%, #C7BEFF 50%, #7C5CFF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .feat-desc {
+    font-size: 17px; color: var(--fg-2); line-height: 1.6;
+    margin-bottom: 28px;
+  }
+  .feat-list { list-style: none; }
+  .feat-list li {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+    font-size: 14.5px;
+    color: var(--fg-2);
+  }
+  .feat-list li:last-child { border-bottom: 1px solid var(--line); }
+  .feat-list li .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-4);
+    width: 30px; flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .feat-list li strong { color: var(--fg); font-weight: 500; }
+  .feat-cta { display: inline-flex; gap: 12px; margin-top: 32px; }
+
+  /* Visualization frames */
+  .viz {
+    border-radius: var(--r-xl);
+    background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    border: 1px solid var(--line-2);
+    padding: 24px;
+    box-shadow: var(--shadow-3);
+    position: relative;
+    overflow: hidden;
+  }
+  .viz::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(60% 50% at 50% 0%, rgba(124,92,255,0.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .viz-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 0 16px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 18px;
+    position: relative; z-index: 1;
+  }
+  .viz-title { font-size: 13px; font-weight: 600; color: var(--fg); }
+  .viz-title small { font-family: 'JetBrains Mono', monospace; color: var(--fg-3); font-size: 11px; margin-left: 8px; font-weight: 400; }
+  .viz-body { position: relative; z-index: 1; }
+
+  /* ============== SCORE CARD VIZ ============== */
+  .scoreboard { display: flex; flex-direction: column; gap: 12px; }
+  .lead-card-x {
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-md);
+    padding: 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+    transition: all .25s;
+    position: relative;
+  }
+  .lead-card-x.hot { border-color: rgba(255,106,106,0.3); background: linear-gradient(180deg, rgba(255,106,106,0.06), rgba(255,106,106,0)); }
+  .lead-card-x .head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+  .lc-name { font-size: 15px; font-weight: 600; color: var(--fg); }
+  .lc-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-3); margin-top: 3px; }
+  .lc-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600;
+    padding: 3px 10px; border-radius: 999px; border: 1px solid;
+  }
+  .lc-pill.hot { background: rgba(255,106,106,0.12); color: var(--rose-300); border-color: rgba(255,106,106,0.3); }
+  .lc-pill.warm { background: rgba(255,176,74,0.12); color: var(--amber-300); border-color: rgba(255,176,74,0.3); }
+  .lc-pill.cold { background: rgba(93,173,226,0.12); color: var(--sky-300); border-color: rgba(93,173,226,0.3); }
+  .lc-bars { display: grid; gap: 9px; }
+  .lc-bar { display: grid; grid-template-columns: 110px 1fr 36px; gap: 12px; align-items: center; font-size: 12px; }
+  .lc-bar-label { color: var(--fg-3); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .lc-bar-track { height: 6px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden; position: relative; }
+  .lc-bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--indigo-400), var(--indigo-300)); width: 0; transition: width 1.6s cubic-bezier(.2,.7,.2,1); position: relative; }
+  .lc-bar-fill::after { content: ''; position: absolute; right: 0; top: -2px; width: 10px; height: 10px; border-radius: 50%; background: var(--indigo-300); box-shadow: 0 0 8px var(--indigo-300); opacity: 0.85; }
+  .lc-bar-fill.warm { background: linear-gradient(90deg, var(--amber-400), var(--amber-300)); }
+  .lc-bar-fill.warm::after { background: var(--amber-300); box-shadow: 0 0 8px var(--amber-300); }
+  .lc-bar-val { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg); font-weight: 600; text-align: right; }
+
+  /* AI thinking line */
+  .ai-line {
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: var(--r-sm);
+    background: rgba(124,92,255,0.06);
+    border: 1px solid rgba(124,92,255,0.2);
+    font-size: 12px; color: var(--fg-2);
+    font-family: 'JetBrains Mono', monospace;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ai-line svg { color: var(--indigo-300); width: 13px; height: 13px; flex-shrink: 0; }
+
+  /* ============== KANBAN VIZ ============== */
+  .kanban-x {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  }
+  .kcol {
+    background: rgba(0,0,0,0.25);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 12px 10px;
+    min-height: 280px;
+  }
+  .khead {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 11px; color: var(--fg-2); font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .kcount {
+    font-size: 10px; padding: 2px 7px; border-radius: 999px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--line-2);
+    color: var(--fg-3);
+  }
+  .kcard {
+    background: var(--bg-3);
+    border: 1px solid var(--line-2);
+    border-radius: 9px;
+    padding: 9px 11px;
+    margin-bottom: 7px;
+    transition: all .2s;
+    cursor: grab;
+  }
+  .kcard:hover { border-color: var(--line-3); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+  .kcard-name {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--fg); font-weight: 500;
+  }
+  .kcard-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-3); margin-top: 4px; }
+  .kcard-tag {
+    display: inline-block; margin-top: 6px;
+    font-size: 10px; padding: 1px 7px;
+    background: rgba(124,92,255,0.12); color: var(--indigo-300);
+    border: 1px solid rgba(124,92,255,0.2);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .kcard.book { border-color: rgba(74,222,154,0.3); background: linear-gradient(180deg, rgba(74,222,154,0.08), rgba(74,222,154,0.02)); }
+  .kcard.book .kcard-tag { background: rgba(74,222,154,0.12); color: var(--mint-300); border-color: rgba(74,222,154,0.25); }
+  .kcard.in-motion {
+    animation: kanban-drift 14s ease-in-out infinite;
+    box-shadow: 0 0 0 1px rgba(124,92,255,0.4), 0 8px 30px rgba(124,92,255,0.25);
+  }
+  @keyframes kanban-drift {
+    0%, 100% { transform: translateX(0); }
+    25%, 35% { transform: translateX(0); }
+    40%, 50% { transform: translateX(calc(100% + 10px)); }
+    55%, 65% { transform: translateX(calc(200% + 20px)); }
+    70%, 80% { transform: translateX(calc(300% + 30px)); }
+  }
+
+  /* SLA escalation banner */
+  .sla-banner {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: var(--r-md);
+    background: linear-gradient(180deg, rgba(255,176,74,0.10), rgba(255,176,74,0.02));
+    border: 1px solid rgba(255,176,74,0.25);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sla-banner .ic {
+    width: 28px; height: 28px;
+    background: rgba(255,176,74,0.18); color: var(--amber-300);
+    border-radius: 8px; display: grid; place-items: center; flex-shrink: 0;
+  }
+  .sla-banner .txt { flex: 1; font-size: 12.5px; color: var(--fg); }
+  .sla-banner .txt small { display: block; color: var(--fg-3); font-size: 11px; margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+  .sla-banner button {
+    padding: 5px 12px; font-size: 11px;
+    border: 1px solid var(--line-3);
+    border-radius: 7px;
+    background: rgba(255,255,255,0.06);
+    color: var(--fg);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ============== INVENTORY TOWER ============== */
+  .tower-wrap {
+    perspective: 1800px;
+    padding: 30px 0;
+    position: relative;
+  }
+  .tower {
+    transform: rotateX(40deg) rotateZ(-25deg);
+    transform-style: preserve-3d;
+    transform-origin: center;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 460px;
+    transition: transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .viz:hover .tower { transform: rotateX(35deg) rotateZ(-22deg) translateZ(20px); }
+  .floor {
+    display: grid; grid-template-columns: 36px repeat(6, 1fr); gap: 4px;
+    margin-bottom: 4px;
+    transform-style: preserve-3d;
+  }
+  .floor-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+    color: var(--fg-3);
+    display: grid; place-items: center;
+  }
+  .unit {
+    aspect-ratio: 1.3 / 1;
+    border-radius: 4px;
+    border: 1px solid;
+    font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
+    display: grid; place-items: center;
+    transition: all .2s;
+    position: relative;
+    cursor: pointer;
+  }
+  .u-avail { background: rgba(74,222,154,0.10); border-color: rgba(74,222,154,0.35); color: var(--mint-300); }
+  .u-block { background: rgba(255,176,74,0.10); border-color: rgba(255,176,74,0.35); color: var(--amber-300); }
+  .u-sold  { background: rgba(255,255,255,0.02); border-color: var(--line-2); color: var(--fg-4); }
+  .u-sel   { background: rgba(124,92,255,0.18); border-color: var(--indigo-400); color: var(--indigo-300); box-shadow: 0 0 0 2px rgba(124,92,255,0.18), 0 0 20px rgba(124,92,255,0.4); transform: translateZ(8px); }
+  .unit:hover { transform: translateZ(6px); }
+  .u-avail:hover { background: rgba(74,222,154,0.18); }
+
+  .tower-legend {
+    display: flex; gap: 18px; flex-wrap: wrap;
+    margin-top: 26px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--fg-2);
+  }
+  .tower-legend .ld {
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .tower-legend .ld-dot { width: 9px; height: 9px; border-radius: 2px; border: 1px solid; }
+
+  .tower-info {
+    display: flex; gap: 24px; padding: 14px 0 0;
+    margin-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+  }
+  .tower-info .ti { color: var(--fg-3); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .tower-info .ti strong { display: block; color: var(--fg); font-size: 18px; font-family: 'Inter', sans-serif; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 2px; }
+
+  /* ============== TRYTHAT INTEGRATION HERO BLOCK ============== */
+  .trythat {
+    padding: 140px 0;
+    background:
+      radial-gradient(60% 60% at 50% 30%, rgba(124,92,255,0.18) 0%, transparent 60%),
+      var(--bg);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .trythat-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(124,92,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,92,255,0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
+    pointer-events: none;
+  }
+  .trythat-content { position: relative; z-index: 1; text-align: center; }
+
+  .tt-mark { display: inline-flex; gap: 12px; align-items: center; margin-bottom: 24px; }
+  .tt-star { color: var(--amber-300); font-size: 13px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em; }
+
+  .tt-flow {
+    margin-top: 80px;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 1fr;
+    gap: 40px;
+    align-items: center;
+    max-width: 1080px;
+    margin-left: auto; margin-right: auto;
+  }
+  .tt-side {
+    text-align: center;
+    padding: 36px 28px;
+    background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-xl);
+    box-shadow: var(--shadow-3);
+  }
+  .tt-side .icon-lg {
+    width: 64px; height: 64px;
+    border-radius: 16px;
+    display: grid; place-items: center;
+    margin: 0 auto 18px;
+    color: white; font-weight: 700; font-size: 22px;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.12) inset;
+  }
+  .tt-side.left .icon-lg { background: linear-gradient(135deg, var(--indigo-300), var(--indigo-500), var(--indigo-600)); box-shadow: 0 0 0 1px rgba(255,255,255,0.12) inset, 0 0 30px rgba(124,92,255,0.5); }
+  .tt-side.right .icon-lg { background: linear-gradient(135deg, #1A1A2E, #050510); box-shadow: 0 0 0 1px rgba(255,255,255,0.12) inset; }
+  .tt-side h4 { font-size: 19px; font-weight: 600; color: var(--fg); margin-bottom: 6px; letter-spacing: -0.02em; }
+  .tt-side .desc { font-size: 13px; color: var(--fg-3); }
+  .tt-side .meta { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-3); }
+  .tt-side .meta strong { color: var(--mint-300); }
+
+  .tt-rail {
+    position: relative;
+    padding: 20px 0;
+  }
+  .tt-rail-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(124,92,255,0.4) 30%, rgba(124,92,255,0.4) 70%, transparent);
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .tt-rail-line::before {
+    content: '';
+    position: absolute; left: 0; top: -2px;
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--indigo-300);
+    box-shadow: 0 0 8px var(--indigo-300);
+    animation: rail-fwd 4s linear infinite;
+  }
+  @keyframes rail-fwd { from { left: 0; } to { left: 100%; } }
+  .tt-rail-line.back {
+    margin-top: 24px; margin-bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,176,74,0.4) 30%, rgba(255,176,74,0.4) 70%, transparent);
+  }
+  .tt-rail-line.back::before {
+    background: var(--amber-300);
+    box-shadow: 0 0 8px var(--amber-300);
+    animation: rail-back 4s linear infinite;
+  }
+  @keyframes rail-back { from { left: 100%; } to { left: 0; } }
+  .tt-rail-label {
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
+    color: var(--fg-2);
+    padding: 0 4px;
+  }
+  .tt-rail-label .arrow { color: var(--indigo-300); }
+  .tt-rail-label.back .arrow { color: var(--amber-300); }
+  .tt-rail .meta-line {
+    text-align: center;
+    padding: 10px 16px;
+    margin: 14px auto;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    font-size: 12px; color: var(--fg-2);
+    display: inline-flex; gap: 8px; align-items: center;
+    width: fit-content;
+  }
+  .tt-rail-center {
+    text-align: center;
+  }
+
+  /* ============== REPORTING CHART VIZ ============== */
+  .chart-viz {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 24px;
+  }
+  .chart-card {
+    background: var(--bg-3);
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-md);
+    padding: 18px;
+  }
+  .chart-card h5 {
+    font-size: 12px; color: var(--fg-2); font-weight: 600;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px;
+  }
+  .chart-card h5 small { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--fg-3); font-weight: 400; }
+
+  /* Funnel bars */
+  .funnel-rows { display: flex; flex-direction: column; gap: 10px; }
+  .funnel-row {
+    display: grid; grid-template-columns: 100px 1fr 56px;
+    gap: 12px; align-items: center;
+    font-size: 12px;
+  }
+  .funnel-row .l { color: var(--fg-3); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; }
+  .funnel-bar { height: 24px; border-radius: 6px; background: linear-gradient(90deg, var(--indigo-400), var(--indigo-300)); position: relative; min-width: 8%; }
+  .funnel-bar.b2 { background: linear-gradient(90deg, var(--indigo-500), var(--indigo-400)); }
+  .funnel-bar.b3 { background: linear-gradient(90deg, var(--indigo-600), var(--indigo-500)); }
+  .funnel-bar.b4 { background: linear-gradient(90deg, var(--amber-400), var(--amber-300)); }
+  .funnel-bar.b5 { background: linear-gradient(90deg, var(--mint-400), var(--mint-300)); }
+  .funnel-row .v { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--fg); text-align: right; font-weight: 500; }
+
+  /* Source ROI rows */
+  .source-rows { display: flex; flex-direction: column; gap: 8px; }
+  .source-row {
+    display: grid; grid-template-columns: 120px 1fr 60px 36px;
+    gap: 10px; align-items: center; font-size: 12px;
+  }
+  .source-row .src { width: 22px; height: 22px; border-radius: 6px; }
+  .source-row .src-name { display: flex; align-items: center; gap: 8px; color: var(--fg); font-size: 12px; font-weight: 500; }
+  .src-bar-track { height: 5px; background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden; }
+  .src-bar-fill { height: 100%; background: linear-gradient(90deg, var(--indigo-400), var(--indigo-300)); border-radius: 999px; }
+  .src-bar-fill.warm { background: linear-gradient(90deg, var(--amber-400), var(--amber-300)); }
+  .src-bar-fill.cool { background: linear-gradient(90deg, var(--sky-300), #2D8BC0); }
+  .source-row .pct { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-2); text-align: right; }
+  .source-row .delta { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-align: right; }
+  .source-row .delta.up { color: var(--mint-300); }
+  .source-row .delta.dn { color: var(--rose-300); }
+
+  /* ============== MOBILE-FIRST PHONE ============== */
+  .phone-wrap {
+    display: flex; justify-content: center;
+    perspective: 1500px;
+    padding: 30px 0;
+  }
+  .phone {
+    position: relative;
+    width: 280px;
+    height: 580px;
+    border-radius: 44px;
+    background: linear-gradient(135deg, #1A1A2E 0%, #050510 100%);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.08) inset,
+      0 0 0 8px #08080F,
+      0 0 0 9px rgba(255,255,255,0.06),
+      0 60px 120px rgba(0,0,0,0.7),
+      0 0 100px rgba(124,92,255,0.25);
+    transform: rotateY(-8deg) rotateX(4deg);
+    transition: transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .phone:hover { transform: rotateY(-4deg) rotateX(2deg); }
+  .phone-notch {
+    position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+    width: 100px; height: 28px; border-radius: 16px;
+    background: #050510;
+    z-index: 5;
+  }
+  .phone-screen {
+    position: absolute;
+    inset: 16px;
+    border-radius: 30px;
+    background: var(--bg);
+    overflow: hidden;
+    padding: 44px 16px 16px;
+  }
+  .phone-h {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 18px;
+  }
+  .phone-h h6 { font-size: 18px; font-weight: 600; color: var(--fg); letter-spacing: -0.02em; }
+  .phone-h h6 em { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; color: var(--fg-3); display: block; font-size: 11px; }
+  .phone-action {
+    width: 32px; height: 32px; border-radius: 10px;
+    background: var(--bg-3); border: 1px solid var(--line-2);
+    color: var(--fg-2);
+    display: grid; place-items: center;
+  }
+  .phone-card {
+    background: var(--bg-3);
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-md);
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+  .phone-card .top { display: flex; justify-content: space-between; align-items: center; }
+  .phone-card .name { font-size: 13px; font-weight: 600; color: var(--fg); }
+  .phone-card .meta { font-size: 11px; color: var(--fg-3); margin-top: 3px; font-family: 'JetBrains Mono', monospace; }
+  .phone-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; }
+  .phone-actions button {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--line-2);
+    border-radius: 8px;
+    padding: 7px 0; font-size: 10px;
+    color: var(--fg-2);
+    font-family: 'JetBrains Mono', monospace;
+    display: grid; place-items: center; gap: 3px;
+  }
+  .phone-actions button.pri {
+    background: var(--indigo-400); color: white; border-color: transparent;
+    box-shadow: 0 4px 14px rgba(124,92,255,0.4);
+  }
+  .phone-tap-bubble {
+    position: absolute;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--indigo-400);
+    background: rgba(124,92,255,0.15);
+    pointer-events: none;
+    animation: tap 2.6s ease-in-out infinite;
+  }
+  .phone-tap-bubble.t1 { top: 30%; right: 18%; }
+  .phone-tap-bubble.t2 { bottom: 26%; left: 18%; animation-delay: 1.3s; }
+  @keyframes tap {
+    0%, 100% { transform: scale(0.6); opacity: 0; }
+    25% { transform: scale(1); opacity: 1; }
+    60% { transform: scale(1.4); opacity: 0; }
+  }
+
+  /* ============== SPEC TABLE ============== */
+  .spec {
+    padding: 120px 0;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .spec-table {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    margin-top: 56px;
+  }
+  .spec-h, .spec-r {
+    background: var(--bg);
+    display: grid;
+    grid-template-columns: 60px 1.8fr 2.4fr 100px 90px;
+    gap: 16px; align-items: center;
+    padding: 14px 22px;
+    font-size: 13.5px;
+  }
+  .spec-h {
+    background: var(--bg-2);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--fg-3); letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .spec-r { transition: background .2s; }
+  .spec-r:hover { background: var(--bg-2); }
+  .spec-num { color: var(--fg-4); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+  .spec-name { color: var(--fg); font-weight: 500; }
+  .spec-desc { color: var(--fg-2); font-size: 13px; }
+  .pri-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 600;
+    padding: 3px 9px; border-radius: 999px;
+    border: 1px solid;
+  }
+  .pri-pill.v1 { background: rgba(74,222,154,0.10); color: var(--mint-300); border-color: rgba(74,222,154,0.3); }
+  .pri-pill.v2 { background: rgba(255,176,74,0.10); color: var(--amber-300); border-color: rgba(255,176,74,0.3); }
+  .pri-pill.v3 { background: rgba(93,173,226,0.10); color: var(--sky-300); border-color: rgba(93,173,226,0.3); }
+  .spec-cat {
+    color: var(--fg-3); font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
+    text-align: right;
+  }
+
+  /* Filter buttons */
+  .spec-filters {
+    display: flex; gap: 8px; justify-content: center; margin-top: 36px;
+    flex-wrap: wrap;
+  }
+  .spec-filter {
+    padding: 8px 16px;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.02);
+    color: var(--fg-2);
+    font-size: 13px;
+    transition: all .18s;
+  }
+  .spec-filter:hover { background: rgba(255,255,255,0.05); color: var(--fg); }
+  .spec-filter.on { background: var(--fg); color: #0A0A12; border-color: var(--fg); font-weight: 500; }
+
+  /* ============== CRITICAL INSTRUCTIONS / MANIFESTO ============== */
+  .instr {
+    padding: 140px 0;
+    background:
+      radial-gradient(50% 50% at 0% 50%, rgba(255,176,74,0.08) 0%, transparent 60%),
+      radial-gradient(50% 50% at 100% 50%, rgba(124,92,255,0.10) 0%, transparent 60%),
+      var(--bg-2);
+  }
+  .instr-grid {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    margin-top: 56px;
+  }
+  .instr-card {
+    background: var(--bg);
+    padding: 32px 28px;
+    grid-column: span 2;
+    position: relative;
+  }
+  .instr-card.wide { grid-column: span 3; }
+  .instr-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--fg-4); letter-spacing: 0.1em;
+    margin-bottom: 18px;
+  }
+  .instr-title {
+    font-size: 22px; font-weight: 600; color: var(--fg);
+    margin-bottom: 12px; letter-spacing: -0.02em; line-height: 1.2;
+  }
+  .instr-title em {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+    color: var(--amber-300);
+  }
+  .instr-card.indigo .instr-title em { color: var(--indigo-300); }
+  .instr-card.mint .instr-title em { color: var(--mint-300); }
+  .instr-card.rose .instr-title em { color: var(--rose-300); }
+  .instr-body { font-size: 14.5px; color: var(--fg-2); line-height: 1.6; }
+
+  /* ============== TESTIMONIAL ============== */
+  .testi {
+    padding: 140px 0;
+    background: var(--bg);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .testi-aurora {
+    position: absolute; inset: 0;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(124,92,255,0.10) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .testi-content { position: relative; z-index: 1; }
+  .testi-quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.25;
+    color: var(--fg);
+    max-width: 980px;
+    margin: 32px auto 36px;
+    letter-spacing: -0.02em;
+  }
+  .testi-quote .hi {
+    background: linear-gradient(135deg, #F4F1EA 0%, #C7BEFF 60%, #FFB04A 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .testi-author {
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 12px 18px;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.02);
+  }
+  .testi-author .av {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--indigo-300), var(--indigo-500));
+    color: white; font-weight: 600; font-size: 13px;
+    display: grid; place-items: center;
+  }
+  .testi-author .info { text-align: left; }
+  .testi-author .info .nm { font-size: 13px; font-weight: 600; color: var(--fg); }
+  .testi-author .info .tl { font-size: 11.5px; color: var(--fg-3); font-family: 'JetBrains Mono', monospace; }
+
+  /* ============== FINAL CTA ============== */
+  .cta {
+    padding: 140px 0;
+    background:
+      radial-gradient(80% 80% at 50% 100%, rgba(124,92,255,0.35) 0%, transparent 60%),
+      radial-gradient(60% 60% at 50% 0%, rgba(255,176,74,0.10) 0%, transparent 60%),
+      #050510;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-noise {
+    position: absolute; inset: 0; pointer-events: none; opacity: .3;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.15 0'/></filter><rect width='120' height='120' filter='url(%23n)'/></svg>");
+  }
+  .cta-content { position: relative; z-index: 1; }
+  .cta h2 { font-size: clamp(48px, 7vw, 92px); margin-bottom: 24px; }
+  .cta-sub { font-size: 19px; color: var(--fg-2); max-width: 620px; margin: 0 auto 40px; line-height: 1.55; }
+  .cta-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .cta-fineprint { margin-top: 36px; font-size: 12.5px; color: var(--fg-4); font-family: 'JetBrains Mono', monospace; }
+  .cta-fineprint .dot { display: inline-block; margin: 0 10px; opacity: 0.5; }
+
+  /* ============== FOOTER ============== */
+  footer {
+    background: var(--bg);
+    padding: 80px 0 32px;
+    border-top: 1px solid var(--line);
+    color: var(--fg-3);
+  }
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 64px;
+  }
+  .foot-brand .brand { color: var(--fg); }
+  .foot-tag {
+    color: var(--fg-3);
+    font-size: 14px; line-height: 1.5;
+    margin-top: 14px; max-width: 280px;
+  }
+  .foot-col h6 {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-2);
+    margin-bottom: 16px;
+  }
+  .foot-col ul { list-style: none; }
+  .foot-col li { margin-bottom: 10px; }
+  .foot-col a { color: var(--fg-3); font-size: 13.5px; transition: color .15s; }
+  .foot-col a:hover { color: var(--fg); }
+  .foot-bottom {
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+    font-size: 12.5px;
+    color: var(--fg-4);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .foot-bottom .live { color: var(--mint-300); }
+  .foot-wordmark {
+    margin-top: 80px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: clamp(80px, 16vw, 220px);
+    letter-spacing: -0.06em;
+    line-height: 0.85;
+    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 60%, transparent 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+    user-select: none;
+    pointer-events: none;
+  }
+  .foot-wordmark em {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+  }
+
+  /* ============================================================
+     THEME TOGGLE BUTTON
+     ============================================================ */
+  .theme-toggle {
+    width: 34px; height: 34px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    background: rgba(255,255,255,0.04);
+    display: grid; place-items: center;
+    color: var(--fg-2);
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .theme-toggle:hover {
+    color: var(--fg);
+    border-color: var(--line-3);
+    background: rgba(255,255,255,0.08);
+    transform: rotate(15deg);
+  }
+  .theme-toggle svg { width: 14px; height: 14px; transition: transform .3s; }
+  .theme-toggle .icon-sun { display: none; }
+  [data-theme="light"] .theme-toggle .icon-sun { display: block; }
+  [data-theme="light"] .theme-toggle .icon-moon { display: none; }
+
+  /* ============================================================
+     LIGHT THEME — comprehensive overrides
+     Warm off-white canvas, deep ink type, deeper indigo for AAA
+     contrast on white. CTA section stays dark by design (the
+     Apple/Stripe pattern of dark punctuation on a light page).
+     ============================================================ */
+  [data-theme="light"] {
+    --bg:           #FAF9F5;
+    --bg-2:         #F1F0E9;
+    --bg-3:         #FFFFFF;
+    --bg-4:         #FFFFFF;
+    --bg-5:         #F8F7F2;
+    --line:         rgba(10,10,18,0.07);
+    --line-2:       rgba(10,10,18,0.11);
+    --line-3:       rgba(10,10,18,0.16);
+
+    --fg:           #0A0A12;
+    --fg-2:         #3A3A4A;
+    --fg-3:         #6B6877;
+    --fg-4:         #9B98A8;
+    --fg-5:         #D4D2DC;
+
+    /* Accent — deepened for legibility on white */
+    --indigo-300:   #7C5CFF;
+    --indigo-400:   #5A38E6;
+    --indigo-500:   #3D1FB7;
+    --indigo-600:   #2A1080;
+
+    --amber-300:    #D97706;
+    --amber-400:    #B45309;
+    --rose-300:     #DC2626;
+    --rose-400:     #991B1B;
+    --mint-300:     #15803D;
+    --mint-400:     #166534;
+    --sky-300:      #0369A1;
+
+    --shadow-1: 0 1px 2px rgba(10,10,18,0.05);
+    --shadow-2: 0 8px 24px rgba(10,10,18,0.08);
+    --shadow-3: 0 20px 48px rgba(10,10,18,0.10);
+    --shadow-glow: 0 0 60px rgba(124,92,255,0.20), 0 24px 60px rgba(10,10,18,0.10);
+  }
+
+  [data-theme="light"] body {
+    background: var(--bg);
+    color: var(--fg);
+  }
+  [data-theme="light"] ::selection {
+    background: rgba(124,92,255,0.22);
+    color: #0A0A12;
+  }
+
+  /* Nav */
+  [data-theme="light"] .nav {
+    background: rgba(250,249,245,0.82);
+    border-bottom-color: var(--line);
+  }
+  [data-theme="light"] .nav-links a:hover {
+    background: rgba(10,10,18,0.04);
+    color: var(--fg);
+  }
+  [data-theme="light"] .kbd {
+    background: var(--bg-3);
+    border-color: var(--line-2);
+    color: var(--fg-3);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.04);
+  }
+  [data-theme="light"] .theme-toggle {
+    background: var(--bg-3);
+    border-color: var(--line-2);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.04);
+  }
+  [data-theme="light"] .theme-toggle:hover {
+    background: white;
+    border-color: var(--line-3);
+  }
+
+  /* Buttons */
+  [data-theme="light"] .btn-pri {
+    background: #0A0A12;
+    color: #FAF9F5;
+  }
+  [data-theme="light"] .btn-pri:hover {
+    background: #1F1F36;
+    box-shadow: 0 12px 32px rgba(10,10,18,0.18);
+  }
+  [data-theme="light"] .btn-ghost {
+    color: var(--fg-2);
+    border-color: var(--line-2);
+    background: var(--bg-3);
+  }
+  [data-theme="light"] .btn-ghost:hover {
+    color: var(--fg);
+    border-color: var(--line-3);
+    background: white;
+  }
+
+  /* Hero environment */
+  [data-theme="light"] .hero-grid-bg {
+    background-image:
+      linear-gradient(rgba(10,10,18,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,10,18,0.045) 1px, transparent 1px);
+  }
+  [data-theme="light"] .hero-noise {
+    opacity: 0.18;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.18 0'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.5'/></svg>");
+  }
+  [data-theme="light"] .hero-aurora {
+    opacity: 0.85;
+  }
+  [data-theme="light"] .hero-tag {
+    background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.5));
+    border-color: var(--line-2);
+    color: var(--fg-2);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.03);
+  }
+  [data-theme="light"] .hero-tag em { color: var(--fg); }
+
+  /* Editorial gradient inks */
+  [data-theme="light"] h1.h1 .ink {
+    background: linear-gradient(135deg, #0A0A12 0%, #5A38E6 55%, #D97706 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  [data-theme="light"] h2.h2 .ink {
+    background: linear-gradient(135deg, #0A0A12 0%, #5A38E6 50%, #D97706 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  [data-theme="light"] h3.h3 .ink {
+    background: linear-gradient(135deg, #0A0A12 0%, #5A38E6 70%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  [data-theme="light"] .testi-quote .hi {
+    background: linear-gradient(135deg, #0A0A12 0%, #5A38E6 55%, #D97706 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  [data-theme="light"] .mod-title em { color: var(--indigo-500); }
+  [data-theme="light"] .mod-num em { color: var(--indigo-500); }
+
+  /* Hero product window — light app preview */
+  [data-theme="light"] .hero-window {
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8F7F2 100%);
+    border-color: rgba(10,10,18,0.10);
+    box-shadow:
+      0 32px 80px rgba(10,10,18,0.14),
+      0 0 0 1px rgba(10,10,18,0.04) inset,
+      0 0 60px rgba(124,92,255,0.14);
+  }
+  [data-theme="light"] .win-bar {
+    background: linear-gradient(180deg, rgba(10,10,18,0.025), transparent);
+    border-bottom-color: var(--line);
+  }
+  [data-theme="light"] .win-url { color: var(--fg-3); }
+  [data-theme="light"] .win-side {
+    background: rgba(10,10,18,0.025);
+    border-right-color: var(--line);
+  }
+  [data-theme="light"] .side-item { color: var(--fg-2); }
+  [data-theme="light"] .side-item.active {
+    background: rgba(124,92,255,0.10);
+    color: var(--indigo-500);
+    border: 1px solid rgba(124,92,255,0.25);
+    box-shadow: 0 0 0 1px rgba(124,92,255,0.08) inset;
+  }
+  [data-theme="light"] .side-item.active .ico { color: var(--indigo-500); }
+  [data-theme="light"] .side-item .ico { color: var(--fg-3); }
+  [data-theme="light"] .stat {
+    background: linear-gradient(180deg, rgba(10,10,18,0.025), rgba(10,10,18,0.005));
+    border-color: var(--line);
+  }
+  [data-theme="light"] .stat-d { color: var(--mint-300); }
+  [data-theme="light"] .stat-d.warn { color: var(--amber-400); }
+  [data-theme="light"] .win-segctl {
+    background: rgba(10,10,18,0.04);
+    border-color: var(--line-2);
+  }
+  [data-theme="light"] .win-segctl span { color: var(--fg-3); }
+  [data-theme="light"] .win-segctl span.on {
+    background: white;
+    color: var(--fg);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.06);
+  }
+  [data-theme="light"] .stream {
+    background: rgba(10,10,18,0.02);
+    border-color: var(--line);
+  }
+  [data-theme="light"] .stream-row { border-bottom-color: var(--line); }
+  [data-theme="light"] .stream-head .live { color: var(--mint-300); }
+
+  /* Score pills — saturated for legibility on white */
+  [data-theme="light"] .score-pill.hot,
+  [data-theme="light"] .lc-pill.hot {
+    background: #FFE4E4; color: #991B1B; border-color: rgba(153,27,27,0.20);
+  }
+  [data-theme="light"] .score-pill.warm,
+  [data-theme="light"] .lc-pill.warm {
+    background: #FFF1DA; color: #92400E; border-color: rgba(146,64,14,0.20);
+  }
+  [data-theme="light"] .score-pill.cold,
+  [data-theme="light"] .lc-pill.cold {
+    background: #DDF0FA; color: #075985; border-color: rgba(7,89,133,0.20);
+  }
+  [data-theme="light"] .score-pill.book {
+    background: #DCFCE7; color: #14532D; border-color: rgba(20,83,45,0.22);
+  }
+
+  /* Floating chips */
+  [data-theme="light"] .float-chip {
+    background: rgba(255,255,255,0.92);
+    border-color: var(--line-2);
+    color: var(--fg-2);
+    box-shadow: 0 12px 30px rgba(10,10,18,0.10);
+  }
+  [data-theme="light"] .float-chip strong { color: var(--fg); }
+  [data-theme="light"] .float-chip .mt { color: var(--fg-3); }
+
+  /* Channels */
+  [data-theme="light"] .channels {
+    background: var(--bg-2);
+    border-color: var(--line);
+  }
+  [data-theme="light"] .channels-label em { color: var(--fg); }
+  [data-theme="light"] .channel {
+    background: var(--bg-3);
+    border-color: var(--line);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.04);
+  }
+  [data-theme="light"] .channel-name { color: var(--fg); }
+  [data-theme="light"] .channel-cat { color: var(--fg-3); }
+
+  /* Overture */
+  [data-theme="light"] .overture-aurora {
+    background: radial-gradient(60% 50% at 50% 50%, rgba(124,92,255,0.07) 0%, transparent 60%);
+  }
+  [data-theme="light"] .overture-stats {
+    border-color: var(--line);
+    background: var(--line);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.03);
+  }
+  [data-theme="light"] .ov-stat { background: var(--bg-3); }
+  [data-theme="light"] .ov-stat .num em { color: var(--indigo-500); }
+  [data-theme="light"] .ov-stat .num .small { color: var(--fg-3); }
+
+  /* Modules */
+  [data-theme="light"] .modules { background: var(--bg-2); }
+  [data-theme="light"] .modules-grid { background: var(--line); }
+  [data-theme="light"] .mod { background: var(--bg-3); }
+  [data-theme="light"] .mod:hover {
+    background: white;
+    box-shadow: 0 12px 30px rgba(10,10,18,0.06);
+  }
+  [data-theme="light"] .mod-tag {
+    background: rgba(10,10,18,0.04);
+    color: var(--fg-2);
+    border-color: var(--line-2);
+  }
+
+  /* Feature blocks */
+  [data-theme="light"] .feat-aurora {
+    background: radial-gradient(50% 50% at 80% 50%, rgba(124,92,255,0.07) 0%, transparent 70%);
+  }
+  [data-theme="light"] .feat:nth-child(even) .feat-aurora {
+    background: radial-gradient(50% 50% at 20% 50%, rgba(217,119,6,0.05) 0%, transparent 70%);
+  }
+  [data-theme="light"] .feat-list li { border-color: var(--line); }
+  [data-theme="light"] .feat-list li strong { color: var(--fg); }
+
+  /* Viz frames */
+  [data-theme="light"] .viz {
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8F7F2 100%);
+    border-color: var(--line-2);
+    box-shadow: 0 16px 40px rgba(10,10,18,0.06), 0 0 0 1px rgba(10,10,18,0.03);
+  }
+  [data-theme="light"] .viz::before {
+    background: radial-gradient(60% 50% at 50% 0%, rgba(124,92,255,0.06) 0%, transparent 70%);
+  }
+  [data-theme="light"] .viz-head { border-bottom-color: var(--line); }
+
+  /* Lead score card */
+  [data-theme="light"] .lead-card-x {
+    background: linear-gradient(180deg, rgba(10,10,18,0.02), rgba(10,10,18,0));
+    border-color: var(--line-2);
+  }
+  [data-theme="light"] .lead-card-x.hot {
+    background: linear-gradient(180deg, rgba(220,38,38,0.05), rgba(220,38,38,0));
+    border-color: rgba(220,38,38,0.25);
+  }
+  [data-theme="light"] .lc-bar-track { background: rgba(10,10,18,0.06); }
+  [data-theme="light"] .ai-line {
+    background: rgba(124,92,255,0.07);
+    border-color: rgba(124,92,255,0.20);
+    color: var(--fg-2);
+  }
+  [data-theme="light"] .ai-line svg { color: var(--indigo-500); }
+
+  /* Kanban */
+  [data-theme="light"] .kcol {
+    background: rgba(10,10,18,0.025);
+    border-color: var(--line);
+  }
+  [data-theme="light"] .kcard {
+    background: white;
+    border-color: var(--line-2);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.04);
+  }
+  [data-theme="light"] .kcard:hover {
+    border-color: var(--line-3);
+    box-shadow: 0 6px 18px rgba(10,10,18,0.08);
+  }
+  [data-theme="light"] .kcard.book {
+    background: linear-gradient(180deg, rgba(22,163,74,0.08), rgba(22,163,74,0.02));
+    border-color: rgba(22,163,74,0.25);
+  }
+  [data-theme="light"] .kcard-tag {
+    background: rgba(124,92,255,0.10);
+    color: var(--indigo-500);
+    border-color: rgba(124,92,255,0.18);
+  }
+  [data-theme="light"] .kcard.book .kcard-tag {
+    background: rgba(22,163,74,0.10);
+    color: #14532D;
+    border-color: rgba(22,163,74,0.18);
+  }
+  [data-theme="light"] .kcount {
+    background: rgba(10,10,18,0.04);
+    color: var(--fg-3);
+    border-color: var(--line-2);
+  }
+  [data-theme="light"] .kcard.in-motion {
+    box-shadow: 0 0 0 1px rgba(124,92,255,0.5), 0 8px 24px rgba(124,92,255,0.20);
+  }
+
+  /* SLA banner */
+  [data-theme="light"] .sla-banner {
+    background: linear-gradient(180deg, rgba(217,119,6,0.08), rgba(217,119,6,0.02));
+    border-color: rgba(217,119,6,0.25);
+  }
+  [data-theme="light"] .sla-banner .ic {
+    background: rgba(217,119,6,0.14);
+    color: var(--amber-300);
+  }
+  [data-theme="light"] .sla-banner button {
+    background: white;
+    border-color: var(--line-2);
+    color: var(--fg);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.04);
+  }
+
+  /* Inventory tower units */
+  [data-theme="light"] .u-avail {
+    background: rgba(22,163,74,0.10);
+    border-color: rgba(22,163,74,0.32);
+    color: #15803D;
+  }
+  [data-theme="light"] .u-block {
+    background: rgba(217,119,6,0.10);
+    border-color: rgba(217,119,6,0.32);
+    color: #B45309;
+  }
+  [data-theme="light"] .u-sold {
+    background: rgba(10,10,18,0.04);
+    border-color: var(--line-2);
+    color: var(--fg-4);
+  }
+  [data-theme="light"] .u-sel {
+    background: rgba(124,92,255,0.16);
+    border-color: var(--indigo-400);
+    color: var(--indigo-500);
+    box-shadow: 0 0 0 2px rgba(124,92,255,0.20), 0 8px 24px rgba(124,92,255,0.30);
+  }
+
+  /* Trythat */
+  [data-theme="light"] .trythat {
+    background:
+      radial-gradient(60% 60% at 50% 30%, rgba(124,92,255,0.14) 0%, transparent 60%),
+      var(--bg);
+  }
+  [data-theme="light"] .trythat-grid {
+    background-image:
+      linear-gradient(rgba(124,92,255,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,92,255,0.06) 1px, transparent 1px);
+  }
+  [data-theme="light"] .tt-side {
+    background: linear-gradient(180deg, #FFFFFF 0%, #F8F7F2 100%);
+    border-color: var(--line-2);
+    box-shadow: 0 16px 40px rgba(10,10,18,0.08);
+  }
+  [data-theme="light"] .tt-side .icon-lg {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.30) inset, 0 0 28px rgba(124,92,255,0.30);
+  }
+  [data-theme="light"] .tt-side.right .icon-lg {
+    background: linear-gradient(135deg, #0A0A12, #1F1F36);
+  }
+  [data-theme="light"] .tt-rail .meta-line {
+    background: white;
+    border-color: var(--line-2);
+  }
+  [data-theme="light"] .tt-side .meta { border-top-color: var(--line); }
+
+  /* Charts */
+  [data-theme="light"] .chart-card {
+    background: white;
+    border-color: var(--line-2);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.04);
+  }
+  [data-theme="light"] .chart-card h5 { color: var(--fg); }
+  [data-theme="light"] .src-bar-track { background: rgba(10,10,18,0.06); }
+  [data-theme="light"] .funnel-row .v { color: var(--fg); }
+  [data-theme="light"] .source-row .src-name { color: var(--fg); }
+  [data-theme="light"] .source-row .delta.up { color: var(--mint-300); }
+  [data-theme="light"] .source-row .delta.dn { color: var(--rose-300); }
+
+  /* Phone — keep dark in both themes (mobile UIs are commonly dark, and
+     the contrast against a light page is intentional). */
+
+  /* Spec table */
+  [data-theme="light"] .spec { background: var(--bg); }
+  [data-theme="light"] .spec-table {
+    background: var(--line);
+    border-color: var(--line);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.03);
+  }
+  [data-theme="light"] .spec-h, [data-theme="light"] .spec-r { background: var(--bg-3); }
+  [data-theme="light"] .spec-h { background: var(--bg-2); }
+  [data-theme="light"] .spec-r:hover { background: var(--bg-2); }
+  [data-theme="light"] .spec-name { color: var(--fg); }
+  [data-theme="light"] .spec-desc { color: var(--fg-2); }
+  [data-theme="light"] .spec-filter {
+    background: var(--bg-3);
+    border-color: var(--line-2);
+    color: var(--fg-2);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.04);
+  }
+  [data-theme="light"] .spec-filter:hover {
+    background: white;
+    color: var(--fg);
+  }
+  [data-theme="light"] .spec-filter.on {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+
+  /* Priority pills */
+  [data-theme="light"] .pri-pill.v1 {
+    background: rgba(22,163,74,0.10); color: var(--mint-300); border-color: rgba(22,163,74,0.25);
+  }
+  [data-theme="light"] .pri-pill.v2 {
+    background: rgba(217,119,6,0.10); color: var(--amber-300); border-color: rgba(217,119,6,0.25);
+  }
+  [data-theme="light"] .pri-pill.v3 {
+    background: rgba(3,105,161,0.10); color: var(--sky-300); border-color: rgba(3,105,161,0.25);
+  }
+
+  /* Critical instructions */
+  [data-theme="light"] .instr {
+    background:
+      radial-gradient(50% 50% at 0% 50%, rgba(217,119,6,0.06) 0%, transparent 60%),
+      radial-gradient(50% 50% at 100% 50%, rgba(124,92,255,0.08) 0%, transparent 60%),
+      var(--bg-2);
+  }
+  [data-theme="light"] .instr-grid { background: var(--line); }
+  [data-theme="light"] .instr-card { background: var(--bg-3); }
+  [data-theme="light"] .instr-card .instr-title em { color: var(--amber-300); }
+  [data-theme="light"] .instr-card.indigo .instr-title em { color: var(--indigo-500); }
+  [data-theme="light"] .instr-card.mint .instr-title em { color: var(--mint-300); }
+  [data-theme="light"] .instr-card.rose .instr-title em { color: var(--rose-300); }
+
+  /* Testimonial */
+  [data-theme="light"] .testi { background: var(--bg); }
+  [data-theme="light"] .testi-aurora {
+    background: radial-gradient(50% 50% at 50% 50%, rgba(124,92,255,0.08) 0%, transparent 60%);
+  }
+  [data-theme="light"] .testi-author {
+    background: var(--bg-3);
+    border-color: var(--line-2);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.04);
+  }
+  [data-theme="light"] .testi-author .nm { color: var(--fg); }
+
+  /* CTA — intentionally remains DARK in both themes. The transition from a
+     light page to a dark band is a deliberate punctuation device, lifted
+     from Apple/Stripe — it prevents the final CTA from feeling like one
+     more white panel. Text inside is locked to dark-mode colors. */
+  [data-theme="light"] .cta h2 { color: #F4F1EA; }
+  [data-theme="light"] .cta h2 .ink {
+    background: linear-gradient(135deg, #F4F1EA 0%, #C7BEFF 60%, #FFB04A 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  [data-theme="light"] .cta-sub { color: #C7C4D1; }
+  [data-theme="light"] .cta-fineprint { color: #6E6C7E; }
+  [data-theme="light"] .cta .btn-pri {
+    background: #F4F1EA;
+    color: #0A0A12;
+  }
+  [data-theme="light"] .cta .btn-pri:hover {
+    background: white;
+    box-shadow: 0 12px 32px rgba(244,241,234,0.28);
+  }
+  [data-theme="light"] .cta .btn-ghost {
+    color: #F4F1EA;
+    border-color: rgba(255,255,255,0.18);
+    background: transparent;
+  }
+  [data-theme="light"] .cta .btn-ghost:hover {
+    color: white;
+    border-color: rgba(255,255,255,0.30);
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* Phone — bezel stays dark, screen flips to light. Just nudge the
+     non-primary action buttons so they read on a white card. */
+  [data-theme="light"] .phone-actions button {
+    background: rgba(10,10,18,0.025);
+  }
+
+  /* Footer */
+  [data-theme="light"] footer {
+    background: var(--bg);
+    border-top-color: var(--line);
+  }
+  [data-theme="light"] .foot-bottom { border-top-color: var(--line); }
+  [data-theme="light"] .foot-wordmark {
+    background: linear-gradient(180deg, rgba(10,10,18,0.10) 0%, rgba(10,10,18,0.03) 60%, transparent 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  [data-theme="light"] .foot-tag { color: var(--fg-3); }
+  [data-theme="light"] .foot-col h6 { color: var(--fg); }
+  [data-theme="light"] .foot-col a:hover { color: var(--fg); }
+
+  /* Brand mark — slightly stronger inner shadow on light to read against bg */
+  [data-theme="light"] .brand small {
+    border-color: var(--line-2);
+    color: var(--fg-3);
+  }
+
+  /* ============== UTILITIES & RESPONSIVE ============== */
+  .hide-mobile { display: initial; }
+
+  @media (max-width: 1100px) {
+    .hero-row { grid-template-columns: 1fr; gap: 48px; }
+    .modules-grid { grid-template-columns: repeat(2, 1fr); }
+    .feat-row, .feat-row.flip { grid-template-columns: 1fr; gap: 48px; direction: ltr; }
+    .chart-viz { grid-template-columns: 1fr; }
+    .tt-flow { grid-template-columns: 1fr; gap: 24px; }
+    .foot-grid { grid-template-columns: 1.6fr 1fr 1fr; gap: 32px; }
+    .foot-grid > .foot-col:nth-child(4),
+    .foot-grid > .foot-col:nth-child(5) { display: none; }
+    .overture-stats { grid-template-columns: repeat(2, 1fr); }
+    .instr-grid { grid-template-columns: repeat(2, 1fr); }
+    .instr-card, .instr-card.wide { grid-column: span 1; }
+    .float-chip { display: none; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 720px) {
+    .wrap, .wrap-narrow, .wrap-tight { padding: 0 20px; }
+    .hero { padding: 56px 0 0; }
+    .hide-mobile { display: none; }
+    .modules-grid { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: repeat(2, 1fr); }
+    .kanban-x { grid-template-columns: repeat(2, 1fr); }
+    .spec-h, .spec-r { grid-template-columns: 40px 1fr 80px; }
+    .spec-r > .spec-desc, .spec-r > .spec-cat,
+    .spec-h > .spec-desc, .spec-h > .spec-cat { display: none; }
+    .overture-stats { grid-template-columns: 1fr; }
+    .ov-stat .num { font-size: 44px; }
+    .channels { padding: 36px 0 28px; }
+    .feat, .modules, .testi, .cta, .trythat, .instr, .spec, .overture { padding: 80px 0; }
+    .nav-actions .btn-ghost { display: none; }
+    .hero-window { transform: none; }
+    .phone { transform: none; }
+  }
+
+  /* Reveal-on-scroll */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0s !important; transition-duration: 0s !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav class="nav">
+  <div class="nav-row">
+    <a href="#" class="brand">
+      <span class="brand-mark"></span>
+      RealtorOS
+      <small class="hide-mobile">v1.0 · live</small>
+    </a>
+    <div class="nav-links">
+      <a href="#modules">Modules</a>
+      <a href="#capture">Capture</a>
+      <a href="#scoring">Scoring</a>
+      <a href="#pipeline">Pipeline</a>
+      <a href="#inventory">Inventory</a>
+      <a href="#trythat">Trythat.ai</a>
+      <a href="#spec">Spec</a>
+    </div>
+    <div class="nav-actions">
+      <span class="kbd hide-mobile">⌘ K</span>
+      <button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="#" class="btn btn-ghost hide-mobile">Sign in</a>
+      <a href="#cta" class="btn btn-pri">Book a demo
+        <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<header class="hero">
+  <div class="hero-aurora"></div>
+  <div class="hero-grid-bg"></div>
+  <div class="hero-noise"></div>
+
+  <div class="wrap hero-inner">
+    <div class="hero-row">
+      <div class="hero-copy">
+        <span class="hero-tag">
+          <span class="pulse"></span>
+          <span><em>Built for builders</em> running 2–3 active projects</span>
+          <span class="tag-dot"></span>
+          <span>India</span>
+        </span>
+
+        <h1 class="h1">
+          The lead<br>
+          never <span class="ink">slips&nbsp;away.</span><br>
+          Again.
+        </h1>
+
+        <p class="hero-sub">
+          RealtorOS is the operating system for builder sales floors.
+          <strong>Six channels, one inbox.</strong> Auto-scored, auto-routed, and synced live to
+          <strong>Trythat.ai</strong>.
+          From the first WhatsApp ping to a signed booking — without anything slipping through.
+        </p>
+
+        <div class="hero-cta-row">
+          <a href="#cta" class="btn btn-glow btn-lg">
+            Book a 20-min walkthrough
+            <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#modules" class="btn btn-ghost btn-lg">
+            See how it works
+          </a>
+        </div>
+
+        <div class="hero-meta">
+          <span class="hero-meta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Live in 14 days
+          </span>
+          <span class="hero-meta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Official WhatsApp Business API
+          </span>
+          <span class="hero-meta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Full data export, always
+          </span>
+        </div>
+      </div>
+
+      <!-- HERO PRODUCT -->
+      <div class="hero-product">
+        <div class="float-chip chip-1">
+          <span class="ic pri">TT</span>
+          <span><strong>+1 lead</strong> from Trythat.ai</span>
+          <span class="mt">2s</span>
+        </div>
+        <div class="float-chip chip-2">
+          <span class="ic mint">✓</span>
+          <span><strong>Megha R.</strong> booked A-1204</span>
+          <span class="mt">₹1.4 Cr</span>
+        </div>
+        <div class="float-chip chip-3">
+          <span class="ic amber">!</span>
+          <span><strong>SLA breach</strong> — escalating</span>
+          <span class="mt">2h</span>
+        </div>
+
+        <div class="hero-window">
+          <div class="win-bar">
+            <span class="win-dot r"></span>
+            <span class="win-dot y"></span>
+            <span class="win-dot g"></span>
+            <span class="win-url"><span class="dot"></span>app.realtoros.com / dashboard</span>
+          </div>
+          <div class="win-body">
+            <aside class="win-side">
+              <div class="side-grp">Workspace</div>
+              <div class="side-item active">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                Dashboard
+              </div>
+              <div class="side-item">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                Lead inbox
+                <span class="badge">47</span>
+              </div>
+              <div class="side-item">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 6-6"/></svg>
+                Pipeline
+              </div>
+              <div class="side-item">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+                Inventory
+              </div>
+              <div class="side-grp">Projects</div>
+              <div class="side-item">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg>
+                Skyline Heights
+                <span class="small-pulse"></span>
+              </div>
+              <div class="side-item">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg>
+                Greenfield Park
+              </div>
+              <div class="side-item">
+                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg>
+                Aria Residences
+              </div>
+            </aside>
+
+            <main class="win-main">
+              <div class="win-greet">
+                <div>
+                  <h4>Good morning, Aakash <em>—</em> 47 new leads since last login</h4>
+                  <div class="sub">Mon · 04 May · 09:12 IST</div>
+                </div>
+                <div class="win-segctl">
+                  <span class="on">Today</span>
+                  <span>Week</span>
+                  <span>Month</span>
+                </div>
+              </div>
+
+              <div class="stat-row">
+                <div class="stat">
+                  <div class="stat-l">New leads</div>
+                  <div class="stat-v">47</div>
+                  <div class="stat-d">▲ 18% vs avg</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-l">Followups</div>
+                  <div class="stat-v">12</div>
+                  <div class="stat-d warn">3 overdue</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-l">Site visits</div>
+                  <div class="stat-v">8</div>
+                  <div class="stat-d">2 conf · 11 AM</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-l">Bookings</div>
+                  <div class="stat-v">3</div>
+                  <div class="stat-d">₹4.2 Cr</div>
+                </div>
+              </div>
+
+              <div class="stream-head">
+                <h5>Live lead stream</h5>
+                <span class="live">streaming · 47</span>
+              </div>
+              <div class="stream">
+                <div class="stream-row" style="animation-delay:.1s">
+                  <span class="src src-tt">TT</span>
+                  <div class="stream-info">
+                    <div class="stream-name">Priya Mehta · 3BHK · Kharadi</div>
+                    <div class="stream-meta">trythat.ai · "ready to move-in" · ₹1.2–1.5 Cr</div>
+                  </div>
+                  <span class="score-pill hot">9.2</span>
+                  <span class="stream-time">2s</span>
+                </div>
+                <div class="stream-row" style="animation-delay:.25s">
+                  <span class="src src-wa">WA</span>
+                  <div class="stream-info">
+                    <div class="stream-name">+91 98765 ••43 · Missed call</div>
+                    <div class="stream-meta">whatsapp · auto-reply sent · skyline</div>
+                  </div>
+                  <span class="score-pill warm">7.4</span>
+                  <span class="stream-time">11s</span>
+                </div>
+                <div class="stream-row" style="animation-delay:.4s">
+                  <span class="src src-fb">M</span>
+                  <div class="stream-info">
+                    <div class="stream-name">Anita Sharma · Lead form</div>
+                    <div class="stream-meta">meta ads · greenfield · 3BHK · weekend visit</div>
+                  </div>
+                  <span class="score-pill warm">6.8</span>
+                  <span class="stream-time">38s</span>
+                </div>
+                <div class="stream-row" style="animation-delay:.55s">
+                  <span class="src src-99">99</span>
+                  <div class="stream-info">
+                    <div class="stream-name">Vikram T. · 99acres enquiry</div>
+                    <div class="stream-meta">99acres.com · 2BHK · skyline · ₹85 L</div>
+                  </div>
+                  <span class="score-pill cold">5.1</span>
+                  <span class="stream-time">1m</span>
+                </div>
+                <div class="stream-row" style="animation-delay:.7s">
+                  <span class="src src-cp">CP</span>
+                  <div class="stream-info">
+                    <div class="stream-name">Karan Desai · Channel Partner</div>
+                    <div class="stream-meta">brokers · 4BHK · aria · hot referral</div>
+                  </div>
+                  <span class="score-pill hot">9.5</span>
+                  <span class="stream-time">2m</span>
+                </div>
+              </div>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     CHANNELS — UNIFIED INBOX
+     ============================================================ -->
+<section class="channels">
+  <div class="channels-label">
+    <em>Every channel a buyer can possibly come through</em> — unified into one inbox
+  </div>
+  <div class="marquee">
+    <div class="marquee-track">
+      <div class="channel"><span class="src src-web">W</span><span class="channel-name">Your Website</span><span class="channel-cat">forms · chat</span></div>
+      <div class="channel"><span class="src src-tt">TT</span><span class="channel-name">Trythat.ai</span><span class="channel-cat">native · 2-way</span></div>
+      <div class="channel"><span class="src src-wa">WA</span><span class="channel-name">WhatsApp</span><span class="channel-cat">official API</span></div>
+      <div class="channel"><span class="src src-fb">M</span><span class="channel-name">Meta Ads</span><span class="channel-cat">lead forms</span></div>
+      <div class="channel"><span class="src src-ig">IG</span><span class="channel-name">Instagram</span><span class="channel-cat">DMs · forms</span></div>
+      <div class="channel"><span class="src src-go">G</span><span class="channel-name">Google Ads</span><span class="channel-cat">lead forms</span></div>
+      <div class="channel"><span class="src src-99">99</span><span class="channel-name">99acres</span><span class="channel-cat">portal sync</span></div>
+      <div class="channel"><span class="src src-mb">MB</span><span class="channel-name">MagicBricks</span><span class="channel-cat">portal sync</span></div>
+      <div class="channel"><span class="src src-cp">CP</span><span class="channel-name">Channel Partners</span><span class="channel-cat">broker portal</span></div>
+      <div class="channel"><span class="src src-web">WI</span><span class="channel-name">Walk-ins</span><span class="channel-cat">2-tap mobile</span></div>
+      <!-- duplicate for marquee -->
+      <div class="channel"><span class="src src-web">W</span><span class="channel-name">Your Website</span><span class="channel-cat">forms · chat</span></div>
+      <div class="channel"><span class="src src-tt">TT</span><span class="channel-name">Trythat.ai</span><span class="channel-cat">native · 2-way</span></div>
+      <div class="channel"><span class="src src-wa">WA</span><span class="channel-name">WhatsApp</span><span class="channel-cat">official API</span></div>
+      <div class="channel"><span class="src src-fb">M</span><span class="channel-name">Meta Ads</span><span class="channel-cat">lead forms</span></div>
+      <div class="channel"><span class="src src-ig">IG</span><span class="channel-name">Instagram</span><span class="channel-cat">DMs · forms</span></div>
+      <div class="channel"><span class="src src-go">G</span><span class="channel-name">Google Ads</span><span class="channel-cat">lead forms</span></div>
+      <div class="channel"><span class="src src-99">99</span><span class="channel-name">99acres</span><span class="channel-cat">portal sync</span></div>
+      <div class="channel"><span class="src src-mb">MB</span><span class="channel-name">MagicBricks</span><span class="channel-cat">portal sync</span></div>
+      <div class="channel"><span class="src src-cp">CP</span><span class="channel-name">Channel Partners</span><span class="channel-cat">broker portal</span></div>
+      <div class="channel"><span class="src src-web">WI</span><span class="channel-name">Walk-ins</span><span class="channel-cat">2-tap mobile</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     OVERTURE / MANIFESTO STATEMENT
+     ============================================================ -->
+<section class="overture" id="overture">
+  <div class="overture-aurora"></div>
+  <div class="wrap overture-content">
+    <div class="overture-eyebrow label label-accent">// the problem</div>
+    <h2 class="h2 reveal">
+      Three projects.<br>
+      Six channels.<br>
+      One <span class="ink">leaking</span> funnel.
+    </h2>
+    <p class="overture-sub reveal">
+      Every builder running multiple projects knows the cost of a lead that arrived three days late, of two execs calling the same buyer, of selling a flat that was already sold.
+      RealtorOS plugs every gap that spreadsheets and generic CRMs leave wide open.
+    </p>
+
+    <div class="overture-stats reveal">
+      <div class="ov-stat">
+        <div class="num">28</div>
+        <div class="lbl">Features delivered across V1, V2 &amp; V3 — every line of the spec.</div>
+      </div>
+      <div class="ov-stat">
+        <div class="num">&lt;<em>30</em><span class="small">s</span></div>
+        <div class="lbl">From form submission to your sales exec's phone.</div>
+      </div>
+      <div class="ov-stat">
+        <div class="num">2<em>·</em><span class="small">taps</span></div>
+        <div class="lbl">Every critical action — log a call, schedule a visit, mark booked — on mobile.</div>
+      </div>
+      <div class="ov-stat">
+        <div class="num">100<span class="small">%</span></div>
+        <div class="lbl">Your data, always exportable. Excel, CSV, anytime.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MODULES OVERVIEW
+     ============================================================ -->
+<section class="modules" id="modules">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="label label-accent">// the lead &amp; crm module</div>
+      <h2 class="h2" style="margin-top:18px;">Six layers.<br>One <span class="ink">operating&nbsp;system.</span></h2>
+      <p class="sub">Capture every enquiry. Score it. Route it. Follow up. Tie it to live inventory. Watch the funnel — every morning. Without anything slipping through.</p>
+    </div>
+
+    <div class="modules-grid">
+      <div class="mod reveal">
+        <div class="mod-num"><em>01</em> · Foundation</div>
+        <div class="mod-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <div class="mod-title">Lead <em>capture</em></div>
+        <p class="mod-desc">Every channel — website, WhatsApp, missed calls, Meta &amp; Google Ads, 99acres, MagicBricks, channel partners, walk-ins — lands in a single inbox, tagged and ready.</p>
+        <div class="mod-tags">
+          <span class="mod-tag">10 channels</span>
+          <span class="mod-tag">trythat.ai sync</span>
+          <span class="mod-tag">broker portal</span>
+        </div>
+      </div>
+
+      <div class="mod reveal">
+        <div class="mod-num"><em>02</em> · Intelligence</div>
+        <div class="mod-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+        </div>
+        <div class="mod-title">Qualification &amp; <em>scoring</em></div>
+        <p class="mod-desc">Auto-score 1–10 on budget, timeline, intent and source. Duplicate detection by phone &amp; email. Project, BHK and budget-band tags applied on capture.</p>
+        <div class="mod-tags">
+          <span class="mod-tag">auto-score</span>
+          <span class="mod-tag">duplicate merge</span>
+          <span class="mod-tag">hot/warm/cold</span>
+        </div>
+      </div>
+
+      <div class="mod reveal">
+        <div class="mod-num"><em>03</em> · Workflow</div>
+        <div class="mod-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="6" height="18" rx="1"/><rect x="11" y="3" width="6" height="12" rx="1"/><rect x="19" y="3" width="2" height="7" rx="1"/></svg>
+        </div>
+        <div class="mod-title">Pipeline &amp; <em>routing</em></div>
+        <p class="mod-desc">Kanban from New → Contacted → Site Visit → Negotiation → Booked. Round-robin or rule-based assignment. Configurable SLA escalation. Auto-reassign on inactivity.</p>
+        <div class="mod-tags">
+          <span class="mod-tag">7-stage kanban</span>
+          <span class="mod-tag">SLA escalation</span>
+          <span class="mod-tag">auto-routing</span>
+        </div>
+      </div>
+
+      <div class="mod reveal">
+        <div class="mod-num"><em>04</em> · Retention</div>
+        <div class="mod-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-8-3 18-6-7-9-3z"/></svg>
+        </div>
+        <div class="mod-title">Follow-up <em>automation</em></div>
+        <p class="mod-desc">Day-1 / Day-3 / Day-7 WhatsApp drips on the official Business API. Self-serve site-visit booking links. Daily call list per exec. Cold-lead re-engagement after 30 days.</p>
+        <div class="mod-tags">
+          <span class="mod-tag">whatsapp drips</span>
+          <span class="mod-tag">slot booking</span>
+          <span class="mod-tag">re-engagement</span>
+        </div>
+      </div>
+
+      <div class="mod reveal">
+        <div class="mod-num"><em>05</em> · Integration</div>
+        <div class="mod-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/><path d="M9 9h.01M9 13h.01M9 17h.01"/></svg>
+        </div>
+        <div class="mod-title">Inventory <em>linkage</em></div>
+        <p class="mod-desc">Live availability inside every lead profile. Soft-block a unit for 24–48 hrs. Mark Booked and the legal, payment and Trythat.ai sync trigger automatically.</p>
+        <div class="mod-tags">
+          <span class="mod-tag">live availability</span>
+          <span class="mod-tag">soft-block</span>
+          <span class="mod-tag">2-way trythat sync</span>
+        </div>
+      </div>
+
+      <div class="mod reveal">
+        <div class="mod-num"><em>06</em> · Visibility</div>
+        <div class="mod-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 6-6"/></svg>
+        </div>
+        <div class="mod-title">Reporting &amp; <em>dashboards</em></div>
+        <p class="mod-desc">Owner view every morning. Source-wise lead quality. Sales exec performance. Funnel drop-off. Project-wise sales velocity. All exportable to Excel.</p>
+        <div class="mod-tags">
+          <span class="mod-tag">owner morning view</span>
+          <span class="mod-tag">source ROI</span>
+          <span class="mod-tag">sales velocity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE 1 — LEAD CAPTURE
+     ============================================================ -->
+<section class="feat" id="capture">
+  <div class="feat-aurora"></div>
+  <div class="wrap">
+    <div class="feat-row">
+      <div class="feat-copy">
+        <div class="feat-eyebrow label label-accent">// 01 · Capture</div>
+        <h3 class="h3">All sources.<br>One <span class="ink">unified</span> inbox.</h3>
+        <p class="feat-desc">Stop copy-pasting from Ads Manager. Stop forwarding screenshots from WhatsApp. Every enquiry — across ten channels — lands in RealtorOS within seconds, tagged with project, BHK, budget band and source.</p>
+        <ul class="feat-list">
+          <li><span class="num">01</span><span><strong>Auto-capture from every portal.</strong> 99acres, MagicBricks, NoBroker — leads land directly, no manual entry.</span></li>
+          <li><span class="num">02</span><span><strong>WhatsApp &amp; missed call capture.</strong> Inbound on your sales number auto-creates a lead record with auto-reply.</span></li>
+          <li><span class="num">03</span><span><strong>Trythat.ai &amp; website sync.</strong> Every enquiry from your buyer assistant flows in instantly — no integration retrofit.</span></li>
+          <li><span class="num">04</span><span><strong>Channel partner portal.</strong> Brokers submit leads via dedicated login, tagged for brokerage tracking.</span></li>
+          <li><span class="num">05</span><span><strong>Walk-in entry in 2 taps.</strong> Sales team logs walk-ins on the spot — auto-timestamped, location-tagged.</span></li>
+        </ul>
+      </div>
+
+      <div class="viz reveal">
+        <div class="viz-head">
+          <div class="viz-title">Lead inbox <small>· last 90 minutes</small></div>
+          <div class="stream-head" style="padding:0;"><span class="live">all sources · live</span></div>
+        </div>
+        <div class="viz-body">
+          <div class="stream" style="background: rgba(0,0,0,0.2);">
+            <div class="stream-row">
+              <span class="src src-tt">TT</span>
+              <div class="stream-info">
+                <div class="stream-name">Priya Mehta · 3BHK · Kharadi</div>
+                <div class="stream-meta">trythat.ai · "looking for ready-to-move" · ₹1.2–1.5 Cr</div>
+              </div>
+              <span class="score-pill hot">9.2 hot</span>
+              <span class="stream-time">2m</span>
+            </div>
+            <div class="stream-row">
+              <span class="src src-web">W</span>
+              <div class="stream-info">
+                <div class="stream-name">Rohan Gupta · 2BHK enquiry</div>
+                <div class="stream-meta">website form · skyline heights · tower B</div>
+              </div>
+              <span class="score-pill warm">7.4 warm</span>
+              <span class="stream-time">11m</span>
+            </div>
+            <div class="stream-row">
+              <span class="src src-wa">WA</span>
+              <div class="stream-info">
+                <div class="stream-name">+91 98765 ••43 · Missed call</div>
+                <div class="stream-meta">whatsapp · auto-reply sent · awaiting</div>
+              </div>
+              <span class="score-pill cold">5.5 cold</span>
+              <span class="stream-time">23m</span>
+            </div>
+            <div class="stream-row">
+              <span class="src src-fb">M</span>
+              <div class="stream-info">
+                <div class="stream-name">Anita Sharma · Lead form</div>
+                <div class="stream-meta">meta ads · greenfield · 3BHK · ₹95L–1.1 Cr</div>
+              </div>
+              <span class="score-pill warm">6.8 warm</span>
+              <span class="stream-time">41m</span>
+            </div>
+            <div class="stream-row">
+              <span class="src src-99">99</span>
+              <div class="stream-info">
+                <div class="stream-name">Sneha Patil · 99acres listing</div>
+                <div class="stream-meta">99acres.com · aria · 2BHK · weekend</div>
+              </div>
+              <span class="score-pill warm">7.0 warm</span>
+              <span class="stream-time">52m</span>
+            </div>
+            <div class="stream-row">
+              <span class="src src-cp">CP</span>
+              <div class="stream-info">
+                <div class="stream-name">Vikram T. · Site visit request</div>
+                <div class="stream-meta">channel partner · weekend slot preferred</div>
+              </div>
+              <span class="score-pill warm">7.8 warm</span>
+              <span class="stream-time">1h</span>
+            </div>
+            <div class="stream-row">
+              <span class="src src-mb">MB</span>
+              <div class="stream-info">
+                <div class="stream-name">Aditya N. · MagicBricks enquiry</div>
+                <div class="stream-meta">magicbricks · skyline · 3BHK · ₹1.3 Cr</div>
+              </div>
+              <span class="score-pill hot">8.6 hot</span>
+              <span class="stream-time">1h 14m</span>
+            </div>
+            <div class="stream-row">
+              <span class="src src-ig">IG</span>
+              <div class="stream-info">
+                <div class="stream-name">Karan D. · Brochure download</div>
+                <div class="stream-meta">instagram campaign · aria residences</div>
+              </div>
+              <span class="score-pill cold">5.1 cold</span>
+              <span class="stream-time">1h 22m</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE 2 — SCORING
+     ============================================================ -->
+<section class="feat" id="scoring">
+  <div class="feat-aurora"></div>
+  <div class="wrap">
+    <div class="feat-row flip">
+      <div class="feat-copy">
+        <div class="feat-eyebrow label label-accent">// 02 · Scoring</div>
+        <h3 class="h3">Hot leads first.<br>The rest, <span class="ink">later.</span></h3>
+        <p class="feat-desc">Every lead gets a 1–10 score the second it lands — on budget match, purchase timeline, intent signals and source quality. Hot, warm, cold reclassifies as buyers respond, open emails or visit your site. Your team's day starts at #1.</p>
+        <ul class="feat-list">
+          <li><span class="num">01</span><span><strong>Auto-scoring at capture.</strong> No manual triage, no spreadsheet ratings.</span></li>
+          <li><span class="num">02</span><span><strong>Duplicate detection.</strong> Same phone or email from multiple sources auto-merged. Two execs never call the same person.</span></li>
+          <li><span class="num">03</span><span><strong>Auto-tag</strong> project, configuration (2BHK / 3BHK / 4BHK) and budget band.</span></li>
+          <li><span class="num">04</span><span><strong>Reclassification</strong> as the buyer behaves — opened emails, replied to WhatsApp, visited site.</span></li>
+          <li><span class="num">05</span><span><strong>Lost-reason capture.</strong> Mandatory on close. Pattern analysis built in.</span></li>
+        </ul>
+      </div>
+
+      <div class="viz reveal">
+        <div class="viz-head">
+          <div class="viz-title">Score breakdown <small>· auto-computed at capture</small></div>
+          <span class="label" style="color: var(--indigo-300);">▲ recomputed 4s ago</span>
+        </div>
+        <div class="viz-body">
+          <div class="scoreboard">
+            <div class="lead-card-x hot">
+              <div class="head">
+                <div>
+                  <div class="lc-name">Karan Desai</div>
+                  <div class="lc-meta">channel partner · 4BHK · aria residences</div>
+                </div>
+                <span class="lc-pill hot">🔥 9.5 hot</span>
+              </div>
+              <div class="lc-bars">
+                <div class="lc-bar"><span class="lc-bar-label">Budget match</span><div class="lc-bar-track"><div class="lc-bar-fill" data-w="95"></div></div><span class="lc-bar-val">95%</span></div>
+                <div class="lc-bar"><span class="lc-bar-label">Timeline</span><div class="lc-bar-track"><div class="lc-bar-fill" data-w="90"></div></div><span class="lc-bar-val">90%</span></div>
+                <div class="lc-bar"><span class="lc-bar-label">Intent signals</span><div class="lc-bar-track"><div class="lc-bar-fill" data-w="88"></div></div><span class="lc-bar-val">88%</span></div>
+                <div class="lc-bar"><span class="lc-bar-label">Source quality</span><div class="lc-bar-track"><div class="lc-bar-fill" data-w="100"></div></div><span class="lc-bar-val">A+</span></div>
+              </div>
+              <div class="ai-line">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+                Hot — site visit suggested within 24h. Auto-routed to <strong style="color: var(--indigo-300);">Mihir B.</strong>
+              </div>
+            </div>
+            <div class="lead-card-x">
+              <div class="head">
+                <div>
+                  <div class="lc-name">Rohan Gupta</div>
+                  <div class="lc-meta">website form · 2BHK · greenfield park</div>
+                </div>
+                <span class="lc-pill warm">7.4 warm</span>
+              </div>
+              <div class="lc-bars">
+                <div class="lc-bar"><span class="lc-bar-label">Budget match</span><div class="lc-bar-track"><div class="lc-bar-fill warm" data-w="70"></div></div><span class="lc-bar-val">70%</span></div>
+                <div class="lc-bar"><span class="lc-bar-label">Timeline</span><div class="lc-bar-track"><div class="lc-bar-fill warm" data-w="60"></div></div><span class="lc-bar-val">60%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE 3 — PIPELINE
+     ============================================================ -->
+<section class="feat" id="pipeline">
+  <div class="feat-aurora"></div>
+  <div class="wrap">
+    <div class="feat-row">
+      <div class="feat-copy">
+        <div class="feat-eyebrow label label-accent">// 03 · Pipeline</div>
+        <h3 class="h3">No lead goes <span class="ink">untouched.</span></h3>
+        <p class="feat-desc">A clean Kanban from <span class="mono" style="color:var(--fg);">New</span> to <span class="mono" style="color:var(--mint-300);">Booked</span>. Round-robin or rule-based assignment. Auto-escalation when a fresh lead sits uncalled past your SLA — and automatic reassignment if it stays cold.</p>
+        <ul class="feat-list">
+          <li><span class="num">01</span><span><strong>Drag-and-drop</strong> Kanban — New → Contacted → Site Visit Scheduled → Site Visit Done → Negotiation → Booked → Lost.</span></li>
+          <li><span class="num">02</span><span><strong>Configurable SLA escalation.</strong> You set the hours. The system enforces them.</span></li>
+          <li><span class="num">03</span><span><strong>Round-robin or rule-based</strong> auto-assignment by project, location, budget band.</span></li>
+          <li><span class="num">04</span><span><strong>Mobile-first.</strong> Every action — log a call, schedule a visit, mark stage — in 2 taps.</span></li>
+        </ul>
+      </div>
+
+      <div class="viz reveal">
+        <div class="viz-head">
+          <div class="viz-title">Pipeline <small>· all projects · today</small></div>
+          <span class="label">47 active</span>
+        </div>
+        <div class="viz-body">
+          <div class="kanban-x">
+            <div class="kcol">
+              <div class="khead">New <span class="kcount">14</span></div>
+              <div class="kcard in-motion">
+                <div class="kcard-name">Priya M. <span class="score-pill hot">9.2</span></div>
+                <div class="kcard-meta">trythat.ai · 3BHK</div>
+                <span class="kcard-tag">skyline</span>
+              </div>
+              <div class="kcard">
+                <div class="kcard-name">Rohan G. <span class="score-pill warm">7.4</span></div>
+                <div class="kcard-meta">website · 2BHK</div>
+                <span class="kcard-tag">greenfield</span>
+              </div>
+              <div class="kcard">
+                <div class="kcard-name">Sneha P. <span class="score-pill warm">7.0</span></div>
+                <div class="kcard-meta">99acres · 2BHK</div>
+              </div>
+            </div>
+            <div class="kcol">
+              <div class="khead">Contacted <span class="kcount">22</span></div>
+              <div class="kcard">
+                <div class="kcard-name">Anita S. <span class="score-pill hot">8.8</span></div>
+                <div class="kcard-meta">whatsapp · 3BHK</div>
+                <span class="kcard-tag">aria</span>
+              </div>
+              <div class="kcard">
+                <div class="kcard-name">Vikram T. <span class="score-pill cold">5.1</span></div>
+                <div class="kcard-meta">meta ads · 2BHK</div>
+              </div>
+            </div>
+            <div class="kcol">
+              <div class="khead">Site visit <span class="kcount">8</span></div>
+              <div class="kcard">
+                <div class="kcard-name">Karan D. <span class="score-pill hot">9.5</span></div>
+                <div class="kcard-meta">walk-in · 4BHK</div>
+                <span class="kcard-tag">aria</span>
+              </div>
+            </div>
+            <div class="kcol">
+              <div class="khead">Booked <span class="kcount">3</span></div>
+              <div class="kcard book">
+                <div class="kcard-name">Megha R. <span class="score-pill book">✓</span></div>
+                <div class="kcard-meta">walk-in · 3BHK · A-1204</div>
+                <span class="kcard-tag">₹1.4 Cr</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sla-banner">
+            <div class="ic">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
+            </div>
+            <div class="txt">
+              <strong style="color: var(--fg);">SLA breach</strong> — Vikram T. uncalled for 2h 14m
+              <small>auto-reassigning to Sales Manager · escalation rule: 1h</small>
+            </div>
+            <button>resolve</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE 4 — INVENTORY (3D TOWER)
+     ============================================================ -->
+<section class="feat" id="inventory">
+  <div class="feat-aurora"></div>
+  <div class="wrap">
+    <div class="feat-row flip">
+      <div class="feat-copy">
+        <div class="feat-eyebrow label label-accent">// 04 · Inventory</div>
+        <h3 class="h3">Sold flats stay <span class="ink">sold.</span></h3>
+        <p class="feat-desc">Live unit availability inside every lead profile. Soft-block a flat for 24–48 hours for a serious buyer — auto-released if not converted. Mark Booked, and legal, payment schedule, token receipt and Trythat.ai sync trigger automatically. No more "sorry, it sold yesterday" on a site visit.</p>
+        <ul class="feat-list">
+          <li><span class="num">01</span><span><strong>Live availability</strong> inside every lead profile — no switching tabs.</span></li>
+          <li><span class="num">02</span><span><strong>Soft-block</strong> a unit with auto-release after 24–48h.</span></li>
+          <li><span class="num">03</span><span><strong>Booking trigger</strong> fires the legal &amp; payment workflow downstream.</span></li>
+          <li><span class="num">04</span><span><strong>Two-way Trythat.ai sync</strong> in real time — buyer-facing availability is always honest.</span></li>
+        </ul>
+      </div>
+
+      <div class="viz reveal">
+        <div class="viz-head">
+          <div class="viz-title">Skyline Heights · Tower A <small>· floors 9–14 · 36 units</small></div>
+          <span class="label">live · 2-way sync</span>
+        </div>
+        <div class="viz-body">
+          <div class="tower-wrap">
+            <div class="tower">
+              <div class="floor"><div class="floor-label">14</div>
+                <div class="unit u-avail">A1401</div><div class="unit u-avail">A1402</div><div class="unit u-blocked">A1403</div><div class="unit u-avail">A1404</div><div class="unit u-avail">A1405</div><div class="unit u-avail">A1406</div>
+              </div>
+              <div class="floor"><div class="floor-label">13</div>
+                <div class="unit u-sold">A1301</div><div class="unit u-avail">A1302</div><div class="unit u-avail">A1303</div><div class="unit u-blocked">A1304</div><div class="unit u-avail">A1305</div><div class="unit u-sold">A1306</div>
+              </div>
+              <div class="floor"><div class="floor-label">12</div>
+                <div class="unit u-avail">A1201</div><div class="unit u-avail">A1202</div><div class="unit u-avail">A1203</div><div class="unit u-sold">A1204</div><div class="unit u-avail">A1205</div><div class="unit u-blocked">A1206</div>
+              </div>
+              <div class="floor"><div class="floor-label">11</div>
+                <div class="unit u-sold">A1101</div><div class="unit u-avail">A1102</div><div class="unit u-sold">A1103</div><div class="unit u-avail">A1104</div><div class="unit u-blocked">A1105</div><div class="unit u-avail">A1106</div>
+              </div>
+              <div class="floor"><div class="floor-label">10</div>
+                <div class="unit u-avail">A1001</div><div class="unit u-sold">A1002</div><div class="unit u-avail">A1003</div><div class="unit u-sel">A1004</div><div class="unit u-avail">A1005</div><div class="unit u-blocked">A1006</div>
+              </div>
+              <div class="floor"><div class="floor-label">09</div>
+                <div class="unit u-sold">A0901</div><div class="unit u-avail">A0902</div><div class="unit u-avail">A0903</div><div class="unit u-blocked">A0904</div><div class="unit u-sold">A0905</div><div class="unit u-avail">A0906</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tower-legend">
+            <span class="ld"><span class="ld-dot" style="background: rgba(74,222,154,0.18); border-color: rgba(74,222,154,0.4);"></span>available · 18</span>
+            <span class="ld"><span class="ld-dot" style="background: rgba(255,176,74,0.18); border-color: rgba(255,176,74,0.4);"></span>soft-blocked · 6</span>
+            <span class="ld"><span class="ld-dot" style="background: rgba(255,255,255,0.04); border-color: var(--line-2);"></span>sold · 11</span>
+            <span class="ld"><span class="ld-dot" style="background: rgba(124,92,255,0.25); border-color: var(--indigo-400);"></span>selected · A1004</span>
+          </div>
+
+          <div class="tower-info">
+            <div class="ti"><strong>3BHK</strong> A1004 · 1,420 sq ft</div>
+            <div class="ti"><strong>₹1.42 Cr</strong> agreement value</div>
+            <div class="ti"><strong>24h</strong> soft-block in effect</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TRYTHAT INTEGRATION — HERO BLOCK
+     ============================================================ -->
+<section class="trythat" id="trythat">
+  <div class="trythat-grid"></div>
+  <div class="wrap trythat-content">
+    <div class="tt-mark">
+      <span class="tt-star">★ NATIVE INTEGRATION</span>
+    </div>
+    <h2 class="h2 reveal">
+      Trythat.ai &amp; RealtorOS,<br>
+      built <span class="ink">together.</span>
+    </h2>
+    <p class="overture-sub reveal" style="margin-top:24px;">
+      Every enquiry from your Trythat.ai buyer assistant flows into RealtorOS in real time.
+      Every unit you block or book in RealtorOS updates Trythat.ai instantly.
+      <strong style="color: var(--fg);">No retrofits. No delays. No spreadsheets in between.</strong>
+    </p>
+
+    <div class="tt-flow reveal">
+      <div class="tt-side left">
+        <div class="icon-lg">TT</div>
+        <h4>Trythat.ai</h4>
+        <div class="desc">Buyer-facing AI assistant.<br>Public property platform.</div>
+        <div class="meta">→ <strong>captures intent</strong> · qualifies · books slots</div>
+      </div>
+
+      <div class="tt-rail">
+        <div class="tt-rail-label"><span class="arrow">→</span><span>Lead handoff <em style="color:var(--fg-3); font-style:normal;">(Day 1, non-negotiable)</em></span><span class="arrow">→</span></div>
+        <div class="tt-rail-line"></div>
+        <div class="tt-rail-center">
+          <span class="meta-line">
+            <span style="color:var(--mint-300); font-family: 'JetBrains Mono', monospace; font-size: 11px;">●</span>
+            <span class="mono" style="color:var(--fg-2); font-size: 11.5px;">avg latency · 4.2s</span>
+          </span>
+        </div>
+        <div class="tt-rail-line back"></div>
+        <div class="tt-rail-label back"><span class="arrow">←</span><span>Unit availability sync</span><span class="arrow">←</span></div>
+      </div>
+
+      <div class="tt-side right">
+        <div class="icon-lg">R</div>
+        <h4>RealtorOS</h4>
+        <div class="desc">Internal sales OS.<br>Lead, pipeline, inventory.</div>
+        <div class="meta">→ <strong style="color: var(--mint-300);">routes &amp; books</strong> · updates inventory</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE 5 — REPORTING (CHARTS)
+     ============================================================ -->
+<section class="feat" id="reporting">
+  <div class="feat-aurora"></div>
+  <div class="wrap">
+    <div class="feat-row">
+      <div class="feat-copy">
+        <div class="feat-eyebrow label label-accent">// 05 · Visibility</div>
+        <h3 class="h3">Know your numbers<br><span class="ink">every morning.</span></h3>
+        <p class="feat-desc">Open RealtorOS at 9 AM. New leads, follow-ups pending, site visits today, bookings this week — one screen. Source quality. Exec performance. Funnel drop-offs. Sales velocity per project. Everything exportable.</p>
+        <ul class="feat-list">
+          <li><span class="num">01</span><span><strong>Daily owner view.</strong> One screen, every morning.</span></li>
+          <li><span class="num">02</span><span><strong>Source-wise lead quality.</strong> Stop wasting ad spend on bad sources.</span></li>
+          <li><span class="num">03</span><span><strong>Sales exec performance.</strong> Leads assigned vs contacted vs converted, per exec.</span></li>
+          <li><span class="num">04</span><span><strong>Funnel drop-off analysis.</strong> Find exactly where leads die.</span></li>
+          <li><span class="num">05</span><span><strong>Project sales velocity.</strong> Units / week. Expected sell-out date at current pace.</span></li>
+        </ul>
+      </div>
+
+      <div class="viz reveal">
+        <div class="viz-head">
+          <div class="viz-title">Today's owner view <small>· 04 May, 09:12 IST</small></div>
+          <button class="btn btn-ghost" style="padding: 6px 14px; font-size: 12px;">Export
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          </button>
+        </div>
+        <div class="viz-body">
+          <div class="chart-viz">
+            <div class="chart-card">
+              <h5>Funnel · this week <small>167 leads</small></h5>
+              <div class="funnel-rows">
+                <div class="funnel-row"><span class="l">New</span><div class="funnel-bar" style="width:100%;"></div><span class="v">167</span></div>
+                <div class="funnel-row"><span class="l">Contacted</span><div class="funnel-bar b2" style="width:80%;"></div><span class="v">134</span></div>
+                <div class="funnel-row"><span class="l">Site visit</span><div class="funnel-bar b3" style="width:38%;"></div><span class="v">63</span></div>
+                <div class="funnel-row"><span class="l">Negotiation</span><div class="funnel-bar b4" style="width:22%;"></div><span class="v">37</span></div>
+                <div class="funnel-row"><span class="l">Booked</span><div class="funnel-bar b5" style="width:8%;"></div><span class="v">14</span></div>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h5>Source ROI <small>cost / booking</small></h5>
+              <div class="source-rows">
+                <div class="source-row">
+                  <span class="src-name"><span class="src src-tt"></span>Trythat.ai</span>
+                  <div class="src-bar-track"><div class="src-bar-fill" style="width:92%;"></div></div>
+                  <span class="pct">₹4.2k</span>
+                  <span class="delta up">▲42%</span>
+                </div>
+                <div class="source-row">
+                  <span class="src-name"><span class="src src-cp"></span>Channel partners</span>
+                  <div class="src-bar-track"><div class="src-bar-fill warm" style="width:70%;"></div></div>
+                  <span class="pct">₹12k</span>
+                  <span class="delta up">▲14%</span>
+                </div>
+                <div class="source-row">
+                  <span class="src-name"><span class="src src-wa"></span>WhatsApp</span>
+                  <div class="src-bar-track"><div class="src-bar-fill" style="width:58%;"></div></div>
+                  <span class="pct">₹6.8k</span>
+                  <span class="delta up">▲9%</span>
+                </div>
+                <div class="source-row">
+                  <span class="src-name"><span class="src src-fb"></span>Meta Ads</span>
+                  <div class="src-bar-track"><div class="src-bar-fill cool" style="width:40%;"></div></div>
+                  <span class="pct">₹26k</span>
+                  <span class="delta dn">▼18%</span>
+                </div>
+                <div class="source-row">
+                  <span class="src-name"><span class="src src-99"></span>99acres</span>
+                  <div class="src-bar-track"><div class="src-bar-fill cool" style="width:32%;"></div></div>
+                  <span class="pct">₹38k</span>
+                  <span class="delta dn">▼31%</span>
+                </div>
+                <div class="source-row">
+                  <span class="src-name"><span class="src src-mb"></span>MagicBricks</span>
+                  <div class="src-bar-track"><div class="src-bar-fill cool" style="width:25%;"></div></div>
+                  <span class="pct">₹44k</span>
+                  <span class="delta dn">▼22%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MOBILE-FIRST PHONE
+     ============================================================ -->
+<section class="feat" id="mobile">
+  <div class="feat-aurora"></div>
+  <div class="wrap">
+    <div class="feat-row flip">
+      <div class="feat-copy">
+        <div class="feat-eyebrow label label-accent">// 06 · Mobile-first</div>
+        <h3 class="h3">Built for execs<br>on <span class="ink">the road.</span></h3>
+        <p class="feat-desc">Your sales team will live on this. At site, in meetings, between visits — they'll never open a laptop. Every critical action — update pipeline stage, log a call, schedule a visit, mark a unit blocked — completable in <strong style="color: var(--fg);">two taps</strong>.</p>
+        <ul class="feat-list">
+          <li><span class="num">01</span><span><strong>2-tap pipeline updates</strong> from anywhere.</span></li>
+          <li><span class="num">02</span><span><strong>Walk-in entry</strong> with auto-timestamp and location.</span></li>
+          <li><span class="num">03</span><span><strong>Daily call list</strong> on login, sorted by score &amp; SLA.</span></li>
+          <li><span class="num">04</span><span><strong>One-tap WhatsApp</strong> with pre-loaded templates.</span></li>
+        </ul>
+      </div>
+
+      <div class="phone-wrap reveal">
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="phone-h">
+              <div>
+                <h6>Today's calls <em>9 pending</em></h6>
+              </div>
+              <button class="phone-action">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+
+            <div class="phone-card">
+              <div class="top">
+                <div>
+                  <div class="name">Karan Desai</div>
+                  <div class="meta">4BHK · aria · channel partner</div>
+                </div>
+                <span class="score-pill hot">9.5</span>
+              </div>
+              <div class="phone-actions">
+                <button class="pri">📞 Call</button>
+                <button>WA</button>
+                <button>Visit</button>
+              </div>
+            </div>
+
+            <div class="phone-card">
+              <div class="top">
+                <div>
+                  <div class="name">Priya Mehta</div>
+                  <div class="meta">3BHK · skyline · trythat</div>
+                </div>
+                <span class="score-pill hot">9.2</span>
+              </div>
+              <div class="phone-actions">
+                <button>📞 Call</button>
+                <button>WA</button>
+                <button class="pri">Visit</button>
+              </div>
+            </div>
+
+            <div class="phone-card">
+              <div class="top">
+                <div>
+                  <div class="name">Anita Sharma</div>
+                  <div class="meta">3BHK · greenfield · meta</div>
+                </div>
+                <span class="score-pill warm">7.4</span>
+              </div>
+            </div>
+          </div>
+          <div class="phone-tap-bubble t1"></div>
+          <div class="phone-tap-bubble t2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SPEC TABLE — 28 features
+     ============================================================ -->
+<section class="spec" id="spec">
+  <div class="wrap-narrow">
+    <div class="section-head">
+      <div class="label label-accent">// the spec, in full</div>
+      <h2 class="h2" style="margin-top:18px;">28 features.<br>Three <span class="ink">priority tiers.</span></h2>
+      <p class="sub">Every line of the RealtorOS Lead &amp; CRM specification, mapped to a delivery version. Filter by priority. Nothing hidden.</p>
+    </div>
+
+    <div class="spec-filters">
+      <button class="spec-filter on" data-f="all">All · 28</button>
+      <button class="spec-filter" data-f="v1">Must have · V1</button>
+      <button class="spec-filter" data-f="v2">Good to have · V2</button>
+      <button class="spec-filter" data-f="v3">Nice to have · V3</button>
+    </div>
+
+    <div class="spec-table" id="specTable">
+      <div class="spec-h">
+        <span>#</span>
+        <span>Feature</span>
+        <span>What it does</span>
+        <span>Priority</span>
+        <span>Module</span>
+      </div>
+
+      <!-- 1. Capture -->
+      <div class="spec-r" data-pri="v1"><span class="spec-num">01</span><span class="spec-name">Auto-capture from portals</span><span class="spec-desc">99acres, MagicBricks, Housing.com, NoBroker — direct, no manual entry.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">capture</span></div>
+      <div class="spec-r" data-pri="v1"><span class="spec-num">02</span><span class="spec-name">Website &amp; Trythat.ai sync</span><span class="spec-desc">Any enquiry from website or Trythat.ai assistant pushes instantly into the CRM.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">capture</span></div>
+      <div class="spec-r" data-pri="v1"><span class="spec-num">03</span><span class="spec-name">WhatsApp &amp; missed call capture</span><span class="spec-desc">Inbound on sales number auto-creates a lead record.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">capture</span></div>
+      <div class="spec-r" data-pri="v1"><span class="spec-num">04</span><span class="spec-name">Meta &amp; Google Ads forms</span><span class="spec-desc">Lead form submissions from paid campaigns flow directly.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">capture</span></div>
+      <div class="spec-r" data-pri="v2"><span class="spec-num">05</span><span class="spec-name">Channel partner portal</span><span class="spec-desc">Brokers submit via dedicated login; tagged for brokerage tracking.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">capture</span></div>
+      <div class="spec-r" data-pri="v3"><span class="spec-num">06</span><span class="spec-name">Walk-in &amp; site visit entry</span><span class="spec-desc">Manual entry from phone; auto-timestamp and location-tag.</span><span><span class="pri-pill v3">○ V3</span></span><span class="spec-cat">capture</span></div>
+
+      <!-- 2. Scoring -->
+      <div class="spec-r" data-pri="v1"><span class="spec-num">07</span><span class="spec-name">Auto lead scoring 1–10</span><span class="spec-desc">Score on budget, timeline, intent and source quality.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">scoring</span></div>
+      <div class="spec-r" data-pri="v1"><span class="spec-num">08</span><span class="spec-name">Duplicate detection</span><span class="spec-desc">Same phone/email from multiple sources auto-merged.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">scoring</span></div>
+      <div class="spec-r" data-pri="v1"><span class="spec-num">09</span><span class="spec-name">Project &amp; unit interest tagging</span><span class="spec-desc">Auto-tag project, BHK and budget band on capture.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">scoring</span></div>
+      <div class="spec-r" data-pri="v2"><span class="spec-num">10</span><span class="spec-name">AI hot/warm/cold reclassification</span><span class="spec-desc">Reclassifies based on response, opens, replies, site visits.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">scoring</span></div>
+      <div class="spec-r" data-pri="v2"><span class="spec-num">11</span><span class="spec-name">Lost-reason capture</span><span class="spec-desc">Mandatory reason on close — for funnel diagnosis.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">scoring</span></div>
+
+      <!-- 3. Pipeline -->
+      <div class="spec-r" data-pri="v1"><span class="spec-num">12</span><span class="spec-name">Kanban pipeline (7 stages)</span><span class="spec-desc">New → Contacted → Site Visit Scheduled → Site Visit Done → Negotiation → Booked → Lost.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">pipeline</span></div>
+      <div class="spec-r" data-pri="v1"><span class="spec-num">13</span><span class="spec-name">Auto-assignment rules</span><span class="spec-desc">Round-robin or rule-based by project, location, budget band.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">pipeline</span></div>
+      <div class="spec-r" data-pri="v1"><span class="spec-num">14</span><span class="spec-name">Escalation on no-contact</span><span class="spec-desc">Auto-escalates to manager past configurable SLA.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">pipeline</span></div>
+      <div class="spec-r" data-pri="v2"><span class="spec-num">15</span><span class="spec-name">Re-assignment on inactivity</span><span class="spec-desc">Untouched lead flagged and optionally reassigned.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">pipeline</span></div>
+
+      <!-- 4. Followup -->
+      <div class="spec-r" data-pri="v1"><span class="spec-num">16</span><span class="spec-name">WhatsApp drip sequences</span><span class="spec-desc">Day-1 / Day-3 / Day-7 — personalised by project &amp; config.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">followup</span></div>
+      <div class="spec-r" data-pri="v1"><span class="spec-num">17</span><span class="spec-name">Task &amp; call reminders</span><span class="spec-desc">Auto-created after each interaction; daily call list per exec.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">followup</span></div>
+      <div class="spec-r" data-pri="v1"><span class="spec-num">18</span><span class="spec-name">Site visit slot booking</span><span class="spec-desc">Buyer picks slot via link; WhatsApp + calendar confirm; site team notified.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">followup</span></div>
+      <div class="spec-r" data-pri="v2"><span class="spec-num">19</span><span class="spec-name">Email drip campaigns</span><span class="spec-desc">Project updates, launch announcements, price revisions.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">followup</span></div>
+      <div class="spec-r" data-pri="v2"><span class="spec-num">20</span><span class="spec-name">Cold-lead re-engagement</span><span class="spec-desc">Auto-message at 30+ days inactive — new offer / new unit.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">followup</span></div>
+
+      <!-- 5. Inventory -->
+      <div class="spec-r" data-pri="v1"><span class="spec-num">21</span><span class="spec-name">Live unit availability</span><span class="spec-desc">Available / blocked / sold inside every lead profile.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">inventory</span></div>
+      <div class="spec-r" data-pri="v1"><span class="spec-num">22</span><span class="spec-name">Soft-block / hold</span><span class="spec-desc">Hold a unit for 24–48h for a serious buyer; auto-release.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">inventory</span></div>
+      <div class="spec-r" data-pri="v1"><span class="spec-num">23</span><span class="spec-name">Booking trigger</span><span class="spec-desc">Mark Booked → fires legal, payment schedule, token receipt.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">inventory</span></div>
+      <div class="spec-r" data-pri="v2"><span class="spec-num">24</span><span class="spec-name">Trythat.ai availability sync</span><span class="spec-desc">Two-way real-time unit-status sync with Trythat.ai.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">inventory</span></div>
+
+      <!-- 6. Reporting -->
+      <div class="spec-r" data-pri="v1"><span class="spec-num">25</span><span class="spec-name">Daily lead summary</span><span class="spec-desc">Owner view: new leads, follow-ups, visits, bookings — one screen, every morning.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">reporting</span></div>
+      <div class="spec-r" data-pri="v1"><span class="spec-num">26</span><span class="spec-name">Source-wise lead quality</span><span class="spec-desc">Which portal / campaign converts. Stop wasting ad spend.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">reporting</span></div>
+      <div class="spec-r" data-pri="v1"><span class="spec-num">27</span><span class="spec-name">Sales exec performance</span><span class="spec-desc">Leads assigned vs contacted vs converted — per exec.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">reporting</span></div>
+      <div class="spec-r" data-pri="v2"><span class="spec-num">28</span><span class="spec-name">Funnel drop-off &amp; sales velocity</span><span class="spec-desc">Where leads die. Units / week. Expected sell-out date.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">reporting</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CRITICAL INSTRUCTIONS — MANIFESTO
+     ============================================================ -->
+<section class="instr">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="label label-accent">// non-negotiables · from the spec</div>
+      <h2 class="h2" style="margin-top:18px;">The promises<br>we <span class="ink">won't break.</span></h2>
+      <p class="sub">Six instructions written into the RealtorOS spec. Six things we don't compromise on — regardless of timeline, budget or convenience.</p>
+    </div>
+
+    <div class="instr-grid">
+      <div class="instr-card indigo wide">
+        <div class="instr-num">01 / Six</div>
+        <div class="instr-title">Trythat.ai integration <em>from Day 1.</em></div>
+        <p class="instr-body">The lead handoff from Trythat.ai into RealtorOS and the unit availability sync back to Trythat.ai are built into the first version. Not a later add-on. Retrofitting integrations is always more expensive — and we refuse to start in debt.</p>
+      </div>
+
+      <div class="instr-card rose wide">
+        <div class="instr-num">02 / Six</div>
+        <div class="instr-title">Duplicate detection <em>is non-negotiable.</em></div>
+        <p class="instr-body">Without it, your lead count is inflated, your execs waste calls, and your reporting lies. Live before launch. No exceptions.</p>
+      </div>
+
+      <div class="instr-card mint">
+        <div class="instr-num">03 / Six</div>
+        <div class="instr-title">Mobile-first <em>for execs.</em></div>
+        <p class="instr-body">Sales is on the road, in meetings, on site. Every critical action completable in 2 taps on mobile.</p>
+      </div>
+
+      <div class="instr-card">
+        <div class="instr-num">04 / Six</div>
+        <div class="instr-title">Escalation rules <em>are configurable.</em></div>
+        <p class="instr-body">You set how many hours before a new lead escalates, how many days before inactive flags, and who gets the alert.</p>
+      </div>
+
+      <div class="instr-card">
+        <div class="instr-num">05 / Six</div>
+        <div class="instr-title">Official WhatsApp <em>API only.</em></div>
+        <p class="instr-body">No grey-market automation tools. Interakt, WATI, AiSensy. Account bans are not a launch risk we accept.</p>
+      </div>
+
+      <div class="instr-card mint">
+        <div class="instr-num">06 / Six</div>
+        <div class="instr-title">All data <em>is exportable.</em></div>
+        <p class="instr-body">Excel, CSV, anytime. Your leads, your pipeline, your reports. Full data ownership.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     TESTIMONIAL
+     ============================================================ -->
+<section class="testi">
+  <div class="testi-aurora"></div>
+  <div class="wrap testi-content">
+    <div class="label">// from a builder running 3 active projects</div>
+    <p class="testi-quote">
+      &ldquo;Before RealtorOS, my team was running three projects on six WhatsApp groups and a single Excel sheet.<br>
+      Now my Monday morning starts with <span class="hi">one screen</span> — and I know exactly which leads got missed, who's performing, and which campaign is wasting our ad spend.&rdquo;
+    </p>
+    <div class="testi-author">
+      <span class="av">AS</span>
+      <div class="info">
+        <div class="nm">Aakash Shah</div>
+        <div class="tl">director · shah realty · pune · 3 projects</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FINAL CTA
+     ============================================================ -->
+<section class="cta" id="cta">
+  <div class="cta-noise"></div>
+  <div class="wrap cta-content">
+    <div class="label label-accent" style="margin-bottom: 24px;">// stop losing leads to spreadsheets</div>
+    <h2 class="h2 display">
+      Sell every unit.<br>
+      From the <span class="ink">first&nbsp;enquiry.</span>
+    </h2>
+    <p class="cta-sub">Book a 20-minute walkthrough. We'll wire it to your real lead sources, your real inventory, your real Trythat.ai instance. You'll see the system work end-to-end before you commit.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn btn-pri btn-lg">
+        Book a 20-min walkthrough
+        <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#" class="btn btn-ghost btn-lg">Download the spec
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      </a>
+    </div>
+    <p class="cta-fineprint">no credit card<span class="dot">·</span>live in 14 days<span class="dot">·</span>full data export, always</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#" class="brand">
+          <span class="brand-mark"></span>
+          RealtorOS
+        </a>
+        <p class="foot-tag">The operating system for real estate builders. Capture every lead. Score every buyer. Sell every unit. Without anything slipping through.</p>
+      </div>
+      <div class="foot-col">
+        <h6>Product</h6>
+        <ul>
+          <li><a href="#capture">Lead capture</a></li>
+          <li><a href="#scoring">Scoring</a></li>
+          <li><a href="#pipeline">Pipeline</a></li>
+          <li><a href="#inventory">Inventory</a></li>
+          <li><a href="#reporting">Reporting</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h6>Integrations</h6>
+        <ul>
+          <li><a href="#trythat">Trythat.ai</a></li>
+          <li><a href="#">WhatsApp Business</a></li>
+          <li><a href="#">Meta &amp; Google Ads</a></li>
+          <li><a href="#">99acres / MagicBricks</a></li>
+          <li><a href="#">Channel Partners</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h6>Spec</h6>
+        <ul>
+          <li><a href="#spec">All 28 features</a></li>
+          <li><a href="#spec">V1 must-have</a></li>
+          <li><a href="#spec">V2 good-to-have</a></li>
+          <li><a href="#spec">V3 nice-to-have</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h6>Company</h6>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Customers</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© 2026 RealtorOS · confidential builder platform</span>
+      <span><span class="live">●</span> all systems operational · v1.0 deployed 04 May 2026</span>
+    </div>
+
+    <div class="foot-wordmark" aria-hidden="true">RealtorOS<em>.</em></div>
+  </div>
+</footer>
+
+<script>
+  /* Theme toggle — initial state already set inline in <head> to prevent FOUC */
+  (function() {
+    const tog = document.querySelector('.theme-toggle');
+    if (!tog) return;
+    tog.addEventListener('click', () => {
+      const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+      document.documentElement.dataset.theme = next;
+      try { localStorage.setItem('realtoros-theme', next); } catch (e) {}
+    });
+  })();
+
+  /* Reveal-on-scroll */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* Animate score bars when in view */
+  const barsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const w = e.target.dataset.w;
+        e.target.style.width = w + '%';
+        barsObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.lc-bar-fill[data-w]').forEach(el => barsObserver.observe(el));
+
+  /* Spec table filter */
+  const specFilters = document.querySelectorAll('.spec-filter');
+  const specRows = document.querySelectorAll('#specTable .spec-r');
+  specFilters.forEach(btn => {
+    btn.addEventListener('click', () => {
+      specFilters.forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      const f = btn.dataset.f;
+      specRows.forEach(r => {
+        if (f === 'all' || r.dataset.pri === f) {
+          r.style.display = '';
+        } else {
+          r.style.display = 'none';
+        }
+      });
+    });
+  });
+
+  /* Subtle parallax on hero window via mouse */
+  const heroWindow = document.querySelector('.hero-window');
+  const heroProduct = document.querySelector('.hero-product');
+  if (heroWindow && heroProduct && window.matchMedia('(min-width: 1100px)').matches) {
+    heroProduct.addEventListener('mousemove', (ev) => {
+      const r = heroProduct.getBoundingClientRect();
+      const px = (ev.clientX - r.left) / r.width - 0.5;
+      const py = (ev.clientY - r.top) / r.height - 0.5;
+      heroWindow.style.transform = `rotateX(${6 - py*6}deg) rotateY(${-6 - px*6}deg)`;
+    });
+    heroProduct.addEventListener('mouseleave', () => {
+      heroWindow.style.transform = '';
+    });
+  }
+</script>
+
+</body>
+</html>
