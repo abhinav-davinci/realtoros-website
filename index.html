@@ -902,29 +902,28 @@
 
   /* ============================================================
      STREAM-ANIMATED — score-cluster cycle
-     The lead inbox in the Capture section toggles between two
-     orderings: chronological (default) and grouped-by-score (hot
-     at top, warm middle, cold bottom). Each row carries two CSS
-     vars: --di (default index) and --si (sorted index). Toggling
-     the .sorted class on the parent translates each row by the
-     delta between the two indices, so they all animate to their
-     new positions in lockstep — FLIP-style smooth reorder.
+     Toggles the lead inbox between chronological order and
+     grouped-by-score order. Each row carries two CSS vars: --di
+     (default index) and --si (sorted index). When the parent has
+     .sorted, every row translates by (si - di) × --row-h in
+     lockstep — FLIP-style smooth reorder.
+
+     --row-h is set by JS to the actual measured distance between
+     two consecutive rows (theme-aware, font-aware) so the rows
+     land exactly on their grid positions with no overlap.
      ============================================================ */
   .stream-animated .stream-row {
-    --row-h: 52px;
+    --row-h: 56px; /* JS overrides this with the measured value */
     --shift: calc((var(--si, 0) - var(--di, 0)) * var(--row-h));
     transform: translateY(0);
-    transition: transform 0.85s cubic-bezier(.4,.05,.2,1);
+    transition: transform 1s cubic-bezier(.22,1,.36,1);
     will-change: transform;
-    animation: none; /* override the entrance slide-in so transforms aren't fought */
-  }
-  [data-theme="light"] .stream-animated .stream-row {
-    --row-h: 60px; /* light theme has 4px gap between rows */
+    animation: none; /* skip the entrance slide-in so it doesn't fight the transform */
   }
   .stream-animated.sorted .stream-row {
     transform: translateY(var(--shift));
   }
-  /* Subtle pill-glow boost when sorted: hot rows lift, cold rows fade slightly */
+  /* Pill emphasis in sorted state — hot rows glow, cold rows fade */
   .stream-animated.sorted .stream-row .score-pill.hot {
     box-shadow: 0 0 0 1px rgba(255,106,106,0.25), 0 4px 14px rgba(255,106,106,0.20);
   }
@@ -3981,19 +3980,33 @@
 
   /* Capture — score-cluster cycle.
      Toggle the .sorted class on the lead-inbox stream every few
-     seconds so the rows animate between chronological order and
-     grouped-by-score order. Only runs when the inbox is in view
-     (so no wasted work + no animation jitter from the page load). */
+     seconds so the rows animate between chronological and
+     grouped-by-score order. Only runs when the inbox is in view. */
   (function initStreamCluster() {
     const stream = document.getElementById('streamAnim');
     const label  = document.getElementById('streamLabel');
     if (!stream) return;
 
-    const HOLD_DEFAULT = 4200;   // ms in chronological state
-    const HOLD_SORTED  = 4200;   // ms in score-grouped state
-    const TRANSITION   = 850;    // matches CSS transform transition
+    const HOLD_DEFAULT = 4500;   // ms in chronological state
+    const HOLD_SORTED  = 4500;   // ms in score-grouped state
+    const TRANSITION   = 1000;   // matches CSS transform transition
+
+    /* Measure the actual distance between consecutive rows so the
+       FLIP transform lands exactly on the grid. Uses offsetTop
+       (layout-flow position, ignores transforms) so it reads
+       correctly even mid-transition. Re-measures on every resize
+       and theme switch. */
+    const measureRowHeight = () => {
+      const rows = stream.querySelectorAll('.stream-row');
+      if (rows.length < 2) return;
+      const top1 = rows[0].offsetTop;
+      const top2 = rows[1].offsetTop;
+      const rowH = top2 - top1;
+      if (rowH > 0) stream.style.setProperty('--row-h', rowH + 'px');
+    };
 
     const tickToSorted = () => {
+      measureRowHeight();
       stream.classList.add('sorted');
       if (label) label.textContent = 'sorted by score';
       setTimeout(tickToDefault, HOLD_SORTED + TRANSITION);
@@ -4004,7 +4017,16 @@
       setTimeout(tickToSorted, HOLD_DEFAULT + TRANSITION);
     };
 
-    // Start once the inbox enters the viewport
+    // Initial measurement (lays the var --row-h before any animation runs)
+    requestAnimationFrame(measureRowHeight);
+
+    // Re-measure on resize and theme change (theme changes row spacing)
+    window.addEventListener('resize', measureRowHeight);
+    new MutationObserver(measureRowHeight).observe(document.documentElement, {
+      attributes: true, attributeFilter: ['data-theme']
+    });
+
+    // Start the cycle once the inbox enters the viewport
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries, obs) => {
         entries.forEach(e => {
