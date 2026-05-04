@@ -398,136 +398,466 @@
   .hero-meta-item:last-child { border-right: none; margin-right: 0; }
   .hero-meta svg { color: var(--mint-300); width: 14px; height: 14px; }
 
-  /* ============== HERO PRODUCT — LIVE LEAD STREAM ============== */
-  .hero-product {
+  /* ============================================================
+     HERO PRODUCT — A LEAD'S JOURNEY
+     A single contained panel that tells one story: a single lead,
+     traveling through five stages, every ~14 seconds. Each stage
+     has its own focal element, so the panel never feels repetitive.
+     No sidebar, no stat grid, no floating chips overlapping — one
+     thing happening at a time.
+     ============================================================ */
+  .journey {
     position: relative;
-    perspective: 2200px;
-  }
-  .hero-window {
-    position: relative;
-    border-radius: var(--r-xl);
-    background: linear-gradient(180deg, #14142A 0%, #0C0C18 100%);
+    width: 100%;
+    max-width: 540px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, rgba(20,20,42,0.85) 0%, rgba(12,12,24,0.85) 100%);
     border: 1px solid var(--line-2);
+    border-radius: var(--r-xl);
+    padding: 22px 24px 20px;
     box-shadow:
       0 40px 80px rgba(0,0,0,0.55),
       0 0 0 1px rgba(255,255,255,0.04) inset,
-      0 0 80px rgba(124,92,255,0.25);
-    overflow: hidden;
-    transform: rotateX(8deg) rotateY(-8deg);
-    transform-style: preserve-3d;
-    transition: transform .6s cubic-bezier(.2,.7,.2,1);
+      0 0 80px rgba(124,92,255,0.22);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
-  .hero-product:hover .hero-window { transform: rotateX(2deg) rotateY(-2deg); }
+  .journey::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: var(--r-xl);
+    background: radial-gradient(80% 60% at 50% 0%, rgba(124,92,255,0.10) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .journey > * { position: relative; }
 
-  .win-bar {
-    height: 36px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
+  .journey-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 14px;
     border-bottom: 1px solid var(--line);
-    display: flex; align-items: center; gap: 8px;
-    padding: 0 14px;
+    margin-bottom: 16px;
   }
-  .win-dot { width: 10px; height: 10px; border-radius: 50%; }
-  .win-dot.r { background: #FF5F57; }
-  .win-dot.y { background: #FEBC2E; }
-  .win-dot.g { background: #28C840; }
-  .win-url {
-    margin-left: 12px;
-    flex: 1;
+  .journey-head-l {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-2);
+    letter-spacing: 0.04em;
+  }
+  .journey-head-l::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--mint-300);
+    box-shadow: 0 0 8px var(--mint-300);
+    animation: pulse-d 1.6s infinite;
+  }
+  .journey-head-l em {
+    font-style: normal;
+    color: var(--fg);
+    font-weight: 600;
+  }
+  .journey-head-r {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-3);
+  }
+  .journey-head-r .dot {
+    display: inline-block; width: 4px; height: 4px;
+    border-radius: 50%; background: var(--mint-300);
+    box-shadow: 0 0 6px var(--mint-300);
+    margin-right: 6px; vertical-align: middle;
+  }
+
+  /* 5-stage progress rail */
+  .stages {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    margin-bottom: 22px;
+    position: relative;
+  }
+  .stages::before {
+    content: '';
+    position: absolute;
+    top: 7px; left: 8%; right: 8%;
+    height: 1px;
+    background: var(--line-2);
+    z-index: 0;
+  }
+  .stage-step {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .stage-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--line-3);
+    transition: all .4s cubic-bezier(.2,.7,.2,1);
+    position: relative;
+  }
+  .stage-step.on .stage-dot {
+    background: var(--indigo-400);
+    border-color: var(--indigo-300);
+    box-shadow: 0 0 0 4px rgba(124,92,255,0.18), 0 0 16px rgba(124,92,255,0.6);
+    animation: stage-on-pulse 1.6s ease-in-out infinite;
+  }
+  .stage-step.past .stage-dot {
+    background: var(--mint-300);
+    border-color: var(--mint-300);
+    box-shadow: 0 0 8px rgba(74,222,154,0.45);
+  }
+  .stage-step.past .stage-dot::after {
+    content: '';
+    position: absolute; inset: 3px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2307070C' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  @keyframes stage-on-pulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(124,92,255,0.18), 0 0 16px rgba(124,92,255,0.6); }
+    50%      { box-shadow: 0 0 0 6px rgba(124,92,255,0.10), 0 0 22px rgba(124,92,255,0.85); }
+  }
+  .stage-step-l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--fg-4);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color .3s;
+  }
+  .stage-step.on .stage-step-l { color: var(--indigo-300); }
+  .stage-step.past .stage-step-l { color: var(--fg-3); }
+
+  /* Stage card area — fixed height, cards crossfade */
+  .stage-area {
+    position: relative;
+    height: 280px;
+    margin-bottom: 16px;
+  }
+  .stage-card {
+    position: absolute;
+    inset: 0;
+    padding: 18px 18px 16px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+    transition: opacity .55s ease, transform .55s cubic-bezier(.2,.7,.2,1);
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .stage-card.on {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  .stage-card-h {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--fg-3);
+    letter-spacing: 0.06em;
+  }
+  .stage-card-h .src {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    display: grid; place-items: center;
+    color: white;
+    font-size: 9.5px;
+    font-weight: 700;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset;
+  }
+  .stage-card-h .l {
+    text-transform: uppercase;
+    color: var(--fg-2);
+  }
+  .stage-card-h .l strong { color: var(--fg); font-weight: 500; }
+  .stage-card-h .t {
+    margin-left: auto;
+    color: var(--fg-4);
+    font-size: 10px;
+  }
+
+  /* Stage 1 — Captured (buyer name focal) */
+  .stage-card.s1 .lead-hero-name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 30px;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--fg);
+    margin-bottom: 6px;
+  }
+  .stage-card.s1 .lead-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--fg-2);
+    margin-bottom: 8px;
+  }
+  .stage-card.s1 .lead-quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 17px;
+    color: var(--fg-2);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .stage-card.s1 .lead-foot {
+    margin-top: 14px;
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+    color: var(--fg-3);
+  }
+
+  /* Stage 2 — Scored (animated bars focal) */
+  .score-grid {
+    display: flex; flex-direction: column; gap: 9px;
+    margin-bottom: 14px;
+  }
+  .score-row-x {
+    display: grid; grid-template-columns: 110px 1fr 40px;
+    gap: 12px; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+  .score-row-x .l {
+    color: var(--fg-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+  .score-row-track {
+    height: 5px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .score-row-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--indigo-400), var(--indigo-300));
+    width: 0;
+    transition: width 1.2s cubic-bezier(.2,.7,.2,1);
+    box-shadow: 0 0 8px rgba(124,92,255,0.45);
+  }
+  .stage-card.s2.on .score-row-fill {
+    width: var(--w);
+  }
+  .score-row-x .v {
+    color: var(--fg);
+    font-weight: 600;
+    text-align: right;
+  }
+  .score-resolve {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--fg-2);
+  }
+  .score-resolve .arr { color: var(--fg-4); }
+  .score-resolve .res { color: var(--fg); font-weight: 600; }
+
+  /* Stage 3 — Routed (exec selection focal) */
+  .exec-grid {
+    display: flex; flex-direction: column; gap: 7px;
+  }
+  .exec-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--fg-2);
+    transition: background .3s, border-color .3s;
+  }
+  .exec-row .name { color: var(--fg); font-weight: 500; }
+  .exec-row .load { color: var(--fg-4); font-size: 11px; }
+  .exec-row.chosen {
+    background: linear-gradient(180deg, rgba(124,92,255,0.18), rgba(124,92,255,0.04));
+    border-color: rgba(124,92,255,0.45);
+    box-shadow: 0 0 0 1px rgba(124,92,255,0.18) inset, 0 0 24px rgba(124,92,255,0.25);
+  }
+  .exec-row.chosen .name { color: var(--indigo-300); }
+  .exec-row.chosen .load { color: var(--indigo-300); }
+
+  /* Stage 4 — Site visit (calendar focal) */
+  .visit-area {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    align-items: center;
+    padding: 6px 0 14px;
+  }
+  .visit-block {
+    width: 96px;
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-md);
+    overflow: hidden;
     text-align: center;
+    background: rgba(0,0,0,0.25);
+  }
+  .visit-day {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: white;
+    background: linear-gradient(135deg, var(--indigo-400), var(--indigo-500));
+    padding: 6px 0;
+  }
+  .visit-date {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--fg);
+    padding: 12px 0 4px;
+    letter-spacing: -0.02em;
+  }
+  .visit-month {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--fg-3);
+    padding: 0 0 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .visit-info {
+    display: flex; flex-direction: column; gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--fg-2);
+  }
+  .visit-info .big {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--fg);
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .visit-info .conf {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--mint-300);
+    margin-top: 4px;
+    font-size: 11px;
+  }
+  .visit-info .conf::before {
+    content: '✓';
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+  }
+  .visit-foot {
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-3);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .visit-foot .src {
+    width: 18px; height: 18px;
+    border-radius: 5px;
+    display: grid; place-items: center;
+    color: white;
+    font-size: 8.5px; font-weight: 700;
+  }
+
+  /* Stage 5 — Booked (₹ amount focal, celebratory) */
+  .stage-card.s5 {
+    background: linear-gradient(180deg, rgba(74,222,154,0.06) 0%, rgba(74,222,154,0.02) 100%);
+    border-color: rgba(74,222,154,0.30);
+  }
+  .stage-card.s5.on {
+    box-shadow: 0 0 0 1px rgba(74,222,154,0.20) inset, 0 0 60px rgba(74,222,154,0.18);
+  }
+  .booked-area {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .booked-unit {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--fg);
+    letter-spacing: -0.01em;
+  }
+  .booked-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--fg-3);
+  }
+  .booked-amount {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 64px;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    background: linear-gradient(135deg, #F4F1EA 0%, #4ADE9A 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 6px 0 4px;
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .7s ease, transform .9s cubic-bezier(.2,.7,.2,1);
+  }
+  .stage-card.s5.on .booked-amount {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: .25s;
+  }
+  .booked-amount em {
+    font-size: 36px;
+    color: var(--mint-300);
+    -webkit-text-fill-color: var(--mint-300);
+    margin-left: 4px;
+  }
+  .booked-foot {
+    margin-top: 6px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-3);
+  }
+  .booked-foot .ok { color: var(--mint-300); }
+
+  /* Activity strip below the journey card */
+  .journey-activity {
+    display: flex; align-items: center; justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     color: var(--fg-3);
     letter-spacing: 0.02em;
   }
-  .win-url .dot { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--mint-300); margin-right: 6px; vertical-align: middle; box-shadow: 0 0 6px var(--mint-300); }
-
-  .win-body {
-    display: grid;
-    grid-template-columns: 168px 1fr;
-    min-height: 480px;
-  }
-  .win-side {
-    border-right: 1px solid var(--line);
-    background: rgba(255,255,255,0.015);
-    padding: 14px 10px;
-  }
-  .side-grp { padding: 4px 8px; margin-top: 8px; font-size: 10px; color: var(--fg-4); letter-spacing: 0.12em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
-  .side-grp:first-child { margin-top: 0; }
-  .side-item {
-    display: flex; align-items: center; gap: 9px;
-    padding: 7px 10px;
-    border-radius: 8px;
-    color: var(--fg-2);
-    font-size: 12.5px;
-    margin-bottom: 1px;
-  }
-  .side-item.active {
-    background: rgba(124,92,255,0.16);
+  .journey-activity .a-item strong {
     color: var(--fg);
-    border: 1px solid rgba(124,92,255,0.3);
-    box-shadow: 0 0 0 1px rgba(124,92,255,0.1) inset;
+    font-weight: 500;
   }
-  .side-item .ico { width: 14px; height: 14px; color: var(--fg-3); flex-shrink: 0; }
-  .side-item.active .ico { color: var(--indigo-300); }
-  .side-item .badge {
-    margin-left: auto;
-    background: var(--indigo-400);
-    color: white;
-    font-size: 9.5px; font-weight: 600;
-    padding: 1px 6px; border-radius: 999px;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.15) inset;
-  }
-  .side-item .small-pulse {
-    margin-left: auto; width: 6px; height: 6px; border-radius: 50%; background: var(--mint-300); box-shadow: 0 0 6px var(--mint-300);
-  }
-
-  .win-main {
-    padding: 16px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    min-width: 0;
-  }
-  .win-greet {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 10px; flex-wrap: wrap;
-  }
-  .win-greet h4 {
-    font-size: 14px; font-weight: 600; color: var(--fg);
-    letter-spacing: -0.01em;
-  }
-  .win-greet h4 em { font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; color: var(--fg-2); }
-  .win-greet .sub { font-size: 11px; color: var(--fg-3); margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
-  .win-segctl {
-    display: flex; gap: 0; padding: 2px;
-    border: 1px solid var(--line-2);
-    border-radius: 8px;
-    background: rgba(0,0,0,0.4);
-  }
-  .win-segctl span {
-    font-size: 10.5px; padding: 4px 10px; border-radius: 6px;
-    color: var(--fg-3); cursor: pointer;
-    font-family: 'JetBrains Mono', monospace;
-  }
-  .win-segctl span.on { background: rgba(255,255,255,0.08); color: var(--fg); }
-
-  .stat-row {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
-  }
-  .stat {
-    background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01));
-    border: 1px solid var(--line);
-    border-radius: var(--r-sm);
-    padding: 9px 11px;
-    overflow: hidden;
-    position: relative;
-  }
-  .stat-l { font-size: 9.5px; color: var(--fg-3); letter-spacing: 0.06em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
-  .stat-v { font-size: 19px; font-weight: 600; color: var(--fg); margin-top: 3px; letter-spacing: -0.02em; }
-  .stat-d { font-size: 10px; color: var(--mint-300); margin-top: 1px; font-family: 'JetBrains Mono', monospace; }
-  .stat-d.warn { color: var(--amber-300); }
-  .stat-spark {
-    position: absolute; right: 8px; bottom: 8px; opacity: 0.7;
+  .journey-activity .sep {
+    color: var(--fg-5);
   }
 
   /* Live lead stream */
@@ -612,49 +942,6 @@
     font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-4);
   }
 
-  /* Floating chips around the window — depth */
-  .float-chip {
-    position: absolute;
-    padding: 8px 12px;
-    background: rgba(20,20,42,0.7);
-    border: 1px solid var(--line-2);
-    border-radius: 12px;
-    backdrop-filter: blur(14px);
-    font-size: 12px;
-    color: var(--fg-2);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
-    display: flex; align-items: center; gap: 8px;
-    z-index: 2;
-    animation: float 6s ease-in-out infinite;
-  }
-  .float-chip .ic {
-    width: 18px; height: 18px;
-    border-radius: 5px;
-    display: grid; place-items: center;
-    color: white; font-size: 9px; font-weight: 700;
-  }
-  .float-chip .ic.pri { background: linear-gradient(135deg, var(--indigo-400), var(--indigo-500)); }
-  .float-chip .ic.amber { background: linear-gradient(135deg, var(--amber-300), var(--amber-400)); }
-  .float-chip .ic.mint { background: linear-gradient(135deg, var(--mint-300), var(--mint-400)); }
-  .float-chip strong { color: var(--fg); font-weight: 600; }
-  .float-chip .mt { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-3); }
-
-  .chip-1 {
-    top: -16px; left: -56px;
-    animation-delay: 0s;
-  }
-  .chip-2 {
-    top: 38%; right: -64px;
-    animation-delay: 1.2s;
-  }
-  .chip-3 {
-    bottom: -14px; left: 16%;
-    animation-delay: 2.4s;
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-  }
 
   /* ============== CHANNELS TICKER ============== */
   .channels {
@@ -1925,8 +2212,8 @@
   [data-theme="light"] .mod-title em { color: var(--indigo-500); }
   [data-theme="light"] .mod-num em { color: var(--indigo-500); }
 
-  /* Hero product window — light app preview */
-  [data-theme="light"] .hero-window {
+  /* Hero — Lead's Journey panel (light) */
+  [data-theme="light"] .journey {
     background: linear-gradient(180deg, #FFFFFF 0%, #F8F7F2 100%);
     border-color: rgba(10,10,18,0.10);
     box-shadow:
@@ -1934,46 +2221,74 @@
       0 0 0 1px rgba(10,10,18,0.04) inset,
       0 0 60px rgba(124,92,255,0.14);
   }
-  [data-theme="light"] .win-bar {
-    background: linear-gradient(180deg, rgba(10,10,18,0.025), transparent);
-    border-bottom-color: var(--line);
+  [data-theme="light"] .journey::before {
+    background: radial-gradient(80% 60% at 50% 0%, rgba(124,92,255,0.10) 0%, transparent 60%);
   }
-  [data-theme="light"] .win-url { color: var(--fg-3); }
-  [data-theme="light"] .win-side {
-    background: rgba(10,10,18,0.025);
-    border-right-color: var(--line);
+  [data-theme="light"] .journey-head { border-bottom-color: var(--line); }
+  [data-theme="light"] .stages::before { background: var(--line-2); }
+  [data-theme="light"] .stage-dot {
+    background: white;
+    border-color: rgba(10,10,18,0.18);
   }
-  [data-theme="light"] .side-item { color: var(--fg-2); }
-  [data-theme="light"] .side-item.active {
-    background: rgba(124,92,255,0.10);
-    color: var(--indigo-500);
-    border: 1px solid rgba(124,92,255,0.25);
-    box-shadow: 0 0 0 1px rgba(124,92,255,0.08) inset;
+  [data-theme="light"] .stage-step.on .stage-dot {
+    background: var(--indigo-400);
+    border-color: var(--indigo-400);
+    box-shadow: 0 0 0 4px rgba(124,92,255,0.18), 0 0 14px rgba(124,92,255,0.50);
   }
-  [data-theme="light"] .side-item.active .ico { color: var(--indigo-500); }
-  [data-theme="light"] .side-item .ico { color: var(--fg-3); }
-  [data-theme="light"] .stat {
-    background: linear-gradient(180deg, rgba(10,10,18,0.025), rgba(10,10,18,0.005));
+  [data-theme="light"] .stage-step.past .stage-dot {
+    background: var(--mint-300);
+    border-color: var(--mint-300);
+  }
+  [data-theme="light"] .stage-step.past .stage-dot::after {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+  }
+  [data-theme="light"] .stage-card {
+    background: rgba(255,255,255,0.85);
     border-color: var(--line);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.04);
   }
-  [data-theme="light"] .stat-d { color: var(--mint-300); }
-  [data-theme="light"] .stat-d.warn { color: var(--amber-400); }
-  [data-theme="light"] .win-segctl {
-    background: rgba(10,10,18,0.04);
+  [data-theme="light"] .stage-card.s5 {
+    background: linear-gradient(180deg, rgba(22,163,74,0.06) 0%, rgba(22,163,74,0.02) 100%);
+    border-color: rgba(22,163,74,0.30);
+  }
+  [data-theme="light"] .stage-card.s5.on {
+    box-shadow: 0 0 0 1px rgba(22,163,74,0.20) inset, 0 0 48px rgba(22,163,74,0.18);
+  }
+  [data-theme="light"] .stage-card-h .l { color: var(--fg-2); }
+  [data-theme="light"] .stage-card-h .l strong { color: var(--fg); }
+  [data-theme="light"] .stage-card.s1 .lead-quote { border-top-color: var(--line); color: var(--fg-2); }
+  [data-theme="light"] .score-row-track { background: rgba(10,10,18,0.07); }
+  [data-theme="light"] .score-resolve { border-top-color: var(--line); }
+  [data-theme="light"] .score-resolve .res { color: var(--fg); }
+  [data-theme="light"] .exec-row {
+    background: white;
+    border-color: var(--line-2);
+    box-shadow: 0 1px 2px rgba(10,10,18,0.03);
+  }
+  [data-theme="light"] .exec-row.chosen {
+    background: linear-gradient(180deg, rgba(124,92,255,0.10), rgba(124,92,255,0.02));
+    border-color: rgba(124,92,255,0.40);
+    box-shadow: 0 0 0 1px rgba(124,92,255,0.10) inset, 0 0 18px rgba(124,92,255,0.20);
+  }
+  [data-theme="light"] .exec-row.chosen .name { color: var(--indigo-500); }
+  [data-theme="light"] .exec-row.chosen .load { color: var(--indigo-500); }
+  [data-theme="light"] .visit-block {
+    background: white;
     border-color: var(--line-2);
   }
-  [data-theme="light"] .win-segctl span { color: var(--fg-3); }
-  [data-theme="light"] .win-segctl span.on {
-    background: white;
-    color: var(--fg);
-    box-shadow: 0 1px 2px rgba(10,10,18,0.06);
+  [data-theme="light"] .visit-foot { border-top-color: var(--line); }
+  [data-theme="light"] .booked-amount {
+    background: linear-gradient(135deg, #0A0A12 0%, #16A34A 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-  [data-theme="light"] .stream {
-    background: rgba(10,10,18,0.02);
-    border-color: var(--line);
+  [data-theme="light"] .booked-amount em {
+    -webkit-text-fill-color: var(--mint-300);
   }
-  [data-theme="light"] .stream-row { border-bottom-color: var(--line); }
-  [data-theme="light"] .stream-head .live { color: var(--mint-300); }
+  [data-theme="light"] .booked-foot { border-top-color: var(--line); }
+  [data-theme="light"] .booked-foot .ok { color: var(--mint-300); }
+  [data-theme="light"] .journey-activity { border-top-color: var(--line); }
 
   /* Score pills — saturated for legibility on white */
   [data-theme="light"] .score-pill.hot,
@@ -1991,16 +2306,6 @@
   [data-theme="light"] .score-pill.book {
     background: #DCFCE7; color: #14532D; border-color: rgba(20,83,45,0.22);
   }
-
-  /* Floating chips */
-  [data-theme="light"] .float-chip {
-    background: rgba(255,255,255,0.92);
-    border-color: var(--line-2);
-    color: var(--fg-2);
-    box-shadow: 0 12px 30px rgba(10,10,18,0.10);
-  }
-  [data-theme="light"] .float-chip strong { color: var(--fg); }
-  [data-theme="light"] .float-chip .mt { color: var(--fg-3); }
 
   /* Channels */
   [data-theme="light"] .channels {
@@ -2323,15 +2628,14 @@
     .overture-stats { grid-template-columns: repeat(2, 1fr); }
     .instr-grid { grid-template-columns: repeat(2, 1fr); }
     .instr-card, .instr-card.wide { grid-column: span 1; }
-    .float-chip { display: none; }
     .nav-links { display: none; }
+    .journey { max-width: 100%; }
   }
   @media (max-width: 720px) {
     .wrap, .wrap-narrow, .wrap-tight { padding: 0 20px; }
     .hero { padding: 56px 0 0; }
     .hide-mobile { display: none; }
     .modules-grid { grid-template-columns: 1fr; }
-    .stat-row { grid-template-columns: repeat(2, 1fr); }
     .kanban-x { grid-template-columns: repeat(2, 1fr); }
     .phase-count { font-size: 72px; }
     .cycler { height: 56px; }
@@ -2341,8 +2645,17 @@
     .channels { padding: 36px 0 28px; }
     .feat, .modules, .testi, .cta, .trythat, .instr, .spec, .overture { padding: 80px 0; }
     .nav-actions .btn-ghost { display: none; }
-    .hero-window { transform: none; }
     .phone { transform: none; }
+
+    /* Journey on small screens */
+    .journey { padding: 18px 16px 16px; }
+    .stage-area { height: 320px; }
+    .stage-step-l { font-size: 9px; }
+    .stage-card.s1 .lead-hero-name { font-size: 24px; }
+    .booked-amount { font-size: 48px; }
+    .booked-amount em { font-size: 28px; }
+    .visit-area { grid-template-columns: 1fr; gap: 12px; }
+    .visit-block { width: 100%; max-width: 200px; }
   }
 
   /* Reveal-on-scroll */
@@ -2447,156 +2760,157 @@
         </div>
       </div>
 
-      <!-- HERO PRODUCT -->
-      <div class="hero-product">
-        <div class="float-chip chip-1">
-          <span class="ic pri">TT</span>
-          <span><strong>+1 lead</strong> from Trythat.ai</span>
-          <span class="mt">2s</span>
-        </div>
-        <div class="float-chip chip-2">
-          <span class="ic mint">✓</span>
-          <span><strong>Megha R.</strong> booked A-1204</span>
-          <span class="mt">₹1.4 Cr</span>
-        </div>
-        <div class="float-chip chip-3">
-          <span class="ic amber">!</span>
-          <span><strong>SLA breach</strong> — escalating</span>
-          <span class="mt">2h</span>
+      <!-- HERO — A LEAD'S JOURNEY -->
+      <div class="journey">
+        <div class="journey-head">
+          <span class="journey-head-l">a lead's journey · <em>live</em></span>
+          <span class="journey-head-r"><span class="dot"></span>realtoros.com</span>
         </div>
 
-        <div class="hero-window">
-          <div class="win-bar">
-            <span class="win-dot r"></span>
-            <span class="win-dot y"></span>
-            <span class="win-dot g"></span>
-            <span class="win-url"><span class="dot"></span>app.realtoros.com / dashboard</span>
+        <!-- 5-stage progress rail -->
+        <div class="stages" id="stages">
+          <div class="stage-step on" data-stage="1">
+            <span class="stage-dot"></span>
+            <span class="stage-step-l">Captured</span>
           </div>
-          <div class="win-body">
-            <aside class="win-side">
-              <div class="side-grp">Workspace</div>
-              <div class="side-item active">
-                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-                Dashboard
-              </div>
-              <div class="side-item">
-                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                Lead inbox
-                <span class="badge">47</span>
-              </div>
-              <div class="side-item">
-                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 6-6"/></svg>
-                Pipeline
-              </div>
-              <div class="side-item">
-                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
-                Inventory
-              </div>
-              <div class="side-grp">Projects</div>
-              <div class="side-item">
-                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg>
-                Skyline Heights
-                <span class="small-pulse"></span>
-              </div>
-              <div class="side-item">
-                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg>
-                Greenfield Park
-              </div>
-              <div class="side-item">
-                <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/></svg>
-                Aria Residences
-              </div>
-            </aside>
-
-            <main class="win-main">
-              <div class="win-greet">
-                <div>
-                  <h4>Good morning, Aakash <em>—</em> 47 new leads since last login</h4>
-                  <div class="sub">Mon · 04 May · 09:12 IST</div>
-                </div>
-                <div class="win-segctl">
-                  <span class="on">Today</span>
-                  <span>Week</span>
-                  <span>Month</span>
-                </div>
-              </div>
-
-              <div class="stat-row">
-                <div class="stat">
-                  <div class="stat-l">New leads</div>
-                  <div class="stat-v">47</div>
-                  <div class="stat-d">▲ 18% vs avg</div>
-                </div>
-                <div class="stat">
-                  <div class="stat-l">Followups</div>
-                  <div class="stat-v">12</div>
-                  <div class="stat-d warn">3 overdue</div>
-                </div>
-                <div class="stat">
-                  <div class="stat-l">Site visits</div>
-                  <div class="stat-v">8</div>
-                  <div class="stat-d">2 conf · 11 AM</div>
-                </div>
-                <div class="stat">
-                  <div class="stat-l">Bookings</div>
-                  <div class="stat-v">3</div>
-                  <div class="stat-d">₹4.2 Cr</div>
-                </div>
-              </div>
-
-              <div class="stream-head">
-                <h5>Live lead stream</h5>
-                <span class="live">streaming · 47</span>
-              </div>
-              <div class="stream">
-                <div class="stream-row" style="animation-delay:.1s">
-                  <span class="src src-tt">TT</span>
-                  <div class="stream-info">
-                    <div class="stream-name">Priya Mehta · 3BHK · Kharadi</div>
-                    <div class="stream-meta">trythat.ai · "ready to move-in" · ₹1.2–1.5 Cr</div>
-                  </div>
-                  <span class="score-pill hot">9.2</span>
-                  <span class="stream-time">2s</span>
-                </div>
-                <div class="stream-row" style="animation-delay:.25s">
-                  <span class="src src-wa">WA</span>
-                  <div class="stream-info">
-                    <div class="stream-name">+91 98765 ••43 · Missed call</div>
-                    <div class="stream-meta">whatsapp · auto-reply sent · skyline</div>
-                  </div>
-                  <span class="score-pill warm">7.4</span>
-                  <span class="stream-time">11s</span>
-                </div>
-                <div class="stream-row" style="animation-delay:.4s">
-                  <span class="src src-fb">M</span>
-                  <div class="stream-info">
-                    <div class="stream-name">Anita Sharma · Lead form</div>
-                    <div class="stream-meta">meta ads · greenfield · 3BHK · weekend visit</div>
-                  </div>
-                  <span class="score-pill warm">6.8</span>
-                  <span class="stream-time">38s</span>
-                </div>
-                <div class="stream-row" style="animation-delay:.55s">
-                  <span class="src src-99">99</span>
-                  <div class="stream-info">
-                    <div class="stream-name">Vikram T. · 99acres enquiry</div>
-                    <div class="stream-meta">99acres.com · 2BHK · skyline · ₹85 L</div>
-                  </div>
-                  <span class="score-pill cold">5.1</span>
-                  <span class="stream-time">1m</span>
-                </div>
-                <div class="stream-row" style="animation-delay:.7s">
-                  <span class="src src-cp">CP</span>
-                  <div class="stream-info">
-                    <div class="stream-name">Karan Desai · Channel Partner</div>
-                    <div class="stream-meta">brokers · 4BHK · aria · hot referral</div>
-                  </div>
-                  <span class="score-pill hot">9.5</span>
-                  <span class="stream-time">2m</span>
-                </div>
-              </div>
-            </main>
+          <div class="stage-step" data-stage="2">
+            <span class="stage-dot"></span>
+            <span class="stage-step-l">Scored</span>
           </div>
+          <div class="stage-step" data-stage="3">
+            <span class="stage-dot"></span>
+            <span class="stage-step-l">Routed</span>
+          </div>
+          <div class="stage-step" data-stage="4">
+            <span class="stage-dot"></span>
+            <span class="stage-step-l">Site visit</span>
+          </div>
+          <div class="stage-step" data-stage="5">
+            <span class="stage-dot"></span>
+            <span class="stage-step-l">Booked</span>
+          </div>
+        </div>
+
+        <!-- Stage cards (one visible at a time) -->
+        <div class="stage-area" id="stageArea">
+
+          <!-- Stage 1 — Captured -->
+          <div class="stage-card s1 on" data-stage="1">
+            <div class="stage-card-h">
+              <span class="src src-tt">TT</span>
+              <span class="l">captured · <strong>trythat.ai</strong></span>
+              <span class="t">4s ago</span>
+            </div>
+            <div class="lead-hero-name">Priya Mehta</div>
+            <div class="lead-meta">3BHK · Kharadi · ₹1.2 – 1.5 Cr</div>
+            <div class="lead-quote">&ldquo;Looking for a ready-to-move 3BHK in Kharadi — possession by Diwali.&rdquo;</div>
+            <div class="lead-foot">
+              <span class="score-pill hot">9.2 hot</span>
+              <span>auto-tagged · skyline heights</span>
+            </div>
+          </div>
+
+          <!-- Stage 2 — Scored -->
+          <div class="stage-card s2" data-stage="2">
+            <div class="stage-card-h">
+              <span class="l">scoring · <strong>1–10</strong></span>
+              <span class="t">computing…</span>
+            </div>
+            <div class="score-grid">
+              <div class="score-row-x">
+                <span class="l">Budget match</span>
+                <div class="score-row-track"><div class="score-row-fill" style="--w:95%"></div></div>
+                <span class="v">95%</span>
+              </div>
+              <div class="score-row-x">
+                <span class="l">Timeline</span>
+                <div class="score-row-track"><div class="score-row-fill" style="--w:90%"></div></div>
+                <span class="v">90%</span>
+              </div>
+              <div class="score-row-x">
+                <span class="l">Intent signals</span>
+                <div class="score-row-track"><div class="score-row-fill" style="--w:88%"></div></div>
+                <span class="v">88%</span>
+              </div>
+              <div class="score-row-x">
+                <span class="l">Source quality</span>
+                <div class="score-row-track"><div class="score-row-fill" style="--w:100%"></div></div>
+                <span class="v">A+</span>
+              </div>
+            </div>
+            <div class="score-resolve">
+              <span>resolves to</span>
+              <span class="arr">→</span>
+              <span class="score-pill hot">9.2 hot</span>
+              <span class="res">Priya Mehta</span>
+            </div>
+          </div>
+
+          <!-- Stage 3 — Routed -->
+          <div class="stage-card s3" data-stage="3">
+            <div class="stage-card-h">
+              <span class="l">routing · <strong>round-robin</strong></span>
+              <span class="t">finding exec…</span>
+            </div>
+            <div class="exec-grid">
+              <div class="exec-row"><span class="name">Priya Naidu</span><span class="load">5 active</span></div>
+              <div class="exec-row chosen"><span class="name">→ Mihir Bhatt</span><span class="load">3 active · ✓</span></div>
+              <div class="exec-row"><span class="name">Sneha Kulkarni</span><span class="load">4 active</span></div>
+              <div class="exec-row"><span class="name">Rohan Iyer</span><span class="load">6 active</span></div>
+            </div>
+          </div>
+
+          <!-- Stage 4 — Site visit -->
+          <div class="stage-card s4" data-stage="4">
+            <div class="stage-card-h">
+              <span class="l">site visit · <strong>auto-booked</strong></span>
+              <span class="t">slot link sent</span>
+            </div>
+            <div class="visit-area">
+              <div class="visit-block">
+                <div class="visit-day">SAT</div>
+                <div class="visit-date">09</div>
+                <div class="visit-month">May · 11 AM</div>
+              </div>
+              <div class="visit-info">
+                <div class="big">Skyline Heights</div>
+                <div>Tower A · sample flat A-1204</div>
+                <div>Mihir Bhatt assigned</div>
+                <div class="conf">Confirmed via WhatsApp</div>
+              </div>
+            </div>
+            <div class="visit-foot">
+              <span class="src src-wa">WA</span>
+              <span>buyer replied "yes, see you Saturday"</span>
+            </div>
+          </div>
+
+          <!-- Stage 5 — Booked -->
+          <div class="stage-card s5" data-stage="5">
+            <div class="stage-card-h">
+              <span class="l">booked · <strong>agreement drafted</strong></span>
+              <span class="t">10 days from capture</span>
+            </div>
+            <div class="booked-area">
+              <div class="booked-unit">A-1204 · 3BHK · East-facing</div>
+              <div class="booked-meta">Skyline Heights · Tower A · 1,420 sq ft</div>
+              <div class="booked-amount">₹1.42 <em>Cr</em></div>
+              <div class="booked-foot">
+                <span class="ok">✓ ₹2 L token paid</span>
+                <span>agreement &amp; payment schedule sent</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Activity strip -->
+        <div class="journey-activity">
+          <span class="a-item"><strong>47</strong> leads today</span>
+          <span class="sep">·</span>
+          <span class="a-item"><strong>12</strong> follow-ups due</span>
+          <span class="sep">·</span>
+          <span class="a-item"><strong>3</strong> bookings this week</span>
         </div>
       </div>
     </div>
@@ -3662,20 +3976,75 @@
   }
   initPhaseCyclers();
 
-  /* Subtle parallax on hero window via mouse */
-  const heroWindow = document.querySelector('.hero-window');
-  const heroProduct = document.querySelector('.hero-product');
-  if (heroWindow && heroProduct && window.matchMedia('(min-width: 1100px)').matches) {
-    heroProduct.addEventListener('mousemove', (ev) => {
-      const r = heroProduct.getBoundingClientRect();
-      const px = (ev.clientX - r.left) / r.width - 0.5;
-      const py = (ev.clientY - r.top) / r.height - 0.5;
-      heroWindow.style.transform = `rotateX(${6 - py*6}deg) rotateY(${-6 - px*6}deg)`;
-    });
-    heroProduct.addEventListener('mouseleave', () => {
-      heroWindow.style.transform = '';
-    });
-  }
+  /* Hero — Lead's Journey cycler.
+     Five stages, each gets ~2.6s of focus, with stage 5 lingering longer
+     for the booked moment. Past stages get a green checkmark; the active
+     one pulses indigo. After stage 5, a brief reset clears everything and
+     the journey loops. */
+  (function initJourney() {
+    const stageEls = document.querySelectorAll('#stageArea .stage-card');
+    const stepEls  = document.querySelectorAll('#stages .stage-step');
+    if (!stageEls.length) return;
+
+    const STAGE_HOLD = 2600;       // ms each stage holds
+    const FINAL_HOLD = 4200;       // booked stage lingers
+    const RESET_GAP  = 700;        // brief blank between cycles
+
+    let i = 0;
+    const setActive = (idx) => {
+      stageEls.forEach((el, k) => {
+        el.classList.toggle('on', k === idx);
+        el.classList.toggle('past', k < idx);
+      });
+      stepEls.forEach((el, k) => {
+        el.classList.toggle('on', k === idx);
+        el.classList.toggle('past', k < idx);
+      });
+    };
+
+    const clearAll = () => {
+      stageEls.forEach(el => { el.classList.remove('on', 'past'); });
+      stepEls.forEach(el => { el.classList.remove('on', 'past'); });
+    };
+
+    const tick = () => {
+      i = i + 1;
+      if (i >= stageEls.length) {
+        // Reset cycle
+        clearAll();
+        setTimeout(() => { i = 0; setActive(0); schedule(); }, RESET_GAP);
+        return;
+      }
+      setActive(i);
+      schedule();
+    };
+
+    const schedule = () => {
+      const isFinal = (i === stageEls.length - 1);
+      setTimeout(tick, isFinal ? FINAL_HOLD : STAGE_HOLD);
+    };
+
+    // Start only when the hero is visible (avoids burning cycles offscreen).
+    const start = () => {
+      setActive(0);
+      schedule();
+    };
+
+    const journey = document.querySelector('.journey');
+    if (journey && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            start();
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      io.observe(journey);
+    } else {
+      start();
+    }
+  })();
 </script>
 
 </body>
