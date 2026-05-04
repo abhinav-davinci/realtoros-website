@@ -1083,68 +1083,357 @@
     font-family: 'JetBrains Mono', monospace;
   }
 
-  /* ============== INVENTORY TOWER ============== */
-  .tower-wrap {
-    perspective: 1800px;
-    padding: 30px 0;
-    position: relative;
+  /* ============================================================
+     INVENTORY — ISOMETRIC BUILDING
+     A true volumetric tower: each floor is a 3D slab with front,
+     top, and right faces. Stacks on a podium base, capped by an
+     accent crown roof. Ground shadow anchors the building.
+     ============================================================ */
+  .iso-wrap {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 32px;
+    align-items: center;
+    padding: 16px 0 0;
   }
-  .tower {
-    transform: rotateX(40deg) rotateZ(-25deg);
-    transform-style: preserve-3d;
-    transform-origin: center;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 460px;
-    transition: transform .8s cubic-bezier(.2,.7,.2,1);
+  @media (max-width: 760px) {
+    .iso-wrap { grid-template-columns: 1fr; gap: 40px; }
   }
-  .viz:hover .tower { transform: rotateX(35deg) rotateZ(-22deg) translateZ(20px); }
-  .floor {
-    display: grid; grid-template-columns: 36px repeat(6, 1fr); gap: 4px;
-    margin-bottom: 4px;
-    transform-style: preserve-3d;
-  }
-  .floor-label {
-    font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
-    color: var(--fg-3);
-    display: grid; place-items: center;
-  }
-  .unit {
-    aspect-ratio: 1.3 / 1;
-    border-radius: 4px;
-    border: 1px solid;
-    font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
-    display: grid; place-items: center;
-    transition: all .2s;
-    position: relative;
-    cursor: pointer;
-  }
-  .u-avail { background: rgba(74,222,154,0.10); border-color: rgba(74,222,154,0.35); color: var(--mint-300); }
-  .u-block { background: rgba(255,176,74,0.10); border-color: rgba(255,176,74,0.35); color: var(--amber-300); }
-  .u-sold  { background: rgba(255,255,255,0.02); border-color: var(--line-2); color: var(--fg-4); }
-  .u-sel   { background: rgba(124,92,255,0.18); border-color: var(--indigo-400); color: var(--indigo-300); box-shadow: 0 0 0 2px rgba(124,92,255,0.18), 0 0 20px rgba(124,92,255,0.4); transform: translateZ(8px); }
-  .unit:hover { transform: translateZ(6px); }
-  .u-avail:hover { background: rgba(74,222,154,0.18); }
 
+  .iso-stage {
+    position: relative;
+    height: 380px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    perspective: 2400px;
+    perspective-origin: 50% 30%;
+    padding-bottom: 40px;
+  }
+
+  .iso-shadow {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    width: 380px;
+    height: 60px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, transparent 65%);
+    border-radius: 50%;
+    filter: blur(14px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .iso-building {
+    --slab-w: 300px;
+    --slab-h: 38px;
+    --slab-d: 28px;
+    --slab-gap: 4px;
+    --base-h: 18px;
+    --roof-h: 14px;
+
+    position: relative;
+    width: var(--slab-w);
+    height: 320px;
+    transform-style: preserve-3d;
+    transform: rotateX(14deg) rotateY(-28deg);
+    transition: transform 1s cubic-bezier(.2,.7,.2,1);
+    z-index: 1;
+  }
+  .viz:hover .iso-building {
+    transform: rotateX(10deg) rotateY(-22deg);
+  }
+
+  /* Each cuboid slab uses front/top/right faces */
+  .iso-floor {
+    position: absolute;
+    width: var(--slab-w);
+    height: var(--slab-h);
+    left: 0;
+    bottom: calc((var(--slab-h) + var(--slab-gap)) * var(--floor-i) + var(--base-h));
+    transform-style: preserve-3d;
+  }
+
+  .floor-front,
+  .floor-top,
+  .floor-right {
+    position: absolute;
+    backface-visibility: hidden;
+  }
+
+  .floor-front {
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2px;
+    padding: 3px;
+    background: linear-gradient(180deg, rgba(20,20,38,0.95) 0%, rgba(12,12,24,0.95) 100%);
+    border: 1px solid rgba(255,255,255,0.10);
+    /* Front face sits at z=0; top/right hinge off it and extrude into -z. */
+  }
+  .floor-top {
+    bottom: 100%; left: 0;
+    width: 100%; height: var(--slab-d);
+    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transform-origin: bottom center;
+    transform: rotateX(90deg);
+  }
+  .floor-right {
+    top: 0; left: 100%;
+    width: var(--slab-d); height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.55) 100%);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-left: none;
+    transform-origin: left center;
+    transform: rotateY(90deg);
+  }
+
+  .iso-floor-label {
+    position: absolute;
+    top: 50%;
+    right: calc(100% + 14px);
+    transform: translateY(-50%) translateZ(calc(var(--slab-d) / 2));
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--fg-4);
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  /* Unit cells on the front face */
+  .iso-unit {
+    border-radius: 2px;
+    border: 1px solid;
+    display: grid;
+    place-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .25s, filter .25s, box-shadow .25s;
+    position: relative;
+  }
+  .iso-unit.u-avail { background: rgba(74,222,154,0.18); border-color: rgba(74,222,154,0.40); color: var(--mint-300); }
+  .iso-unit.u-block { background: rgba(255,176,74,0.20); border-color: rgba(255,176,74,0.45); color: var(--amber-300); }
+  .iso-unit.u-sold  { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.10); color: rgba(255,255,255,0.30); }
+  .iso-unit.u-sel {
+    background: rgba(124,92,255,0.45);
+    border-color: var(--indigo-300);
+    color: white;
+    transform: translateZ(10px);
+    z-index: 5;
+    box-shadow:
+      0 0 0 1px rgba(124,92,255,0.6) inset,
+      0 0 14px rgba(124,92,255,0.7),
+      0 0 36px rgba(124,92,255,0.45);
+    animation: iso-sel-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes iso-sel-pulse {
+    0%, 100% {
+      box-shadow:
+        0 0 0 1px rgba(124,92,255,0.6) inset,
+        0 0 14px rgba(124,92,255,0.7),
+        0 0 36px rgba(124,92,255,0.45);
+    }
+    50% {
+      box-shadow:
+        0 0 0 1px rgba(124,92,255,0.85) inset,
+        0 0 22px rgba(124,92,255,0.9),
+        0 0 50px rgba(124,92,255,0.65);
+    }
+  }
+  .iso-unit:hover { transform: translateZ(6px); filter: brightness(1.18); z-index: 3; }
+  .iso-unit.u-sel:hover { transform: translateZ(12px); filter: brightness(1.10); }
+
+  /* Podium base */
+  .iso-base {
+    position: absolute;
+    width: var(--slab-w);
+    height: var(--base-h);
+    left: 0; bottom: 0;
+    transform-style: preserve-3d;
+  }
+  .iso-base .base-front,
+  .iso-base .base-top,
+  .iso-base .base-right { position: absolute; backface-visibility: hidden; }
+  .iso-base .base-front {
+    inset: 0;
+    background: linear-gradient(180deg, rgba(28,28,48,1) 0%, rgba(8,8,18,1) 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-top: 1px solid rgba(255,255,255,0.14);
+  }
+  .iso-base .base-top {
+    bottom: 100%; left: 0; width: 100%; height: var(--slab-d);
+    background: linear-gradient(180deg, rgba(50,50,75,0.85) 0%, rgba(28,28,48,1) 100%);
+    border: 1px solid rgba(255,255,255,0.10);
+    transform-origin: bottom center;
+    transform: rotateX(90deg);
+  }
+  .iso-base .base-right {
+    top: 0; left: 100%; width: var(--slab-d); height: 100%;
+    background: linear-gradient(90deg, rgba(30,28,42,0.85) 0%, rgba(0,0,0,0.95) 100%);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-left: none;
+    transform-origin: left center;
+    transform: rotateY(90deg);
+  }
+
+  /* Accent crown */
+  .iso-roof {
+    position: absolute;
+    width: var(--slab-w);
+    height: var(--roof-h);
+    left: 0;
+    bottom: calc((var(--slab-h) + var(--slab-gap)) * 6 + var(--base-h));
+    transform-style: preserve-3d;
+  }
+  .iso-roof .roof-front,
+  .iso-roof .roof-top,
+  .iso-roof .roof-right { position: absolute; backface-visibility: hidden; }
+  .iso-roof .roof-front {
+    inset: 0;
+    background: linear-gradient(180deg, rgba(124,92,255,0.55) 0%, rgba(90,56,230,0.55) 100%);
+    border: 1px solid rgba(124,92,255,0.65);
+    box-shadow: 0 0 24px rgba(124,92,255,0.45);
+  }
+  .iso-roof .roof-top {
+    bottom: 100%; left: 0; width: 100%; height: var(--slab-d);
+    background: linear-gradient(180deg, rgba(151,133,255,0.85) 0%, rgba(124,92,255,0.55) 100%);
+    border: 1px solid rgba(151,133,255,0.6);
+    transform-origin: bottom center;
+    transform: rotateX(90deg);
+    box-shadow: 0 0 50px rgba(124,92,255,0.5);
+  }
+  .iso-roof .roof-right {
+    top: 0; left: 100%; width: var(--slab-d); height: 100%;
+    background: linear-gradient(90deg, rgba(124,92,255,0.45) 0%, rgba(60,30,150,0.65) 100%);
+    border: 1px solid rgba(124,92,255,0.40);
+    border-left: none;
+    transform-origin: left center;
+    transform: rotateY(90deg);
+  }
+
+  /* Tower legend (kept; sits below the iso scene) */
   .tower-legend {
     display: flex; gap: 18px; flex-wrap: wrap;
-    margin-top: 26px;
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
     font-family: 'JetBrains Mono', monospace; font-size: 11px;
     color: var(--fg-2);
   }
-  .tower-legend .ld {
-    display: inline-flex; align-items: center; gap: 6px;
-  }
+  .tower-legend .ld { display: inline-flex; align-items: center; gap: 6px; }
   .tower-legend .ld-dot { width: 9px; height: 9px; border-radius: 2px; border: 1px solid; }
 
-  .tower-info {
-    display: flex; gap: 24px; padding: 14px 0 0;
-    margin-top: 14px;
-    border-top: 1px solid var(--line);
-    font-size: 12px;
+  /* Side info panel for the selected unit */
+  .iso-info {
+    background: linear-gradient(180deg, rgba(255,255,255,0.025) 0%, rgba(255,255,255,0.005) 100%);
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-md);
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
   }
-  .tower-info .ti { color: var(--fg-3); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
-  .tower-info .ti strong { display: block; color: var(--fg); font-size: 18px; font-family: 'Inter', sans-serif; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 2px; }
+  .iso-info::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(70% 60% at 0% 0%, rgba(124,92,255,0.10) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .iso-info > * { position: relative; }
+  .iso-info-l {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--fg-3);
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .iso-info-l::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--indigo-300);
+    box-shadow: 0 0 8px var(--indigo-300);
+  }
+  .iso-info h6 {
+    font-size: 26px; font-weight: 600;
+    letter-spacing: -0.025em;
+    color: var(--fg);
+    margin-bottom: 18px;
+    line-height: 1.05;
+  }
+  .iso-info h6 em {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
+    color: var(--indigo-300);
+    margin-left: 4px;
+  }
+  .iso-info-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 9px 0;
+    border-top: 1px solid var(--line);
+    font-size: 12.5px;
+  }
+  .iso-info-row:first-of-type { border-top: none; padding-top: 4px; }
+  .iso-info-row .k {
+    color: var(--fg-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .iso-info-row .v { color: var(--fg); font-weight: 500; font-size: 13px; }
+  .iso-info-row .v em {
+    font-family: 'Fraunces', serif;
+    font-style: italic; font-weight: 300;
+    color: var(--indigo-300);
+    margin-right: 3px;
+  }
+
+  .iso-block-timer {
+    margin-top: 14px;
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px;
+    background: linear-gradient(180deg, rgba(255,176,74,0.10), rgba(255,176,74,0.02));
+    border: 1px solid rgba(255,176,74,0.25);
+    border-radius: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--amber-300);
+  }
+  .iso-block-timer .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--amber-300);
+    box-shadow: 0 0 8px var(--amber-300);
+    animation: pulse-d 1.6s infinite;
+  }
+  .iso-block-timer .timer { color: var(--fg); margin-left: auto; font-weight: 500; }
+
+  .iso-info-cta {
+    margin-top: 14px;
+    display: grid; grid-template-columns: 1.4fr 1fr;
+    gap: 8px;
+  }
+  .iso-info-cta button {
+    padding: 10px 12px;
+    border-radius: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    border: 1px solid var(--line-2);
+    background: rgba(255,255,255,0.04);
+    color: var(--fg-2);
+    transition: all .2s;
+    cursor: pointer;
+  }
+  .iso-info-cta button.pri {
+    background: linear-gradient(135deg, var(--indigo-400), var(--indigo-500));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 6px 18px rgba(124,92,255,0.35);
+  }
+  .iso-info-cta button:hover { transform: translateY(-1px); }
+  .iso-info-cta button.pri:hover { box-shadow: 0 10px 28px rgba(124,92,255,0.5); }
 
   /* ============== TRYTHAT INTEGRATION HERO BLOCK ============== */
   .trythat {
@@ -2011,28 +2300,89 @@
     box-shadow: 0 1px 2px rgba(10,10,18,0.04);
   }
 
-  /* Inventory tower units */
-  [data-theme="light"] .u-avail {
-    background: rgba(22,163,74,0.10);
-    border-color: rgba(22,163,74,0.32);
+  /* Inventory — isometric building (light theme)
+     Building exterior: warm concrete tones rather than dark glass. Each
+     slab keeps a top/side gradient so the volume is still legible. */
+  [data-theme="light"] .iso-shadow {
+    background: radial-gradient(ellipse at center, rgba(10,10,18,0.22) 0%, transparent 65%);
+  }
+  [data-theme="light"] .floor-front {
+    background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(245,243,238,0.95) 100%);
+    border-color: rgba(10,10,18,0.10);
+  }
+  [data-theme="light"] .floor-top {
+    background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(238,236,228,0.85) 100%);
+    border-color: rgba(10,10,18,0.10);
+    border-bottom-color: rgba(10,10,18,0.05);
+  }
+  [data-theme="light"] .floor-right {
+    background: linear-gradient(90deg, rgba(220,216,205,0.85) 0%, rgba(170,166,155,0.85) 100%);
+    border-color: rgba(10,10,18,0.10);
+  }
+  [data-theme="light"] .iso-base .base-front {
+    background: linear-gradient(180deg, rgba(48,46,55,1) 0%, rgba(20,18,28,1) 100%);
+    border-color: rgba(10,10,18,0.20);
+    border-top-color: rgba(255,255,255,0.05);
+  }
+  [data-theme="light"] .iso-base .base-top {
+    background: linear-gradient(180deg, rgba(80,76,90,0.95) 0%, rgba(48,46,55,1) 100%);
+    border-color: rgba(10,10,18,0.20);
+  }
+  [data-theme="light"] .iso-base .base-right {
+    background: linear-gradient(90deg, rgba(40,38,48,0.95) 0%, rgba(15,12,22,1) 100%);
+    border-color: rgba(10,10,18,0.18);
+  }
+  /* Roof crown — keep violet glow regardless of theme */
+  [data-theme="light"] .iso-roof .roof-front {
+    box-shadow: 0 0 24px rgba(124,92,255,0.30);
+  }
+  [data-theme="light"] .iso-roof .roof-top {
+    box-shadow: 0 -20px 50px rgba(124,92,255,0.35);
+  }
+
+  /* Unit cells — saturated colors for white-floor legibility */
+  [data-theme="light"] .iso-unit.u-avail {
+    background: rgba(22,163,74,0.16);
+    border-color: rgba(22,163,74,0.45);
     color: #15803D;
   }
-  [data-theme="light"] .u-block {
-    background: rgba(217,119,6,0.10);
-    border-color: rgba(217,119,6,0.32);
+  [data-theme="light"] .iso-unit.u-block {
+    background: rgba(217,119,6,0.18);
+    border-color: rgba(217,119,6,0.50);
     color: #B45309;
   }
-  [data-theme="light"] .u-sold {
-    background: rgba(10,10,18,0.04);
-    border-color: var(--line-2);
-    color: var(--fg-4);
+  [data-theme="light"] .iso-unit.u-sold {
+    background: rgba(10,10,18,0.06);
+    border-color: rgba(10,10,18,0.12);
+    color: rgba(10,10,18,0.30);
   }
-  [data-theme="light"] .u-sel {
-    background: rgba(124,92,255,0.16);
+  [data-theme="light"] .iso-unit.u-sel {
+    background: rgba(124,92,255,0.32);
     border-color: var(--indigo-400);
-    color: var(--indigo-500);
-    box-shadow: 0 0 0 2px rgba(124,92,255,0.20), 0 8px 24px rgba(124,92,255,0.30);
+    color: white;
+    box-shadow:
+      0 0 0 1px rgba(124,92,255,0.6) inset,
+      0 0 14px rgba(124,92,255,0.55),
+      0 0 36px rgba(124,92,255,0.40);
   }
+  [data-theme="light"] .iso-floor-label { color: var(--fg-3); }
+
+  /* Side info panel */
+  [data-theme="light"] .iso-info {
+    background: white;
+    border-color: var(--line-2);
+    box-shadow: 0 16px 40px rgba(10,10,18,0.06), 0 0 0 1px rgba(10,10,18,0.03);
+  }
+  [data-theme="light"] .iso-info::before {
+    background: radial-gradient(70% 60% at 0% 0%, rgba(124,92,255,0.08) 0%, transparent 60%);
+  }
+  [data-theme="light"] .iso-info-row { border-top-color: var(--line); }
+  [data-theme="light"] .iso-info-cta button {
+    background: rgba(10,10,18,0.025);
+    border-color: var(--line-2);
+    color: var(--fg-2);
+  }
+  [data-theme="light"] .iso-info-cta button:hover { background: rgba(10,10,18,0.05); }
 
   /* Trythat */
   [data-theme="light"] .trythat {
@@ -2955,40 +3305,143 @@
           <span class="label">live · 2-way sync</span>
         </div>
         <div class="viz-body">
-          <div class="tower-wrap">
-            <div class="tower">
-              <div class="floor"><div class="floor-label">14</div>
-                <div class="unit u-avail">A1401</div><div class="unit u-avail">A1402</div><div class="unit u-blocked">A1403</div><div class="unit u-avail">A1404</div><div class="unit u-avail">A1405</div><div class="unit u-avail">A1406</div>
+          <div class="iso-wrap">
+            <div class="iso-stage">
+              <div class="iso-shadow"></div>
+              <div class="iso-building">
+
+                <!-- Podium base -->
+                <div class="iso-base">
+                  <div class="base-front"></div>
+                  <div class="base-top"></div>
+                  <div class="base-right"></div>
+                </div>
+
+                <!-- Floor 09 -->
+                <div class="iso-floor" style="--floor-i: 0;">
+                  <span class="iso-floor-label">09</span>
+                  <div class="floor-top"></div>
+                  <div class="floor-right"></div>
+                  <div class="floor-front">
+                    <div class="iso-unit u-sold"  title="A0901 · sold">01</div>
+                    <div class="iso-unit u-avail" title="A0902 · available">02</div>
+                    <div class="iso-unit u-avail" title="A0903 · available">03</div>
+                    <div class="iso-unit u-block" title="A0904 · soft-blocked">04</div>
+                    <div class="iso-unit u-sold"  title="A0905 · sold">05</div>
+                    <div class="iso-unit u-avail" title="A0906 · available">06</div>
+                  </div>
+                </div>
+
+                <!-- Floor 10 -->
+                <div class="iso-floor" style="--floor-i: 1;">
+                  <span class="iso-floor-label">10</span>
+                  <div class="floor-top"></div>
+                  <div class="floor-right"></div>
+                  <div class="floor-front">
+                    <div class="iso-unit u-avail" title="A1001 · available">01</div>
+                    <div class="iso-unit u-sold"  title="A1002 · sold">02</div>
+                    <div class="iso-unit u-avail" title="A1003 · available">03</div>
+                    <div class="iso-unit u-sel"   title="A1004 · selected · 24h soft-block">04</div>
+                    <div class="iso-unit u-avail" title="A1005 · available">05</div>
+                    <div class="iso-unit u-block" title="A1006 · soft-blocked">06</div>
+                  </div>
+                </div>
+
+                <!-- Floor 11 -->
+                <div class="iso-floor" style="--floor-i: 2;">
+                  <span class="iso-floor-label">11</span>
+                  <div class="floor-top"></div>
+                  <div class="floor-right"></div>
+                  <div class="floor-front">
+                    <div class="iso-unit u-sold"  title="A1101 · sold">01</div>
+                    <div class="iso-unit u-avail" title="A1102 · available">02</div>
+                    <div class="iso-unit u-sold"  title="A1103 · sold">03</div>
+                    <div class="iso-unit u-avail" title="A1104 · available">04</div>
+                    <div class="iso-unit u-block" title="A1105 · soft-blocked">05</div>
+                    <div class="iso-unit u-avail" title="A1106 · available">06</div>
+                  </div>
+                </div>
+
+                <!-- Floor 12 -->
+                <div class="iso-floor" style="--floor-i: 3;">
+                  <span class="iso-floor-label">12</span>
+                  <div class="floor-top"></div>
+                  <div class="floor-right"></div>
+                  <div class="floor-front">
+                    <div class="iso-unit u-avail" title="A1201 · available">01</div>
+                    <div class="iso-unit u-avail" title="A1202 · available">02</div>
+                    <div class="iso-unit u-avail" title="A1203 · available">03</div>
+                    <div class="iso-unit u-sold"  title="A1204 · sold">04</div>
+                    <div class="iso-unit u-avail" title="A1205 · available">05</div>
+                    <div class="iso-unit u-block" title="A1206 · soft-blocked">06</div>
+                  </div>
+                </div>
+
+                <!-- Floor 13 -->
+                <div class="iso-floor" style="--floor-i: 4;">
+                  <span class="iso-floor-label">13</span>
+                  <div class="floor-top"></div>
+                  <div class="floor-right"></div>
+                  <div class="floor-front">
+                    <div class="iso-unit u-sold"  title="A1301 · sold">01</div>
+                    <div class="iso-unit u-avail" title="A1302 · available">02</div>
+                    <div class="iso-unit u-avail" title="A1303 · available">03</div>
+                    <div class="iso-unit u-block" title="A1304 · soft-blocked">04</div>
+                    <div class="iso-unit u-avail" title="A1305 · available">05</div>
+                    <div class="iso-unit u-sold"  title="A1306 · sold">06</div>
+                  </div>
+                </div>
+
+                <!-- Floor 14 -->
+                <div class="iso-floor" style="--floor-i: 5;">
+                  <span class="iso-floor-label">14</span>
+                  <div class="floor-top"></div>
+                  <div class="floor-right"></div>
+                  <div class="floor-front">
+                    <div class="iso-unit u-avail" title="A1401 · available">01</div>
+                    <div class="iso-unit u-avail" title="A1402 · available">02</div>
+                    <div class="iso-unit u-block" title="A1403 · soft-blocked">03</div>
+                    <div class="iso-unit u-avail" title="A1404 · available">04</div>
+                    <div class="iso-unit u-avail" title="A1405 · available">05</div>
+                    <div class="iso-unit u-avail" title="A1406 · available">06</div>
+                  </div>
+                </div>
+
+                <!-- Accent crown roof -->
+                <div class="iso-roof">
+                  <div class="roof-front"></div>
+                  <div class="roof-top"></div>
+                  <div class="roof-right"></div>
+                </div>
+
               </div>
-              <div class="floor"><div class="floor-label">13</div>
-                <div class="unit u-sold">A1301</div><div class="unit u-avail">A1302</div><div class="unit u-avail">A1303</div><div class="unit u-blocked">A1304</div><div class="unit u-avail">A1305</div><div class="unit u-sold">A1306</div>
+            </div>
+
+            <!-- Side info panel -->
+            <div class="iso-info">
+              <div class="iso-info-l">selected · soft-blocked</div>
+              <h6>A-1004 <em>· 3BHK</em></h6>
+              <div class="iso-info-row"><span class="k">Carpet area</span><span class="v">1,420 sq ft</span></div>
+              <div class="iso-info-row"><span class="k">Tower / floor</span><span class="v">A · 10<sup>th</sup></span></div>
+              <div class="iso-info-row"><span class="k">Facing / view</span><span class="v">East · pool</span></div>
+              <div class="iso-info-row"><span class="k">Agreement value</span><span class="v"><em>₹</em>1.42 Cr</span></div>
+              <div class="iso-block-timer">
+                <span class="dot"></span>
+                <span>soft-block in effect</span>
+                <span class="timer">23 : 14 : 42</span>
               </div>
-              <div class="floor"><div class="floor-label">12</div>
-                <div class="unit u-avail">A1201</div><div class="unit u-avail">A1202</div><div class="unit u-avail">A1203</div><div class="unit u-sold">A1204</div><div class="unit u-avail">A1205</div><div class="unit u-blocked">A1206</div>
-              </div>
-              <div class="floor"><div class="floor-label">11</div>
-                <div class="unit u-sold">A1101</div><div class="unit u-avail">A1102</div><div class="unit u-sold">A1103</div><div class="unit u-avail">A1104</div><div class="unit u-blocked">A1105</div><div class="unit u-avail">A1106</div>
-              </div>
-              <div class="floor"><div class="floor-label">10</div>
-                <div class="unit u-avail">A1001</div><div class="unit u-sold">A1002</div><div class="unit u-avail">A1003</div><div class="unit u-sel">A1004</div><div class="unit u-avail">A1005</div><div class="unit u-blocked">A1006</div>
-              </div>
-              <div class="floor"><div class="floor-label">09</div>
-                <div class="unit u-sold">A0901</div><div class="unit u-avail">A0902</div><div class="unit u-avail">A0903</div><div class="unit u-blocked">A0904</div><div class="unit u-sold">A0905</div><div class="unit u-avail">A0906</div>
+              <div class="iso-info-cta">
+                <button class="pri">Convert to booking</button>
+                <button>Release</button>
               </div>
             </div>
           </div>
 
           <div class="tower-legend">
-            <span class="ld"><span class="ld-dot" style="background: rgba(74,222,154,0.18); border-color: rgba(74,222,154,0.4);"></span>available · 18</span>
-            <span class="ld"><span class="ld-dot" style="background: rgba(255,176,74,0.18); border-color: rgba(255,176,74,0.4);"></span>soft-blocked · 6</span>
+            <span class="ld"><span class="ld-dot" style="background: rgba(74,222,154,0.20); border-color: rgba(74,222,154,0.4);"></span>available · 18</span>
+            <span class="ld"><span class="ld-dot" style="background: rgba(255,176,74,0.20); border-color: rgba(255,176,74,0.45);"></span>soft-blocked · 6</span>
             <span class="ld"><span class="ld-dot" style="background: rgba(255,255,255,0.04); border-color: var(--line-2);"></span>sold · 11</span>
-            <span class="ld"><span class="ld-dot" style="background: rgba(124,92,255,0.25); border-color: var(--indigo-400);"></span>selected · A1004</span>
-          </div>
-
-          <div class="tower-info">
-            <div class="ti"><strong>3BHK</strong> A1004 · 1,420 sq ft</div>
-            <div class="ti"><strong>₹1.42 Cr</strong> agreement value</div>
-            <div class="ti"><strong>24h</strong> soft-block in effect</div>
+            <span class="ld"><span class="ld-dot" style="background: rgba(124,92,255,0.4); border-color: var(--indigo-300);"></span>selected · A-1004</span>
           </div>
         </div>
       </div>
