@@ -1964,196 +1964,6 @@
     65%, 100% { transform: scale(2.1); opacity: 0; }
   }
 
-  /* ============================================================
-     SPEC — AT A GLANCE
-     A cinematic three-phase composition. Each phase is a card with
-       — a huge editorial italic count
-       — a row of dot indicators (one per feature in that tier)
-       — a single feature name that crossfades through the whole list
-     The dots light up in sync with the cycler so the eye sees the
-     plan advancing by itself. No table, no filters, no scrolling.
-     ============================================================ */
-  .spec {
-    padding: 88px 0;
-    background: var(--bg);
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    position: relative;
-    overflow: hidden;
-  }
-  .spec::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(50% 40% at 20% 30%, rgba(74,222,154,0.06) 0%, transparent 60%),
-      radial-gradient(40% 40% at 80% 30%, rgba(124,92,255,0.07) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .spec .wrap-narrow { position: relative; z-index: 1; }
-
-  .phases {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr 0.7fr;
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line-2);
-    border-radius: var(--r-xl);
-    overflow: hidden;
-    margin-top: 56px;
-    box-shadow: 0 20px 48px rgba(0,0,0,0.30);
-  }
-  .phase {
-    background: var(--bg);
-    padding: 36px 32px 30px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-height: 380px;
-  }
-  .phase::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(80% 50% at 50% 0%, var(--phase-glow), transparent 70%);
-    pointer-events: none;
-    opacity: 0.85;
-  }
-  .phase-v1 { --phase-glow: rgba(74,222,154,0.12); --phase-c: var(--mint-300); --phase-rgb: 74,222,154; }
-  .phase-v2 { --phase-glow: rgba(255,176,74,0.10); --phase-c: var(--amber-300); --phase-rgb: 255,176,74; }
-  .phase-v3 { --phase-glow: rgba(124,92,255,0.10); --phase-c: var(--indigo-300); --phase-rgb: 124,92,255; }
-
-  .phase > * { position: relative; z-index: 1; }
-
-  .phase-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--fg-3);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 18px;
-  }
-  .phase-num::before {
-    content: '';
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--phase-c);
-    box-shadow: 0 0 8px rgba(var(--phase-rgb), 0.55);
-  }
-  .phase-num em { font-style: normal; color: var(--fg); }
-
-  .phase-count {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(76px, 9vw, 116px);
-    line-height: 0.92;
-    letter-spacing: -0.05em;
-    background: linear-gradient(135deg, var(--fg) 0%, var(--phase-c) 130%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin-bottom: 4px;
-  }
-  .phase-count-l {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--fg-3);
-    text-transform: uppercase;
-    margin-bottom: 26px;
-  }
-
-  .phase-dots {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-bottom: 28px;
-    min-height: 8px;
-  }
-  .phase-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.10);
-    transition: background .35s, box-shadow .35s, transform .35s;
-  }
-  .phase-dot.on {
-    background: var(--phase-c);
-    box-shadow: 0 0 10px rgba(var(--phase-rgb), 0.7);
-    transform: scale(1.15);
-  }
-
-  .phase-cycler-l {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10.5px;
-    letter-spacing: 0.10em;
-    text-transform: uppercase;
-    color: var(--fg-4);
-    margin-bottom: 10px;
-  }
-  .cycler {
-    height: 70px;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: auto;
-  }
-  .cycler-item {
-    position: absolute;
-    inset: 0;
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 300;
-    font-size: clamp(20px, 2vw, 26px);
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    color: var(--fg);
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity .55s ease, transform .65s cubic-bezier(.2,.7,.2,1);
-    pointer-events: none;
-  }
-  .cycler-item.on {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .phase-tail {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 18px;
-    border-top: 1px solid var(--line);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11.5px;
-    color: var(--fg-2);
-    margin-top: 24px;
-  }
-  .phase-tail .when {
-    display: inline-flex; align-items: center; gap: 8px;
-  }
-  .phase-tail .when::before {
-    content: '';
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--phase-c);
-    box-shadow: 0 0 6px rgba(var(--phase-rgb), 0.55);
-    animation: pulse-d 1.8s infinite;
-  }
-  .phase-tail .arr {
-    color: var(--fg-4);
-    transition: transform .25s, color .25s;
-  }
-  .phase:hover .phase-tail .arr {
-    transform: translateX(2px);
-    color: var(--phase-c);
-  }
-  @media (max-width: 900px) {
-    .phases { grid-template-columns: 1fr; }
-    .phase { min-height: auto; padding: 28px; }
-  }
-
   /* ============== CRITICAL INSTRUCTIONS / MANIFESTO ============== */
   .instr {
     padding: 96px 0;
@@ -2274,7 +2084,7 @@
   }
   .foot-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 48px;
     margin-bottom: 64px;
   }
@@ -2811,27 +2621,6 @@
   /* Phone — keep dark in both themes (mobile UIs are commonly dark, and
      the contrast against a light page is intentional). */
 
-  /* Spec phases — light theme */
-  [data-theme="light"] .spec { background: var(--bg); }
-  [data-theme="light"] .spec::before {
-    background:
-      radial-gradient(50% 40% at 20% 30%, rgba(22,163,74,0.05) 0%, transparent 60%),
-      radial-gradient(40% 40% at 80% 30%, rgba(124,92,255,0.06) 0%, transparent 60%);
-  }
-  [data-theme="light"] .phases {
-    background: var(--line);
-    border-color: var(--line);
-    box-shadow: 0 16px 40px rgba(10,10,18,0.06), 0 0 0 1px rgba(10,10,18,0.03);
-  }
-  [data-theme="light"] .phase { background: var(--bg-3); }
-  [data-theme="light"] .phase-v1 { --phase-glow: rgba(22,163,74,0.12); --phase-c: var(--mint-300); --phase-rgb: 22,163,74; }
-  [data-theme="light"] .phase-v2 { --phase-glow: rgba(217,119,6,0.10); --phase-c: var(--amber-300); --phase-rgb: 217,119,6; }
-  [data-theme="light"] .phase-v3 { --phase-glow: rgba(124,92,255,0.10); --phase-c: var(--indigo-500); --phase-rgb: 90,56,230; }
-  [data-theme="light"] .phase-dot {
-    background: rgba(10,10,18,0.10);
-  }
-  [data-theme="light"] .phase-tail { border-top-color: var(--line); }
-
   /* Critical instructions */
   [data-theme="light"] .instr {
     background:
@@ -2928,8 +2717,7 @@
     .chart-viz { grid-template-columns: 1fr; }
     .tt-flow { grid-template-columns: 1fr; gap: 24px; }
     .foot-grid { grid-template-columns: 1.6fr 1fr 1fr; gap: 32px; }
-    .foot-grid > .foot-col:nth-child(4),
-    .foot-grid > .foot-col:nth-child(5) { display: none; }
+    .foot-grid > .foot-col:nth-child(4) { display: none; }
     .overture-stats { grid-template-columns: repeat(2, 1fr); }
     .instr-grid { grid-template-columns: repeat(2, 1fr); }
     .nav-links { display: none; }
@@ -2941,13 +2729,10 @@
     .hide-mobile { display: none; }
     .modules-grid { grid-template-columns: 1fr; }
     .kanban-x { grid-template-columns: repeat(2, 1fr); }
-    .phase-count { font-size: 72px; }
-    .cycler { height: 56px; }
-    .cycler-item { font-size: 19px; }
     .overture-stats { grid-template-columns: 1fr; }
     .ov-stat .num { font-size: 44px; }
     .channels { padding: 36px 0 28px; }
-    .feat, .modules, .testi, .cta, .trythat, .instr, .spec, .overture { padding: 80px 0; }
+    .feat, .modules, .testi, .cta, .trythat, .instr, .overture { padding: 80px 0; }
     .nav-actions .btn-ghost { display: none; }
     .phone { transform: none; }
 
@@ -2991,7 +2776,6 @@
       <a href="#pipeline">Pipeline</a>
       <a href="#inventory">Inventory</a>
       <a href="#trythat">Trythat.ai</a>
-      <a href="#spec">Spec</a>
     </div>
     <div class="nav-actions">
       <span class="kbd hide-mobile">⌘ K</span>
@@ -3971,111 +3755,6 @@
 </section>
 
 <!-- ============================================================
-     SPEC — AT A GLANCE (cinematic three-phase composition)
-     ============================================================ -->
-<section class="spec" id="spec">
-  <div class="wrap-narrow">
-    <div class="section-head">
-      <div class="label label-accent">// the whole spec</div>
-      <h2 class="h2" style="margin-top:18px;">Twenty-eight features.<br>Built in <span class="ink">three&nbsp;waves.</span></h2>
-      <p class="sub">Every line of the RealtorOS specification — V1 must-haves to V3 nice-to-haves. Watch it advance.</p>
-    </div>
-
-    <div class="phases reveal">
-
-      <!-- V1 -->
-      <div class="phase phase-v1">
-        <div class="phase-num"><em>V1</em> · must have</div>
-        <div class="phase-count">19</div>
-        <div class="phase-count-l">features</div>
-
-        <div class="phase-dots">
-          <span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span>
-        </div>
-
-        <div class="phase-cycler-l">now showing</div>
-        <div class="cycler" data-cycler>
-          <span class="cycler-item">Auto-capture from portals</span>
-          <span class="cycler-item">Website &amp; Trythat.ai sync</span>
-          <span class="cycler-item">WhatsApp &amp; missed call capture</span>
-          <span class="cycler-item">Meta &amp; Google Ads forms</span>
-          <span class="cycler-item">Auto lead scoring · 1–10</span>
-          <span class="cycler-item">Duplicate detection</span>
-          <span class="cycler-item">Project &amp; budget tagging</span>
-          <span class="cycler-item">Kanban pipeline · 7 stages</span>
-          <span class="cycler-item">Auto-assignment rules</span>
-          <span class="cycler-item">Escalation on no-contact</span>
-          <span class="cycler-item">WhatsApp drip sequences</span>
-          <span class="cycler-item">Task &amp; call reminders</span>
-          <span class="cycler-item">Site visit slot booking</span>
-          <span class="cycler-item">Live unit availability</span>
-          <span class="cycler-item">Soft-block · 24–48h</span>
-          <span class="cycler-item">Booking trigger</span>
-          <span class="cycler-item">Daily lead summary</span>
-          <span class="cycler-item">Source-wise lead quality</span>
-          <span class="cycler-item">Sales exec performance</span>
-        </div>
-
-        <div class="phase-tail">
-          <span class="when">live in 14 days</span>
-          <span class="arr">→</span>
-        </div>
-      </div>
-
-      <!-- V2 -->
-      <div class="phase phase-v2">
-        <div class="phase-num"><em>V2</em> · good to have</div>
-        <div class="phase-count">8</div>
-        <div class="phase-count-l">features</div>
-
-        <div class="phase-dots">
-          <span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span>
-        </div>
-
-        <div class="phase-cycler-l">now showing</div>
-        <div class="cycler" data-cycler>
-          <span class="cycler-item">Channel partner portal</span>
-          <span class="cycler-item">AI hot/warm/cold reclassification</span>
-          <span class="cycler-item">Lost-reason capture</span>
-          <span class="cycler-item">Re-assignment on inactivity</span>
-          <span class="cycler-item">Email drip campaigns</span>
-          <span class="cycler-item">Cold-lead re-engagement</span>
-          <span class="cycler-item">Trythat.ai availability sync</span>
-          <span class="cycler-item">Funnel drop-off &amp; velocity</span>
-        </div>
-
-        <div class="phase-tail">
-          <span class="when">+30 days</span>
-          <span class="arr">→</span>
-        </div>
-      </div>
-
-      <!-- V3 -->
-      <div class="phase phase-v3">
-        <div class="phase-num"><em>V3</em> · nice to have</div>
-        <div class="phase-count">1</div>
-        <div class="phase-count-l">feature</div>
-
-        <div class="phase-dots">
-          <span class="phase-dot"></span>
-        </div>
-
-        <div class="phase-cycler-l">on the list</div>
-        <div class="cycler" data-cycler>
-          <span class="cycler-item">Walk-in entry · 2 taps</span>
-        </div>
-
-        <div class="phase-tail">
-          <span class="when">+60 days</span>
-          <span class="arr">→</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
      CRITICAL INSTRUCTIONS — MANIFESTO
      ============================================================ -->
 <section class="instr">
@@ -4206,15 +3885,6 @@
         </ul>
       </div>
       <div class="foot-col">
-        <h6>The plan</h6>
-        <ul>
-          <li><a href="#spec">28 features at a glance</a></li>
-          <li><a href="#spec">V1 · must have · 19</a></li>
-          <li><a href="#spec">V2 · good to have · 8</a></li>
-          <li><a href="#spec">V3 · nice to have · 1</a></li>
-        </ul>
-      </div>
-      <div class="foot-col">
         <h6>Company</h6>
         <ul>
           <li><a href="#">About</a></li>
@@ -4269,50 +3939,6 @@
     });
   }, { threshold: 0.6 });
   document.querySelectorAll('.lc-bar-fill[data-w]').forEach(el => barsObserver.observe(el));
-
-  /* Spec phases — feature-name cycler with synced dot indicators.
-     Each phase advances on its own clock with a slight stagger so the
-     three columns don't tick in lockstep. The cycler only runs once
-     the phase has scrolled into view, to avoid wasted animations. */
-  function initPhaseCyclers() {
-    const phases = document.querySelectorAll('.phase');
-    phases.forEach((phase, idx) => {
-      const items = phase.querySelectorAll('.cycler-item');
-      const dots  = phase.querySelectorAll('.phase-dot');
-      if (!items.length) return;
-
-      // Initial state — first item visible, first dot active.
-      items[0].classList.add('on');
-      if (dots[0]) dots[0].classList.add('on');
-
-      // Single-item phases (V3) need no rotation.
-      if (items.length === 1) return;
-
-      const interval = 2200;
-      const stagger  = idx * 600;
-      let i = 0;
-
-      const tick = () => {
-        items[i].classList.remove('on');
-        if (dots[i]) dots[i].classList.remove('on');
-        i = (i + 1) % items.length;
-        items[i].classList.add('on');
-        if (dots[i]) dots[i].classList.add('on');
-      };
-
-      // Start only when the phase enters the viewport.
-      const startObserver = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            setTimeout(() => setInterval(tick, interval), stagger);
-            startObserver.unobserve(phase);
-          }
-        });
-      }, { threshold: 0.4 });
-      startObserver.observe(phase);
-    });
-  }
-  initPhaseCyclers();
 
   /* Hero — Lead's Journey cycler.
      Five stages, each gets ~2.6s of focus, with stage 5 lingering longer
