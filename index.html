@@ -1396,72 +1396,195 @@
     60% { transform: scale(1.4); opacity: 0; }
   }
 
-  /* ============== SPEC TABLE ============== */
+  /* ============================================================
+     SPEC — AT A GLANCE
+     A cinematic three-phase composition. Each phase is a card with
+       — a huge editorial italic count
+       — a row of dot indicators (one per feature in that tier)
+       — a single feature name that crossfades through the whole list
+     The dots light up in sync with the cycler so the eye sees the
+     plan advancing by itself. No table, no filters, no scrolling.
+     ============================================================ */
   .spec {
     padding: 120px 0;
     background: var(--bg);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
   }
-  .spec-table {
+  .spec::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(50% 40% at 20% 30%, rgba(74,222,154,0.06) 0%, transparent 60%),
+      radial-gradient(40% 40% at 80% 30%, rgba(124,92,255,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .spec .wrap-narrow { position: relative; z-index: 1; }
+
+  .phases {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1.4fr 1fr 0.7fr;
     gap: 1px;
     background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: var(--r-lg);
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-xl);
     overflow: hidden;
     margin-top: 56px;
+    box-shadow: 0 20px 48px rgba(0,0,0,0.30);
   }
-  .spec-h, .spec-r {
+  .phase {
     background: var(--bg);
-    display: grid;
-    grid-template-columns: 60px 1.8fr 2.4fr 100px 90px;
-    gap: 16px; align-items: center;
-    padding: 14px 22px;
-    font-size: 13.5px;
+    padding: 36px 32px 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 380px;
   }
-  .spec-h {
-    background: var(--bg-2);
-    font-family: 'JetBrains Mono', monospace; font-size: 11px;
-    color: var(--fg-3); letter-spacing: 0.06em; text-transform: uppercase;
+  .phase::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(80% 50% at 50% 0%, var(--phase-glow), transparent 70%);
+    pointer-events: none;
+    opacity: 0.85;
   }
-  .spec-r { transition: background .2s; }
-  .spec-r:hover { background: var(--bg-2); }
-  .spec-num { color: var(--fg-4); font-family: 'JetBrains Mono', monospace; font-size: 12px; }
-  .spec-name { color: var(--fg); font-weight: 500; }
-  .spec-desc { color: var(--fg-2); font-size: 13px; }
-  .pri-pill {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 600;
-    padding: 3px 9px; border-radius: 999px;
-    border: 1px solid;
+  .phase-v1 { --phase-glow: rgba(74,222,154,0.12); --phase-c: var(--mint-300); --phase-rgb: 74,222,154; }
+  .phase-v2 { --phase-glow: rgba(255,176,74,0.10); --phase-c: var(--amber-300); --phase-rgb: 255,176,74; }
+  .phase-v3 { --phase-glow: rgba(124,92,255,0.10); --phase-c: var(--indigo-300); --phase-rgb: 124,92,255; }
+
+  .phase > * { position: relative; z-index: 1; }
+
+  .phase-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 18px;
   }
-  .pri-pill.v1 { background: rgba(74,222,154,0.10); color: var(--mint-300); border-color: rgba(74,222,154,0.3); }
-  .pri-pill.v2 { background: rgba(255,176,74,0.10); color: var(--amber-300); border-color: rgba(255,176,74,0.3); }
-  .pri-pill.v3 { background: rgba(93,173,226,0.10); color: var(--sky-300); border-color: rgba(93,173,226,0.3); }
-  .spec-cat {
-    color: var(--fg-3); font-family: 'JetBrains Mono', monospace;
-    font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
-    text-align: right;
+  .phase-num::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--phase-c);
+    box-shadow: 0 0 8px rgba(var(--phase-rgb), 0.55);
+  }
+  .phase-num em { font-style: normal; color: var(--fg); }
+
+  .phase-count {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(76px, 9vw, 116px);
+    line-height: 0.92;
+    letter-spacing: -0.05em;
+    background: linear-gradient(135deg, var(--fg) 0%, var(--phase-c) 130%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 4px;
+  }
+  .phase-count-l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--fg-3);
+    text-transform: uppercase;
+    margin-bottom: 26px;
   }
 
-  /* Filter buttons */
-  .spec-filters {
-    display: flex; gap: 8px; justify-content: center; margin-top: 36px;
+  .phase-dots {
+    display: flex;
     flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 28px;
+    min-height: 8px;
   }
-  .spec-filter {
-    padding: 8px 16px;
-    border: 1px solid var(--line-2);
-    border-radius: 999px;
-    background: rgba(255,255,255,0.02);
+  .phase-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.10);
+    transition: background .35s, box-shadow .35s, transform .35s;
+  }
+  .phase-dot.on {
+    background: var(--phase-c);
+    box-shadow: 0 0 10px rgba(var(--phase-rgb), 0.7);
+    transform: scale(1.15);
+  }
+
+  .phase-cycler-l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--fg-4);
+    margin-bottom: 10px;
+  }
+  .cycler {
+    height: 70px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: auto;
+  }
+  .cycler-item {
+    position: absolute;
+    inset: 0;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(20px, 2vw, 26px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity .55s ease, transform .65s cubic-bezier(.2,.7,.2,1);
+    pointer-events: none;
+  }
+  .cycler-item.on {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .phase-tail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
     color: var(--fg-2);
-    font-size: 13px;
-    transition: all .18s;
+    margin-top: 24px;
   }
-  .spec-filter:hover { background: rgba(255,255,255,0.05); color: var(--fg); }
-  .spec-filter.on { background: var(--fg); color: #0A0A12; border-color: var(--fg); font-weight: 500; }
+  .phase-tail .when {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .phase-tail .when::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--phase-c);
+    box-shadow: 0 0 6px rgba(var(--phase-rgb), 0.55);
+    animation: pulse-d 1.8s infinite;
+  }
+  .phase-tail .arr {
+    color: var(--fg-4);
+    transition: transform .25s, color .25s;
+  }
+  .phase:hover .phase-tail .arr {
+    transform: translateX(2px);
+    color: var(--phase-c);
+  }
+  @media (max-width: 900px) {
+    .phases { grid-template-columns: 1fr; }
+    .phase { min-height: auto; padding: 28px; }
+  }
 
   /* ============== CRITICAL INSTRUCTIONS / MANIFESTO ============== */
   .instr {
@@ -2078,44 +2201,26 @@
   /* Phone — keep dark in both themes (mobile UIs are commonly dark, and
      the contrast against a light page is intentional). */
 
-  /* Spec table */
+  /* Spec phases — light theme */
   [data-theme="light"] .spec { background: var(--bg); }
-  [data-theme="light"] .spec-table {
+  [data-theme="light"] .spec::before {
+    background:
+      radial-gradient(50% 40% at 20% 30%, rgba(22,163,74,0.05) 0%, transparent 60%),
+      radial-gradient(40% 40% at 80% 30%, rgba(124,92,255,0.06) 0%, transparent 60%);
+  }
+  [data-theme="light"] .phases {
     background: var(--line);
     border-color: var(--line);
-    box-shadow: 0 1px 2px rgba(10,10,18,0.03);
+    box-shadow: 0 16px 40px rgba(10,10,18,0.06), 0 0 0 1px rgba(10,10,18,0.03);
   }
-  [data-theme="light"] .spec-h, [data-theme="light"] .spec-r { background: var(--bg-3); }
-  [data-theme="light"] .spec-h { background: var(--bg-2); }
-  [data-theme="light"] .spec-r:hover { background: var(--bg-2); }
-  [data-theme="light"] .spec-name { color: var(--fg); }
-  [data-theme="light"] .spec-desc { color: var(--fg-2); }
-  [data-theme="light"] .spec-filter {
-    background: var(--bg-3);
-    border-color: var(--line-2);
-    color: var(--fg-2);
-    box-shadow: 0 1px 2px rgba(10,10,18,0.04);
+  [data-theme="light"] .phase { background: var(--bg-3); }
+  [data-theme="light"] .phase-v1 { --phase-glow: rgba(22,163,74,0.12); --phase-c: var(--mint-300); --phase-rgb: 22,163,74; }
+  [data-theme="light"] .phase-v2 { --phase-glow: rgba(217,119,6,0.10); --phase-c: var(--amber-300); --phase-rgb: 217,119,6; }
+  [data-theme="light"] .phase-v3 { --phase-glow: rgba(124,92,255,0.10); --phase-c: var(--indigo-500); --phase-rgb: 90,56,230; }
+  [data-theme="light"] .phase-dot {
+    background: rgba(10,10,18,0.10);
   }
-  [data-theme="light"] .spec-filter:hover {
-    background: white;
-    color: var(--fg);
-  }
-  [data-theme="light"] .spec-filter.on {
-    background: var(--fg);
-    color: var(--bg);
-    border-color: var(--fg);
-  }
-
-  /* Priority pills */
-  [data-theme="light"] .pri-pill.v1 {
-    background: rgba(22,163,74,0.10); color: var(--mint-300); border-color: rgba(22,163,74,0.25);
-  }
-  [data-theme="light"] .pri-pill.v2 {
-    background: rgba(217,119,6,0.10); color: var(--amber-300); border-color: rgba(217,119,6,0.25);
-  }
-  [data-theme="light"] .pri-pill.v3 {
-    background: rgba(3,105,161,0.10); color: var(--sky-300); border-color: rgba(3,105,161,0.25);
-  }
+  [data-theme="light"] .phase-tail { border-top-color: var(--line); }
 
   /* Critical instructions */
   [data-theme="light"] .instr {
@@ -2228,9 +2333,9 @@
     .modules-grid { grid-template-columns: 1fr; }
     .stat-row { grid-template-columns: repeat(2, 1fr); }
     .kanban-x { grid-template-columns: repeat(2, 1fr); }
-    .spec-h, .spec-r { grid-template-columns: 40px 1fr 80px; }
-    .spec-r > .spec-desc, .spec-r > .spec-cat,
-    .spec-h > .spec-desc, .spec-h > .spec-cat { display: none; }
+    .phase-count { font-size: 72px; }
+    .cycler { height: 56px; }
+    .cycler-item { font-size: 19px; }
     .overture-stats { grid-template-columns: 1fr; }
     .ov-stat .num { font-size: 44px; }
     .channels { padding: 36px 0 28px; }
@@ -3214,71 +3319,106 @@
 </section>
 
 <!-- ============================================================
-     SPEC TABLE — 28 features
+     SPEC — AT A GLANCE (cinematic three-phase composition)
      ============================================================ -->
 <section class="spec" id="spec">
   <div class="wrap-narrow">
     <div class="section-head">
-      <div class="label label-accent">// the spec, in full</div>
-      <h2 class="h2" style="margin-top:18px;">28 features.<br>Three <span class="ink">priority tiers.</span></h2>
-      <p class="sub">Every line of the RealtorOS Lead &amp; CRM specification, mapped to a delivery version. Filter by priority. Nothing hidden.</p>
+      <div class="label label-accent">// the whole spec</div>
+      <h2 class="h2" style="margin-top:18px;">Twenty-eight features.<br>Built in <span class="ink">three&nbsp;waves.</span></h2>
+      <p class="sub">Every line of the RealtorOS specification — V1 must-haves to V3 nice-to-haves. Watch it advance.</p>
     </div>
 
-    <div class="spec-filters">
-      <button class="spec-filter on" data-f="all">All · 28</button>
-      <button class="spec-filter" data-f="v1">Must have · V1</button>
-      <button class="spec-filter" data-f="v2">Good to have · V2</button>
-      <button class="spec-filter" data-f="v3">Nice to have · V3</button>
-    </div>
+    <div class="phases reveal">
 
-    <div class="spec-table" id="specTable">
-      <div class="spec-h">
-        <span>#</span>
-        <span>Feature</span>
-        <span>What it does</span>
-        <span>Priority</span>
-        <span>Module</span>
+      <!-- V1 -->
+      <div class="phase phase-v1">
+        <div class="phase-num"><em>V1</em> · must have</div>
+        <div class="phase-count">19</div>
+        <div class="phase-count-l">features</div>
+
+        <div class="phase-dots">
+          <span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span>
+        </div>
+
+        <div class="phase-cycler-l">now showing</div>
+        <div class="cycler" data-cycler>
+          <span class="cycler-item">Auto-capture from portals</span>
+          <span class="cycler-item">Website &amp; Trythat.ai sync</span>
+          <span class="cycler-item">WhatsApp &amp; missed call capture</span>
+          <span class="cycler-item">Meta &amp; Google Ads forms</span>
+          <span class="cycler-item">Auto lead scoring · 1–10</span>
+          <span class="cycler-item">Duplicate detection</span>
+          <span class="cycler-item">Project &amp; budget tagging</span>
+          <span class="cycler-item">Kanban pipeline · 7 stages</span>
+          <span class="cycler-item">Auto-assignment rules</span>
+          <span class="cycler-item">Escalation on no-contact</span>
+          <span class="cycler-item">WhatsApp drip sequences</span>
+          <span class="cycler-item">Task &amp; call reminders</span>
+          <span class="cycler-item">Site visit slot booking</span>
+          <span class="cycler-item">Live unit availability</span>
+          <span class="cycler-item">Soft-block · 24–48h</span>
+          <span class="cycler-item">Booking trigger</span>
+          <span class="cycler-item">Daily lead summary</span>
+          <span class="cycler-item">Source-wise lead quality</span>
+          <span class="cycler-item">Sales exec performance</span>
+        </div>
+
+        <div class="phase-tail">
+          <span class="when">live in 14 days</span>
+          <span class="arr">→</span>
+        </div>
       </div>
 
-      <!-- 1. Capture -->
-      <div class="spec-r" data-pri="v1"><span class="spec-num">01</span><span class="spec-name">Auto-capture from portals</span><span class="spec-desc">99acres, MagicBricks, Housing.com, NoBroker — direct, no manual entry.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">capture</span></div>
-      <div class="spec-r" data-pri="v1"><span class="spec-num">02</span><span class="spec-name">Website &amp; Trythat.ai sync</span><span class="spec-desc">Any enquiry from website or Trythat.ai assistant pushes instantly into the CRM.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">capture</span></div>
-      <div class="spec-r" data-pri="v1"><span class="spec-num">03</span><span class="spec-name">WhatsApp &amp; missed call capture</span><span class="spec-desc">Inbound on sales number auto-creates a lead record.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">capture</span></div>
-      <div class="spec-r" data-pri="v1"><span class="spec-num">04</span><span class="spec-name">Meta &amp; Google Ads forms</span><span class="spec-desc">Lead form submissions from paid campaigns flow directly.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">capture</span></div>
-      <div class="spec-r" data-pri="v2"><span class="spec-num">05</span><span class="spec-name">Channel partner portal</span><span class="spec-desc">Brokers submit via dedicated login; tagged for brokerage tracking.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">capture</span></div>
-      <div class="spec-r" data-pri="v3"><span class="spec-num">06</span><span class="spec-name">Walk-in &amp; site visit entry</span><span class="spec-desc">Manual entry from phone; auto-timestamp and location-tag.</span><span><span class="pri-pill v3">○ V3</span></span><span class="spec-cat">capture</span></div>
+      <!-- V2 -->
+      <div class="phase phase-v2">
+        <div class="phase-num"><em>V2</em> · good to have</div>
+        <div class="phase-count">8</div>
+        <div class="phase-count-l">features</div>
 
-      <!-- 2. Scoring -->
-      <div class="spec-r" data-pri="v1"><span class="spec-num">07</span><span class="spec-name">Auto lead scoring 1–10</span><span class="spec-desc">Score on budget, timeline, intent and source quality.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">scoring</span></div>
-      <div class="spec-r" data-pri="v1"><span class="spec-num">08</span><span class="spec-name">Duplicate detection</span><span class="spec-desc">Same phone/email from multiple sources auto-merged.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">scoring</span></div>
-      <div class="spec-r" data-pri="v1"><span class="spec-num">09</span><span class="spec-name">Project &amp; unit interest tagging</span><span class="spec-desc">Auto-tag project, BHK and budget band on capture.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">scoring</span></div>
-      <div class="spec-r" data-pri="v2"><span class="spec-num">10</span><span class="spec-name">AI hot/warm/cold reclassification</span><span class="spec-desc">Reclassifies based on response, opens, replies, site visits.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">scoring</span></div>
-      <div class="spec-r" data-pri="v2"><span class="spec-num">11</span><span class="spec-name">Lost-reason capture</span><span class="spec-desc">Mandatory reason on close — for funnel diagnosis.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">scoring</span></div>
+        <div class="phase-dots">
+          <span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span><span class="phase-dot"></span>
+        </div>
 
-      <!-- 3. Pipeline -->
-      <div class="spec-r" data-pri="v1"><span class="spec-num">12</span><span class="spec-name">Kanban pipeline (7 stages)</span><span class="spec-desc">New → Contacted → Site Visit Scheduled → Site Visit Done → Negotiation → Booked → Lost.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">pipeline</span></div>
-      <div class="spec-r" data-pri="v1"><span class="spec-num">13</span><span class="spec-name">Auto-assignment rules</span><span class="spec-desc">Round-robin or rule-based by project, location, budget band.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">pipeline</span></div>
-      <div class="spec-r" data-pri="v1"><span class="spec-num">14</span><span class="spec-name">Escalation on no-contact</span><span class="spec-desc">Auto-escalates to manager past configurable SLA.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">pipeline</span></div>
-      <div class="spec-r" data-pri="v2"><span class="spec-num">15</span><span class="spec-name">Re-assignment on inactivity</span><span class="spec-desc">Untouched lead flagged and optionally reassigned.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">pipeline</span></div>
+        <div class="phase-cycler-l">now showing</div>
+        <div class="cycler" data-cycler>
+          <span class="cycler-item">Channel partner portal</span>
+          <span class="cycler-item">AI hot/warm/cold reclassification</span>
+          <span class="cycler-item">Lost-reason capture</span>
+          <span class="cycler-item">Re-assignment on inactivity</span>
+          <span class="cycler-item">Email drip campaigns</span>
+          <span class="cycler-item">Cold-lead re-engagement</span>
+          <span class="cycler-item">Trythat.ai availability sync</span>
+          <span class="cycler-item">Funnel drop-off &amp; velocity</span>
+        </div>
 
-      <!-- 4. Followup -->
-      <div class="spec-r" data-pri="v1"><span class="spec-num">16</span><span class="spec-name">WhatsApp drip sequences</span><span class="spec-desc">Day-1 / Day-3 / Day-7 — personalised by project &amp; config.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">followup</span></div>
-      <div class="spec-r" data-pri="v1"><span class="spec-num">17</span><span class="spec-name">Task &amp; call reminders</span><span class="spec-desc">Auto-created after each interaction; daily call list per exec.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">followup</span></div>
-      <div class="spec-r" data-pri="v1"><span class="spec-num">18</span><span class="spec-name">Site visit slot booking</span><span class="spec-desc">Buyer picks slot via link; WhatsApp + calendar confirm; site team notified.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">followup</span></div>
-      <div class="spec-r" data-pri="v2"><span class="spec-num">19</span><span class="spec-name">Email drip campaigns</span><span class="spec-desc">Project updates, launch announcements, price revisions.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">followup</span></div>
-      <div class="spec-r" data-pri="v2"><span class="spec-num">20</span><span class="spec-name">Cold-lead re-engagement</span><span class="spec-desc">Auto-message at 30+ days inactive — new offer / new unit.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">followup</span></div>
+        <div class="phase-tail">
+          <span class="when">+30 days</span>
+          <span class="arr">→</span>
+        </div>
+      </div>
 
-      <!-- 5. Inventory -->
-      <div class="spec-r" data-pri="v1"><span class="spec-num">21</span><span class="spec-name">Live unit availability</span><span class="spec-desc">Available / blocked / sold inside every lead profile.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">inventory</span></div>
-      <div class="spec-r" data-pri="v1"><span class="spec-num">22</span><span class="spec-name">Soft-block / hold</span><span class="spec-desc">Hold a unit for 24–48h for a serious buyer; auto-release.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">inventory</span></div>
-      <div class="spec-r" data-pri="v1"><span class="spec-num">23</span><span class="spec-name">Booking trigger</span><span class="spec-desc">Mark Booked → fires legal, payment schedule, token receipt.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">inventory</span></div>
-      <div class="spec-r" data-pri="v2"><span class="spec-num">24</span><span class="spec-name">Trythat.ai availability sync</span><span class="spec-desc">Two-way real-time unit-status sync with Trythat.ai.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">inventory</span></div>
+      <!-- V3 -->
+      <div class="phase phase-v3">
+        <div class="phase-num"><em>V3</em> · nice to have</div>
+        <div class="phase-count">1</div>
+        <div class="phase-count-l">feature</div>
 
-      <!-- 6. Reporting -->
-      <div class="spec-r" data-pri="v1"><span class="spec-num">25</span><span class="spec-name">Daily lead summary</span><span class="spec-desc">Owner view: new leads, follow-ups, visits, bookings — one screen, every morning.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">reporting</span></div>
-      <div class="spec-r" data-pri="v1"><span class="spec-num">26</span><span class="spec-name">Source-wise lead quality</span><span class="spec-desc">Which portal / campaign converts. Stop wasting ad spend.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">reporting</span></div>
-      <div class="spec-r" data-pri="v1"><span class="spec-num">27</span><span class="spec-name">Sales exec performance</span><span class="spec-desc">Leads assigned vs contacted vs converted — per exec.</span><span><span class="pri-pill v1">● V1</span></span><span class="spec-cat">reporting</span></div>
-      <div class="spec-r" data-pri="v2"><span class="spec-num">28</span><span class="spec-name">Funnel drop-off &amp; sales velocity</span><span class="spec-desc">Where leads die. Units / week. Expected sell-out date.</span><span><span class="pri-pill v2">◐ V2</span></span><span class="spec-cat">reporting</span></div>
+        <div class="phase-dots">
+          <span class="phase-dot"></span>
+        </div>
+
+        <div class="phase-cycler-l">on the list</div>
+        <div class="cycler" data-cycler>
+          <span class="cycler-item">Walk-in entry · 2 taps</span>
+        </div>
+
+        <div class="phase-tail">
+          <span class="when">+60 days</span>
+          <span class="arr">→</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -3414,12 +3554,12 @@
         </ul>
       </div>
       <div class="foot-col">
-        <h6>Spec</h6>
+        <h6>The plan</h6>
         <ul>
-          <li><a href="#spec">All 28 features</a></li>
-          <li><a href="#spec">V1 must-have</a></li>
-          <li><a href="#spec">V2 good-to-have</a></li>
-          <li><a href="#spec">V3 nice-to-have</a></li>
+          <li><a href="#spec">28 features at a glance</a></li>
+          <li><a href="#spec">V1 · must have · 19</a></li>
+          <li><a href="#spec">V2 · good to have · 8</a></li>
+          <li><a href="#spec">V3 · nice to have · 1</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -3478,23 +3618,49 @@
   }, { threshold: 0.6 });
   document.querySelectorAll('.lc-bar-fill[data-w]').forEach(el => barsObserver.observe(el));
 
-  /* Spec table filter */
-  const specFilters = document.querySelectorAll('.spec-filter');
-  const specRows = document.querySelectorAll('#specTable .spec-r');
-  specFilters.forEach(btn => {
-    btn.addEventListener('click', () => {
-      specFilters.forEach(b => b.classList.remove('on'));
-      btn.classList.add('on');
-      const f = btn.dataset.f;
-      specRows.forEach(r => {
-        if (f === 'all' || r.dataset.pri === f) {
-          r.style.display = '';
-        } else {
-          r.style.display = 'none';
-        }
-      });
+  /* Spec phases — feature-name cycler with synced dot indicators.
+     Each phase advances on its own clock with a slight stagger so the
+     three columns don't tick in lockstep. The cycler only runs once
+     the phase has scrolled into view, to avoid wasted animations. */
+  function initPhaseCyclers() {
+    const phases = document.querySelectorAll('.phase');
+    phases.forEach((phase, idx) => {
+      const items = phase.querySelectorAll('.cycler-item');
+      const dots  = phase.querySelectorAll('.phase-dot');
+      if (!items.length) return;
+
+      // Initial state — first item visible, first dot active.
+      items[0].classList.add('on');
+      if (dots[0]) dots[0].classList.add('on');
+
+      // Single-item phases (V3) need no rotation.
+      if (items.length === 1) return;
+
+      const interval = 2200;
+      const stagger  = idx * 600;
+      let i = 0;
+
+      const tick = () => {
+        items[i].classList.remove('on');
+        if (dots[i]) dots[i].classList.remove('on');
+        i = (i + 1) % items.length;
+        items[i].classList.add('on');
+        if (dots[i]) dots[i].classList.add('on');
+      };
+
+      // Start only when the phase enters the viewport.
+      const startObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            setTimeout(() => setInterval(tick, interval), stagger);
+            startObserver.unobserve(phase);
+          }
+        });
+      }, { threshold: 0.4 });
+      startObserver.observe(phase);
     });
-  });
+  }
+  initPhaseCyclers();
 
   /* Subtle parallax on hero window via mouse */
   const heroWindow = document.querySelector('.hero-window');
