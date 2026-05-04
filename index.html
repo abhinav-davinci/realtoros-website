@@ -992,7 +992,7 @@
 
   /* ============== MANIFESTO / OVERTURE ============== */
   .overture {
-    padding: 140px 0 100px;
+    padding: 96px 0 80px;
     position: relative;
     overflow: hidden;
   }
@@ -1070,7 +1070,7 @@
 
   /* ============== MODULES OVERVIEW ============== */
   .modules {
-    padding: 100px 0;
+    padding: 80px 0;
     background: var(--bg-2);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
@@ -1149,7 +1149,7 @@
 
   /* ============== FEATURE BLOCK (ALTERNATING) ============== */
   .feat {
-    padding: 120px 0;
+    padding: 88px 0;
     border-bottom: 1px solid var(--line);
     position: relative;
     overflow: hidden;
@@ -1334,15 +1334,19 @@
   .kcard.book { border-color: rgba(74,222,154,0.3); background: linear-gradient(180deg, rgba(74,222,154,0.08), rgba(74,222,154,0.02)); }
   .kcard.book .kcard-tag { background: rgba(74,222,154,0.12); color: var(--mint-300); border-color: rgba(74,222,154,0.25); }
   .kcard.in-motion {
-    animation: kanban-drift 14s ease-in-out infinite;
-    box-shadow: 0 0 0 1px rgba(124,92,255,0.4), 0 8px 30px rgba(124,92,255,0.25);
+    animation: kanban-drift 14s cubic-bezier(.45,.05,.55,.95) infinite;
+    box-shadow: 0 0 0 1px rgba(124,92,255,0.45), 0 8px 30px rgba(124,92,255,0.30);
+    will-change: transform, opacity;
   }
+  /* The card walks 3 columns (New → Contacted → Site visit), then fades
+     out before it would overlap the existing Booked card. Fade-in on the
+     other side completes the loop without a teleport flash. */
   @keyframes kanban-drift {
-    0%, 100% { transform: translateX(0); }
-    25%, 35% { transform: translateX(0); }
-    40%, 50% { transform: translateX(calc(100% + 10px)); }
-    55%, 65% { transform: translateX(calc(200% + 20px)); }
-    70%, 80% { transform: translateX(calc(300% + 30px)); }
+    0%, 16%   { transform: translateX(0); opacity: 0; }
+    20%, 30%  { transform: translateX(0); opacity: 1; }
+    36%, 46%  { transform: translateX(calc(100% + 10px)); opacity: 1; }
+    52%, 62%  { transform: translateX(calc(200% + 20px)); opacity: 1; }
+    72%, 100% { transform: translateX(calc(200% + 20px)); opacity: 0; }
   }
 
   /* SLA escalation banner */
@@ -1435,7 +1439,7 @@
 
   /* ============== TRYTHAT INTEGRATION HERO BLOCK ============== */
   .trythat {
-    padding: 140px 0;
+    padding: 96px 0;
     background:
       radial-gradient(60% 60% at 50% 30%, rgba(124,92,255,0.18) 0%, transparent 60%),
       var(--bg);
@@ -1693,7 +1697,7 @@
      plan advancing by itself. No table, no filters, no scrolling.
      ============================================================ */
   .spec {
-    padding: 120px 0;
+    padding: 88px 0;
     background: var(--bg);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
@@ -1875,14 +1879,14 @@
 
   /* ============== CRITICAL INSTRUCTIONS / MANIFESTO ============== */
   .instr {
-    padding: 140px 0;
+    padding: 96px 0;
     background:
       radial-gradient(50% 50% at 0% 50%, rgba(255,176,74,0.08) 0%, transparent 60%),
       radial-gradient(50% 50% at 100% 50%, rgba(124,92,255,0.10) 0%, transparent 60%),
       var(--bg-2);
   }
   .instr-grid {
-    display: grid; grid-template-columns: repeat(6, 1fr);
+    display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 1px;
     background: var(--line);
     border: 1px solid var(--line);
@@ -1893,10 +1897,8 @@
   .instr-card {
     background: var(--bg);
     padding: 32px 28px;
-    grid-column: span 2;
     position: relative;
   }
-  .instr-card.wide { grid-column: span 3; }
   .instr-num {
     font-family: 'JetBrains Mono', monospace; font-size: 11px;
     color: var(--fg-4); letter-spacing: 0.1em;
@@ -1917,7 +1919,7 @@
 
   /* ============== TESTIMONIAL ============== */
   .testi {
-    padding: 140px 0;
+    padding: 96px 0;
     background: var(--bg);
     text-align: center;
     position: relative;
@@ -1965,7 +1967,7 @@
 
   /* ============== FINAL CTA ============== */
   .cta {
-    padding: 140px 0;
+    padding: 112px 0;
     background:
       radial-gradient(80% 80% at 50% 100%, rgba(124,92,255,0.35) 0%, transparent 60%),
       radial-gradient(60% 60% at 50% 0%, rgba(255,176,74,0.10) 0%, transparent 60%),
@@ -2627,7 +2629,6 @@
     .foot-grid > .foot-col:nth-child(5) { display: none; }
     .overture-stats { grid-template-columns: repeat(2, 1fr); }
     .instr-grid { grid-template-columns: repeat(2, 1fr); }
-    .instr-card, .instr-card.wide { grid-column: span 1; }
     .nav-links { display: none; }
     .journey { max-width: 100%; }
   }
@@ -3749,13 +3750,13 @@
     </div>
 
     <div class="instr-grid">
-      <div class="instr-card indigo wide">
+      <div class="instr-card indigo">
         <div class="instr-num">01 / Six</div>
         <div class="instr-title">Trythat.ai integration <em>from Day 1.</em></div>
-        <p class="instr-body">The lead handoff from Trythat.ai into RealtorOS and the unit availability sync back to Trythat.ai are built into the first version. Not a later add-on. Retrofitting integrations is always more expensive — and we refuse to start in debt.</p>
+        <p class="instr-body">The lead handoff into RealtorOS and the unit availability sync back to Trythat.ai are built into the first version. Not a later add-on. Retrofitting is always more expensive.</p>
       </div>
 
-      <div class="instr-card rose wide">
+      <div class="instr-card rose">
         <div class="instr-num">02 / Six</div>
         <div class="instr-title">Duplicate detection <em>is non-negotiable.</em></div>
         <p class="instr-body">Without it, your lead count is inflated, your execs waste calls, and your reporting lies. Live before launch. No exceptions.</p>
