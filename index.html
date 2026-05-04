@@ -899,6 +899,42 @@
     to { transform: translateY(0); opacity: 1; }
   }
   .stream-row:last-child { border-bottom: none; }
+
+  /* ============================================================
+     STREAM-ANIMATED — score-cluster cycle
+     The lead inbox in the Capture section toggles between two
+     orderings: chronological (default) and grouped-by-score (hot
+     at top, warm middle, cold bottom). Each row carries two CSS
+     vars: --di (default index) and --si (sorted index). Toggling
+     the .sorted class on the parent translates each row by the
+     delta between the two indices, so they all animate to their
+     new positions in lockstep — FLIP-style smooth reorder.
+     ============================================================ */
+  .stream-animated .stream-row {
+    --row-h: 52px;
+    --shift: calc((var(--si, 0) - var(--di, 0)) * var(--row-h));
+    transform: translateY(0);
+    transition: transform 0.85s cubic-bezier(.4,.05,.2,1);
+    will-change: transform;
+    animation: none; /* override the entrance slide-in so transforms aren't fought */
+  }
+  [data-theme="light"] .stream-animated .stream-row {
+    --row-h: 60px; /* light theme has 4px gap between rows */
+  }
+  .stream-animated.sorted .stream-row {
+    transform: translateY(var(--shift));
+  }
+  /* Subtle pill-glow boost when sorted: hot rows lift, cold rows fade slightly */
+  .stream-animated.sorted .stream-row .score-pill.hot {
+    box-shadow: 0 0 0 1px rgba(255,106,106,0.25), 0 4px 14px rgba(255,106,106,0.20);
+  }
+  [data-theme="light"] .stream-animated.sorted .stream-row .score-pill.hot {
+    box-shadow: 0 0 0 1px rgba(153,27,27,0.18), 0 4px 14px rgba(153,27,27,0.18);
+  }
+  .stream-animated.sorted .stream-row .score-pill.cold {
+    opacity: 0.78;
+  }
+
   .stream-row .src {
     width: 22px; height: 22px; border-radius: 6px;
     display: grid; place-items: center;
@@ -3200,11 +3236,13 @@
       <div class="viz reveal">
         <div class="viz-head">
           <div class="viz-title">Lead inbox <small>· last 90 minutes</small></div>
-          <div class="stream-head" style="padding:0;"><span class="live">all sources · live</span></div>
+          <div class="stream-head" style="padding:0;">
+            <span class="live" id="streamLabel">all sources · live</span>
+          </div>
         </div>
         <div class="viz-body">
-          <div class="stream">
-            <div class="stream-row">
+          <div class="stream stream-animated" id="streamAnim">
+            <div class="stream-row" style="--di:0;--si:0">
               <span class="src src-tt">TT</span>
               <div class="stream-info">
                 <div class="stream-name">Priya Mehta · 3BHK · Kharadi</div>
@@ -3213,7 +3251,7 @@
               <span class="score-pill hot">9.2 hot</span>
               <span class="stream-time">2m</span>
             </div>
-            <div class="stream-row">
+            <div class="stream-row" style="--di:1;--si:3">
               <span class="src src-web">W</span>
               <div class="stream-info">
                 <div class="stream-name">Rohan Gupta · 2BHK enquiry</div>
@@ -3222,7 +3260,7 @@
               <span class="score-pill warm">7.4 warm</span>
               <span class="stream-time">11m</span>
             </div>
-            <div class="stream-row">
+            <div class="stream-row" style="--di:2;--si:6">
               <span class="src src-wa">WA</span>
               <div class="stream-info">
                 <div class="stream-name">+91 98765 ••43 · Missed call</div>
@@ -3231,7 +3269,7 @@
               <span class="score-pill cold">5.5 cold</span>
               <span class="stream-time">23m</span>
             </div>
-            <div class="stream-row">
+            <div class="stream-row" style="--di:3;--si:5">
               <span class="src src-fb">M</span>
               <div class="stream-info">
                 <div class="stream-name">Anita Sharma · Lead form</div>
@@ -3240,7 +3278,7 @@
               <span class="score-pill warm">6.8 warm</span>
               <span class="stream-time">41m</span>
             </div>
-            <div class="stream-row">
+            <div class="stream-row" style="--di:4;--si:4">
               <span class="src src-99">99</span>
               <div class="stream-info">
                 <div class="stream-name">Sneha Patil · 99acres listing</div>
@@ -3249,7 +3287,7 @@
               <span class="score-pill warm">7.0 warm</span>
               <span class="stream-time">52m</span>
             </div>
-            <div class="stream-row">
+            <div class="stream-row" style="--di:5;--si:2">
               <span class="src src-cp">CP</span>
               <div class="stream-info">
                 <div class="stream-name">Vikram T. · Site visit request</div>
@@ -3258,7 +3296,7 @@
               <span class="score-pill warm">7.8 warm</span>
               <span class="stream-time">1h</span>
             </div>
-            <div class="stream-row">
+            <div class="stream-row" style="--di:6;--si:1">
               <span class="src src-mb">MB</span>
               <div class="stream-info">
                 <div class="stream-name">Aditya N. · MagicBricks enquiry</div>
@@ -3267,7 +3305,7 @@
               <span class="score-pill hot">8.6 hot</span>
               <span class="stream-time">1h 14m</span>
             </div>
-            <div class="stream-row">
+            <div class="stream-row" style="--di:7;--si:7">
               <span class="src src-ig">IG</span>
               <div class="stream-info">
                 <div class="stream-name">Karan D. · Brochure download</div>
@@ -3940,6 +3978,47 @@
     });
   }, { threshold: 0.6 });
   document.querySelectorAll('.lc-bar-fill[data-w]').forEach(el => barsObserver.observe(el));
+
+  /* Capture — score-cluster cycle.
+     Toggle the .sorted class on the lead-inbox stream every few
+     seconds so the rows animate between chronological order and
+     grouped-by-score order. Only runs when the inbox is in view
+     (so no wasted work + no animation jitter from the page load). */
+  (function initStreamCluster() {
+    const stream = document.getElementById('streamAnim');
+    const label  = document.getElementById('streamLabel');
+    if (!stream) return;
+
+    const HOLD_DEFAULT = 4200;   // ms in chronological state
+    const HOLD_SORTED  = 4200;   // ms in score-grouped state
+    const TRANSITION   = 850;    // matches CSS transform transition
+
+    const tickToSorted = () => {
+      stream.classList.add('sorted');
+      if (label) label.textContent = 'sorted by score';
+      setTimeout(tickToDefault, HOLD_SORTED + TRANSITION);
+    };
+    const tickToDefault = () => {
+      stream.classList.remove('sorted');
+      if (label) label.textContent = 'all sources · live';
+      setTimeout(tickToSorted, HOLD_DEFAULT + TRANSITION);
+    };
+
+    // Start once the inbox enters the viewport
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            setTimeout(tickToSorted, HOLD_DEFAULT);
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      io.observe(stream);
+    } else {
+      setTimeout(tickToSorted, HOLD_DEFAULT);
+    }
+  })();
 
   /* Hero — Lead's Journey cycler.
      Five stages, each gets ~2.6s of focus, with stage 5 lingering longer
