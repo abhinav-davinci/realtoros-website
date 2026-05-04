@@ -1,0 +1,6 @@
+# macOS
+.DS_Store
+
+# Local dev artifacts
+.audit/
+.playwright-mcp/
