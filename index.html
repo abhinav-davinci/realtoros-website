@@ -909,12 +909,15 @@
      .sorted, every row translates by (si - di) × --row-h in
      lockstep — FLIP-style smooth reorder.
 
-     --row-h is set by JS to the actual measured distance between
-     two consecutive rows (theme-aware, font-aware) so the rows
-     land exactly on their grid positions with no overlap.
+     --row-h is declared on the .stream-animated PARENT so that
+     JS-set inline overrides cascade down. Declaring it on .stream-row
+     directly broke this — children's own var def wins over the
+     parent's inherited value, and the JS measurement was ignored.
      ============================================================ */
+  .stream-animated {
+    --row-h: 56px; /* JS overrides this on the parent with the measured value */
+  }
   .stream-animated .stream-row {
-    --row-h: 56px; /* JS overrides this with the measured value */
     --shift: calc((var(--si, 0) - var(--di, 0)) * var(--row-h));
     transform: translateY(0);
     transition: transform 1s cubic-bezier(.22,1,.36,1);
