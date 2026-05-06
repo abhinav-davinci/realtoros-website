@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>RealtorOS — An execution engine for real estate sales teams</title>
-<meta name="description" content="An execution engine for real estate sales teams. RealtorOS brings every lead — WhatsApp, ads, brokers, portals, walk-ins — into one pipeline. Your team knows who to call, when to act, and what will close." />
+<meta name="description" content="An execution engine for real estate sales teams. RealtorOS brings every lead from WhatsApp, ads, brokers, portals and walk-ins into one pipeline. Your team knows who to call, when to act, and what will close." />
 <script>
   /* Set theme as early as possible to prevent FOUC.
      Light is the default for everyone; the user can switch to
@@ -241,11 +241,11 @@
   }
   .nav-links a.nav-link:hover { color: var(--fg); background: var(--line); }
   .nav-links a.nav-link.active {
-    color: white;
-    background: var(--brand);
-    box-shadow: 0 0 0 1px rgba(124,92,255,0.18) inset, 0 4px 14px rgba(124,92,255,0.30);
+    color: var(--brand);
+    background: var(--brand-tint);
+    font-weight: 600;
   }
-  .nav-links a.nav-link.active:hover { background: var(--brand); }
+  .nav-links a.nav-link.active:hover { background: var(--brand-tint); }
   [data-theme="light"] .nav-links {
     background: rgba(10,10,18,0.02);
     border-color: var(--line-2);
@@ -254,9 +254,9 @@
     background: rgba(10,10,18,0.05);
   }
   [data-theme="light"] .nav-links a.nav-link.active {
-    background: var(--brand);
-    color: white;
-    box-shadow: 0 4px 14px rgba(90,56,230,0.28);
+    background: var(--brand-tint);
+    color: var(--brand-deep);
+    font-weight: 600;
   }
 
   .nav-actions { display: flex; align-items: center; gap: 8px; }
@@ -2991,21 +2991,22 @@
       <div class="hero-copy">
         <span class="hero-tag">
           <span class="pulse"></span>
-          <span>For builders tired of chasing leads</span>
-          <span class="tag-dot"></span>
-          <span>India</span>
+          <span>Sales OS for builders tired of chasing leads</span>
         </span>
 
         <h1 class="h1">
-          Your leads aren't the&nbsp;problem.<br>
-          Your <span class="ink">system</span> is.
+          Every lead.<br>
+          <span class="ink">One inbox.</span><br>
+          Every booking.
         </h1>
 
         <p class="hero-sub">
-          Leads are coming from everywhere — WhatsApp, ads, brokers, portals.
-          But your team is still juggling spreadsheets, missing follow-ups, and guessing priorities.
-          <strong>RealtorOS</strong> brings everything into one system, so your team knows who to
-          call, when to act, and what will close.
+          Your enquiries come in from WhatsApp, 99acres, Meta ads, channel partners and
+          <strong>Trythat.ai</strong>, but right now they're scattered across six different
+          places. RealtorOS collects every one of them, scores each lead before your exec picks
+          up the phone, routes it to the right person, and keeps the follow-ups going
+          automatically. Nothing slips through. And your team stops copy-pasting from Ads Manager
+          at midnight.
         </p>
 
         <div class="hero-cta-row">
@@ -3029,7 +3030,7 @@
           </span>
           <span class="hero-meta-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-            Built for active projects, not theory
+            Built for live projects
           </span>
         </div>
       </div>
@@ -3077,7 +3078,7 @@
             </div>
             <div class="lead-hero-name">Priya Mehta</div>
             <div class="lead-meta">3BHK · Kharadi · ₹1.2 – 1.5 Cr</div>
-            <div class="lead-quote">&ldquo;Looking for a ready-to-move 3BHK in Kharadi — possession by Diwali.&rdquo;</div>
+            <div class="lead-quote">&ldquo;Looking for a ready-to-move 3BHK in Kharadi, possession by Diwali.&rdquo;</div>
             <div class="lead-foot">
               <span class="score-pill hot">9.2 hot</span>
               <span>auto-tagged · skyline heights</span>
@@ -3239,14 +3240,14 @@
     <p class="overture-sub reveal">
       Real estate teams don't lose deals to a slow market. They lose them when leads go cold
       because nobody followed up, when hot buyers get treated like cold traffic, when half the
-      morning is spent figuring out who should do what. The problem isn't effort — it's the lack
+      morning is spent figuring out who should do what. The problem isn't effort. It's the lack
       of a system.
     </p>
 
     <div class="overture-stats reveal">
       <div class="ov-stat">
         <div class="num">Most</div>
-        <div class="lbl">Leads go untouched — buried across platforms nobody opens together.</div>
+        <div class="lbl">Leads go untouched, buried across platforms nobody opens together.</div>
       </div>
       <div class="ov-stat">
         <div class="num">Hours</div>
@@ -3282,7 +3283,7 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         </div>
         <div class="mod-title">All your leads. <em>One inbox.</em></div>
-        <p class="mod-desc">No more switching tabs or checking multiple platforms. Every lead — WhatsApp, ads, brokers, portals, walk-ins — lands in one place, tagged and ready.</p>
+        <p class="mod-desc">No more switching tabs or checking multiple platforms. Every lead from WhatsApp, ads, brokers, portals and walk-ins lands in one place, tagged and ready.</p>
         <div class="mod-tags">
           <span class="mod-tag">10 channels</span>
           <span class="mod-tag">trythat.ai sync</span>
@@ -3296,7 +3297,7 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
         </div>
         <div class="mod-title">Know who's <em>serious</em>, instantly.</div>
-        <p class="mod-desc">Not all leads are equal. RealtorOS scores every lead on capture and highlights the ones most likely to convert — so your team works the right pipeline first.</p>
+        <p class="mod-desc">Not all leads are equal. RealtorOS scores every lead on capture and highlights the ones most likely to convert, so your team works the right pipeline first.</p>
         <div class="mod-tags">
           <span class="mod-tag">auto-score</span>
           <span class="mod-tag">duplicate merge</span>
@@ -3310,7 +3311,7 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="6" height="18" rx="1"/><rect x="11" y="3" width="6" height="12" rx="1"/><rect x="19" y="3" width="2" height="7" rx="1"/></svg>
         </div>
         <div class="mod-title">The right lead, <em>the right person.</em></div>
-        <p class="mod-desc">No more random assignments. Leads go to the salesperson most likely to close them — by project, location, budget band or round-robin. SLA escalation is built in.</p>
+        <p class="mod-desc">No more random assignments. Leads go to the salesperson most likely to close them, set by project, location, budget band or round-robin. SLA escalation is built in.</p>
         <div class="mod-tags">
           <span class="mod-tag">7-stage kanban</span>
           <span class="mod-tag">SLA escalation</span>
@@ -3324,7 +3325,7 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-8-3 18-6-7-9-3z"/></svg>
         </div>
         <div class="mod-title">Never miss a <em>follow-up.</em></div>
-        <p class="mod-desc">Automated reminders, WhatsApp drips on the official Business API, and daily call lists make sure every lead gets worked properly — not just the ones your team remembers.</p>
+        <p class="mod-desc">Automated reminders, WhatsApp drips on the official Business API, and daily call lists make sure every lead gets worked properly, not just the ones your team remembers.</p>
         <div class="mod-tags">
           <span class="mod-tag">whatsapp drips</span>
           <span class="mod-tag">slot booking</span>
@@ -3352,7 +3353,7 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 6-6"/></svg>
         </div>
         <div class="mod-title">From pipeline <em>to revenue.</em></div>
-        <p class="mod-desc">See exactly what's converting and why. Source quality, exec performance, funnel drop-off, sales velocity per project — on one screen, exportable to Excel.</p>
+        <p class="mod-desc">See exactly what's converting and why. Source quality, exec performance, funnel drop-off, sales velocity per project. All on one screen, exportable to Excel.</p>
         <div class="mod-tags">
           <span class="mod-tag">owner morning view</span>
           <span class="mod-tag">source ROI</span>
@@ -3373,7 +3374,7 @@
       <div class="feat-copy">
         <div class="feat-eyebrow label label-accent">// 01 · Capture</div>
         <h3 class="h3">All your leads.<br>One inbox.</h3>
-        <p class="feat-desc">No more switching tabs. No screenshots forwarded from WhatsApp groups. Leads from ten channels land here within seconds — tagged with project, BHK and budget on the way in.</p>
+        <p class="feat-desc">No more switching tabs. No screenshots forwarded from WhatsApp groups. Leads from ten channels land here within seconds, tagged with project, BHK and budget on the way in.</p>
         <ul class="feat-list">
           <li><span class="num">01</span><span><strong>Portals.</strong> Leads from 99acres, MagicBricks and NoBroker drop straight in. No manual entry.</span></li>
           <li><span class="num">02</span><span><strong>WhatsApp and missed calls.</strong> A buyer rings or messages your sales number and a lead record is created with an auto-reply.</span></li>
@@ -3481,11 +3482,11 @@
       <div class="feat-copy">
         <div class="feat-eyebrow label label-accent">// 02 · Scoring</div>
         <h3 class="h3">Stop treating every<br>lead the same.</h3>
-        <p class="feat-desc">Some buyers are browsing. Some are ready to book. RealtorOS scores every lead on the way in — budget match, timeline, intent, source quality — and your team's morning call list is already sorted by who's most likely to close.</p>
+        <p class="feat-desc">Some buyers are browsing. Some are ready to book. RealtorOS scores every lead on the way in, looking at budget match, timeline, intent and source quality. Your team's morning call list is already sorted by who's most likely to close.</p>
         <ul class="feat-list">
           <li><span class="num">01</span><span><strong>Scored on capture.</strong> No manual triage, no rating spreadsheets, no &ldquo;I think this one's hot&rdquo;.</span></li>
           <li><span class="num">02</span><span><strong>Duplicates merged.</strong> Same phone or email from two channels becomes one lead. Two execs don't call the same buyer.</span></li>
-          <li><span class="num">03</span><span><strong>Tags applied automatically.</strong> Project, configuration (2BHK / 3BHK / 4BHK), and budget band — set on the way in.</span></li>
+          <li><span class="num">03</span><span><strong>Tags applied automatically.</strong> Project, configuration (2BHK / 3BHK / 4BHK), and budget band, all set on the way in.</span></li>
           <li><span class="num">04</span><span><strong>Score updates with behaviour.</strong> Opened the email? Replied on WhatsApp? Visited site? The rating moves.</span></li>
           <li><span class="num">05</span><span><strong>Lost reasons recorded.</strong> Required when you close a lead, so you can see the patterns at quarter-end.</span></li>
         </ul>
@@ -3547,11 +3548,11 @@
       <div class="feat-copy">
         <div class="feat-eyebrow label label-accent">// 03 · Pipeline</div>
         <h3 class="h3">Your team should sell,<br>not manage chaos.</h3>
-        <p class="feat-desc">A drag-and-drop Kanban from <span class="mono" style="color:var(--fg);">New</span> to <span class="mono" style="color:var(--mint-300);">Booked</span>. Leads go to the right person automatically. If a lead sits past your SLA, the manager hears about it. If it stays cold, it gets reassigned. Your salespeople sell — they don't manage the system.</p>
+        <p class="feat-desc">A drag-and-drop Kanban from <span class="mono" style="color:var(--fg);">New</span> to <span class="mono" style="color:var(--mint-300);">Booked</span>. Leads go to the right person automatically. If a lead sits past your SLA, the manager hears about it. If it stays cold, it gets reassigned. Your salespeople sell. They don't manage the system.</p>
         <ul class="feat-list">
           <li><span class="num">01</span><span><strong>Seven stages.</strong> New → Contacted → Site Visit Scheduled → Site Visit Done → Negotiation → Booked → Lost.</span></li>
           <li><span class="num">02</span><span><strong>SLAs you set.</strong> &ldquo;Call within 1 hour, escalate after 2.&rdquo; You decide. The system enforces.</span></li>
-          <li><span class="num">03</span><span><strong>Auto-assignment.</strong> Round-robin, or by project, location, or budget band — your choice.</span></li>
+          <li><span class="num">03</span><span><strong>Auto-assignment.</strong> Round-robin, or by project, location, or budget band. Your choice.</span></li>
           <li><span class="num">04</span><span><strong>Mobile-first.</strong> Logging a call, scheduling a visit, or moving a stage takes two taps.</span></li>
         </ul>
       </div>
@@ -3636,11 +3637,11 @@
       <div class="feat-copy">
         <div class="feat-eyebrow label label-accent">// 04 · Inventory</div>
         <h3 class="h3">Turn interest<br>into bookings.</h3>
-        <p class="feat-desc">Live availability inside every lead. Hold a flat for a serious buyer for 24 to 48 hours — it releases itself if the deal doesn't close. Mark Booked, and the legal flow, payment schedule, token receipt and Trythat.ai update on their own. No more &ldquo;sorry, that one went yesterday&rdquo; at a site visit.</p>
+        <p class="feat-desc">Live availability inside every lead. Hold a flat for a serious buyer for 24 to 48 hours. It releases itself if the deal doesn't close. Mark Booked, and the legal flow, payment schedule, token receipt and Trythat.ai update on their own. No more &ldquo;sorry, that one went yesterday&rdquo; at a site visit.</p>
         <ul class="feat-list">
           <li><span class="num">01</span><span><strong>Availability inside the lead.</strong> No switching tabs to check what's free.</span></li>
           <li><span class="num">02</span><span><strong>Soft-block with timer.</strong> Hold a flat for 24 to 48 hours. If it doesn't convert, it goes back on the list.</span></li>
-          <li><span class="num">03</span><span><strong>Booking triggers the rest.</strong> Legal, payment schedule, token receipt — all start automatically.</span></li>
+          <li><span class="num">03</span><span><strong>Booking triggers the rest.</strong> Legal, payment schedule, token receipt, all start automatically.</span></li>
           <li><span class="num">04</span><span><strong>Trythat.ai stays in sync.</strong> Buyers see real availability, not yesterday's data.</span></li>
         </ul>
       </div>
@@ -3752,7 +3753,7 @@
       <div class="feat-copy">
         <div class="feat-eyebrow label label-accent">// 05 · Visibility</div>
         <h3 class="h3">Know exactly<br>what's happening.</h3>
-        <p class="feat-desc">No more asking &ldquo;what's the status of this lead?&rdquo; Open RealtorOS at 9 AM and see new leads, pending follow-ups, today's visits, this week's bookings, source quality, exec performance, funnel drop-off, project velocity — all on one screen, all exportable to Excel.</p>
+        <p class="feat-desc">No more asking &ldquo;what's the status of this lead?&rdquo; Open RealtorOS at 9 AM and see new leads, pending follow-ups, today's visits, this week's bookings, source quality, exec performance, funnel drop-off and project velocity. All on one screen, all exportable to Excel.</p>
         <ul class="feat-list">
           <li><span class="num">01</span><span><strong>The morning view.</strong> One screen with the four numbers you actually want at 9 AM.</span></li>
           <li><span class="num">02</span><span><strong>Source quality.</strong> Which channels convert. Which ones eat ad spend. Stop guessing.</span></li>
@@ -3839,10 +3840,10 @@
       <div class="feat-copy">
         <div class="feat-eyebrow label label-accent">// 06 · Mobile-first</div>
         <h3 class="h3">Built where your<br>team actually works.</h3>
-        <p class="feat-desc">Your execs aren't at desks. They're at site, in meetings, in the car between visits. Logging a call, scheduling a visit, moving a stage, holding a unit — each is <strong style="color: var(--fg);">two taps</strong>. They won't fight the tool. They'll actually use it.</p>
+        <p class="feat-desc">Your execs aren't at desks. They're at site, in meetings, in the car between visits. Logging a call, scheduling a visit, moving a stage or holding a unit takes <strong style="color: var(--fg);">two taps</strong>. They won't fight the tool. They'll actually use it.</p>
         <ul class="feat-list">
           <li><span class="num">01</span><span><strong>Stage updates in two taps</strong> from anywhere.</span></li>
-          <li><span class="num">02</span><span><strong>Walk-in entry on the spot</strong> — location and timestamp recorded for you.</span></li>
+          <li><span class="num">02</span><span><strong>Walk-in entry on the spot.</strong> Location and timestamp recorded for you.</span></li>
           <li><span class="num">03</span><span><strong>Today's call list</strong> opens on login, already sorted by score and SLA.</span></li>
           <li><span class="num">04</span><span><strong>WhatsApp templates</strong> ready to send. Tap, send, done.</span></li>
         </ul>
@@ -3877,7 +3878,7 @@
             <!-- App content -->
             <div class="phone-h">
               <div>
-                <h6>Today's calls <span class="muted">— 9 pending</span></h6>
+                <h6>Today's calls <span class="muted">· 9 pending</span></h6>
               </div>
               <button class="phone-action" aria-label="New">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
@@ -3950,15 +3951,15 @@
   <div class="wrap">
     <div class="section-head">
       <div class="label label-accent">// non-negotiables · from the spec</div>
-      <h2 class="h2" style="margin-top:18px;">What we won't<br>trade away.</h2>
-      <p class="sub">Six lines we wrote into the RealtorOS spec — non-negotiable, regardless of timeline, budget or convenience.</p>
+      <h2 class="h2" style="margin-top:18px;">Promises we keep.</h2>
+      <p class="sub">Six lines we wrote into the RealtorOS spec. Non-negotiable, regardless of timeline, budget or convenience.</p>
     </div>
 
     <div class="instr-grid">
       <div class="instr-card indigo">
         <div class="instr-num">01 / Six</div>
         <div class="instr-title">Trythat.ai works on day one.</div>
-        <p class="instr-body">The lead handoff and the unit-availability sync ship in version one — not later. Bolting integrations on after launch always costs more.</p>
+        <p class="instr-body">The lead handoff and the unit-availability sync ship in version one. Not later. Bolting integrations on after launch always costs more.</p>
       </div>
 
       <div class="instr-card rose">
@@ -3970,7 +3971,7 @@
       <div class="instr-card mint">
         <div class="instr-num">03 / Six</div>
         <div class="instr-title">Mobile is the default.</div>
-        <p class="instr-body">Sales lives on the road. Every action — log a call, schedule a visit, move a stage — is two taps on a phone.</p>
+        <p class="instr-body">Sales lives on the road. So logging a call, scheduling a visit or moving a stage takes two taps on a phone.</p>
       </div>
 
       <div class="instr-card">
@@ -3988,7 +3989,7 @@
       <div class="instr-card mint">
         <div class="instr-num">06 / Six</div>
         <div class="instr-title">Your data is yours.</div>
-        <p class="instr-body">Excel and CSV exports, whenever you want them. Leads, pipeline, reports — all of it. No lock-in.</p>
+        <p class="instr-body">Excel and CSV exports, whenever you want them. Leads, pipeline, reports, all of it. No lock-in.</p>
       </div>
     </div>
   </div>
@@ -4003,7 +4004,7 @@
     <div class="label">// what changed</div>
     <p class="testi-quote">
       &ldquo;We were running three projects on six WhatsApp groups and one Excel sheet.<br>
-      Now Monday starts with <span class="hi">one screen</span> — every lead, every miss, every rupee of ad spend in one place.&rdquo;
+      Now Monday starts with <span class="hi">one screen</span>. Every lead, every miss, every rupee of ad spend in one place.&rdquo;
     </p>
     <div class="testi-author">
       <span class="av">AS</span>
@@ -4026,7 +4027,7 @@
       If your leads are scattered,<br>
       your revenue is too.
     </h2>
-    <p class="cta-sub">Bring structure to your sales process. Close more — without increasing spend. Twenty minutes on a call, connected to your real lead sources and inventory, and you'll see how it runs.</p>
+    <p class="cta-sub">Bring structure to your sales process. Close more without increasing spend. Twenty minutes on a call, connected to your real lead sources and inventory, and you'll see how it runs.</p>
     <div class="cta-actions">
       <a href="#" class="btn btn-pri btn-lg">
         See RealtorOS in action
