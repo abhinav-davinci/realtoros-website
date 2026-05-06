@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RealtorOS — Hero A/B · Convergence vs Living Floor</title>
+<meta name="description" content="Two ambitious hero treatments for RealtorOS. Same copy. Two different motion-design ideas: lead-card convergence vs a live isometric building view." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@1,9..144,300..700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     RealtorOS — Hero A/B
+     Variant 1: The Convergence (lead-card particle motion)
+     Variant 2: The Living Floor (isometric building, real-time bookings)
+     ============================================================ */
+  :root {
+    --canvas:           #FAF9F5;
+    --surface:          #FFFFFF;
+
+    --line:             rgba(10,10,18,0.07);
+    --line-2:           rgba(10,10,18,0.11);
+    --line-3:           rgba(10,10,18,0.16);
+
+    --fg:               #0A0A12;
+    --fg-2:             #3A3A4A;
+    --fg-3:             #6B6877;
+    --fg-4:             #9B98A8;
+    --fg-5:             #D4D2DC;
+
+    --brand:            #7C5CFF;
+    --brand-deep:       #5A38E6;
+    --brand-tint:       #ECE9FF;
+    --brand-bright:     #A693FF;
+
+    --mint-300:         #15803D;
+    --mint-bg:          #DCFCE7;
+    --rose-300:         #DC2626;
+    --amber-500:        #F59E0B;
+    --gold-500:         #CA8A04;
+    --gold-tint:        #FEF3C7;
+
+    --shadow-1:         0 1px 2px rgba(20,19,26,0.06), 0 0 0 1px rgba(20,19,26,0.04);
+    --shadow-2:         0 4px 8px rgba(20,19,26,0.06), 0 1px 2px rgba(20,19,26,0.04);
+    --shadow-3:         0 12px 24px rgba(20,19,26,0.08), 0 4px 6px rgba(20,19,26,0.04);
+    --shadow-4:         0 24px 48px rgba(20,19,26,0.10), 0 8px 12px rgba(20,19,26,0.04);
+    --shadow-5:         0 40px 80px rgba(20,19,26,0.14), 0 16px 24px rgba(20,19,26,0.06);
+
+    --r-md:             8px;
+    --r-lg:             10px;
+    --r-xl:             14px;
+    --r-2xl:            20px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--canvas);
+    color: var(--fg);
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    font-size: 16px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; background: none; border: none; cursor: pointer; color: inherit; }
+
+  /* ============== TOC SWITCHER ============== */
+  .variant-toc {
+    position: fixed; top: 16px; right: 16px; z-index: 200;
+    display: flex; gap: 4px;
+    padding: 4px;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    box-shadow: var(--shadow-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.04em;
+  }
+  .variant-toc a {
+    padding: 6px 12px; border-radius: 999px; color: var(--fg-3);
+    transition: color .18s, background .18s;
+  }
+  .variant-toc a:hover { color: var(--fg); background: rgba(10,10,18,0.04); }
+
+  .variant-frame {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  .variant-label {
+    position: absolute; top: 16px; left: 16px; z-index: 10;
+    padding: 6px 12px;
+    background: rgba(10,10,18,0.04);
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--brand);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  /* ============== SHARED HERO PRIMITIVES ============== */
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; position: relative; }
+
+  .h-tag {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 6px 14px 6px 8px;
+    border: 1px solid var(--line-2);
+    background: rgba(10,10,18,0.02);
+    border-radius: 999px;
+    font-size: 12.5px; color: var(--fg-2);
+  }
+  .h-tag .pulse {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--mint-300);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(21,128,61,0.55); }
+    70%  { box-shadow: 0 0 0 10px rgba(21,128,61,0); }
+    100% { box-shadow: 0 0 0 0 rgba(21,128,61,0); }
+  }
+
+  .h-h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    color: var(--fg);
+    line-height: 1.0;
+    font-size: clamp(48px, 6vw, 76px);
+    margin: 28px 0 24px;
+  }
+  .h-h1 .ink {
+    font-style: normal; font-weight: 600;
+    color: var(--brand);
+  }
+
+  .h-sub {
+    font-size: 17px; color: var(--fg-2); line-height: 1.55;
+    max-width: 540px; margin-bottom: 28px;
+  }
+  .h-sub strong { color: var(--fg); font-weight: 500; }
+
+  .h-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 22px;
+    border-radius: 999px;
+    font-size: 14.5px; font-weight: 600;
+    transition: all .18s ease;
+    line-height: 1; white-space: nowrap;
+    border: 1px solid transparent;
+  }
+  .h-cta-pri {
+    background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+    color: white;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.18) inset,
+      0 8px 24px rgba(124,92,255,0.35);
+  }
+  .h-cta-pri:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.22) inset,
+      0 14px 40px rgba(124,92,255,0.50);
+  }
+  .h-cta-sec {
+    color: var(--fg-2); border-color: var(--line-2);
+    background: var(--surface);
+  }
+  .h-cta-sec:hover { color: var(--fg); border-color: var(--line-3); }
+  .arrow-r { width: 14px; height: 14px; }
+
+  .h-meta {
+    display: flex; flex-wrap: wrap; gap: 0; align-items: center;
+    color: var(--fg-3); font-size: 13px; margin-top: 24px;
+  }
+  .h-meta-item {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 16px 6px 0;
+    border-right: 1px solid var(--line);
+    margin-right: 16px;
+  }
+  .h-meta-item:last-child { border-right: none; margin-right: 0; }
+  .h-meta svg { color: var(--mint-300); width: 14px; height: 14px; }
+
+  /* ============================================================
+     VARIANT 1 — THE CONVERGENCE
+     Twenty-five lead cards drift in from the viewport edges,
+     each tagged with a real channel. They converge on a vortex
+     that becomes the unified inbox panel. Stages fire in fast
+     succession. Booking emerges. Reset, loop.
+     ============================================================ */
+  .v1 {
+    background:
+      radial-gradient(70% 60% at 70% 50%, rgba(124,92,255,0.10) 0%, transparent 60%),
+      radial-gradient(50% 40% at 30% 30%, rgba(255,176,74,0.06) 0%, transparent 60%),
+      var(--canvas);
+    padding: 80px 0 96px;
+  }
+  .v1 .v1-grid {
+    display: grid;
+    grid-template-columns: 0.95fr 1.1fr;
+    gap: 64px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .v1-particles {
+    position: absolute;
+    inset: 0;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .v1-card {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px 6px 6px;
+    background: rgba(255,255,255,0.92);
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--fg);
+    box-shadow: var(--shadow-2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    white-space: nowrap;
+    transform-origin: center;
+    will-change: transform, opacity;
+  }
+  .v1-card .v1-icon {
+    width: 18px; height: 18px;
+    border-radius: 5px;
+    display: grid; place-items: center;
+    color: white;
+    font-size: 9px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .v1-card .v1-src {
+    color: var(--fg-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+  }
+  .v1-card .v1-name { color: var(--fg); font-weight: 500; }
+  .v1-icon.wa { background: #25D366; }
+  .v1-icon.tt { background: linear-gradient(135deg, #7C5CFF, #5A38E6); }
+  .v1-icon.fb { background: #1877F2; }
+  .v1-icon.ig { background: linear-gradient(135deg, #E1306C, #F77737, #FCAF45); }
+  .v1-icon.go { background: linear-gradient(135deg, #4285F4, #EA4335, #34A853, #FBBC05); }
+  .v1-icon.web { background: var(--fg); }
+  .v1-icon.cp { background: #D97706; }
+  .v1-icon.wi { background: #0F766E; }
+  .v1-icon.ac { background: #DC2626; }
+  .v1-icon.mb { background: #991B1B; }
+
+  .v1-panel-stage {
+    position: relative;
+    z-index: 3;
+    min-height: 540px;
+  }
+  .v1-panel {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(248,247,242,0.92) 100%);
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-2xl);
+    padding: 22px 24px 20px;
+    box-shadow:
+      0 40px 80px rgba(20,19,26,0.16),
+      0 0 0 1px rgba(124,92,255,0.06) inset,
+      0 0 60px rgba(124,92,255,0.10);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .v1-panel.solid { opacity: 1; transform: scale(1); }
+  .v1-panel.solid::before {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: var(--r-2xl);
+    background: radial-gradient(80% 60% at 50% 0%, rgba(124,92,255,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .v1-panel > * { position: relative; }
+
+  /* Panel inner styles (compact journey) */
+  .panel-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 16px;
+  }
+  .panel-head-l {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--fg-2);
+    letter-spacing: 0.04em;
+  }
+  .panel-head-l::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--mint-300);
+    box-shadow: 0 0 8px rgba(21,128,61,0.6);
+    animation: pulse-d 1.6s infinite;
+  }
+  @keyframes pulse-d { 50% { opacity: .35; } }
+  .panel-head-l strong { color: var(--fg); font-weight: 600; }
+  .panel-head-r {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--fg-3);
+  }
+
+  .stages-rail {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 0; margin-bottom: 22px; position: relative;
+  }
+  .stages-rail::before {
+    content: '';
+    position: absolute; top: 7px; left: 8%; right: 8%;
+    height: 1px; background: var(--line-2); z-index: 0;
+  }
+  .stage-step {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    position: relative; z-index: 1;
+  }
+  .stage-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: rgba(10,10,18,0.04);
+    border: 1px solid var(--line-3);
+    transition: all .4s cubic-bezier(.2,.7,.2,1);
+    position: relative;
+  }
+  .stage-step.on .stage-dot {
+    background: var(--brand);
+    border-color: var(--brand-tint);
+    box-shadow: 0 0 0 4px rgba(124,92,255,0.18), 0 0 16px rgba(124,92,255,0.4);
+  }
+  .stage-step.past .stage-dot {
+    background: var(--mint-300); border-color: var(--mint-300);
+  }
+  .stage-step.past .stage-dot::after {
+    content: '';
+    position: absolute; inset: 3px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+    background-size: contain; background-repeat: no-repeat; background-position: center;
+  }
+  .stage-step-l {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--fg-4);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color .3s;
+  }
+  .stage-step.on .stage-step-l { color: var(--brand); }
+  .stage-step.past .stage-step-l { color: var(--fg-3); }
+
+  .stage-area {
+    position: relative;
+    height: 240px;
+    margin-bottom: 16px;
+  }
+  .stage-card {
+    position: absolute; inset: 0;
+    padding: 16px;
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+    transition: opacity .5s ease, transform .5s cubic-bezier(.2,.7,.2,1);
+    overflow: hidden;
+  }
+  .stage-card.on { opacity: 1; transform: none; }
+
+  .stage-card-h {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--fg-3);
+    letter-spacing: 0.06em;
+  }
+  .stage-card-h .l { text-transform: uppercase; color: var(--fg-2); }
+  .stage-card-h .l strong { color: var(--fg); font-weight: 500; }
+  .stage-card-h .t { margin-left: auto; color: var(--fg-4); font-size: 10px; }
+
+  .lead-name { font-weight: 600; font-size: 26px; letter-spacing: -0.025em; line-height: 1.05; color: var(--fg); margin-bottom: 4px; }
+  .lead-meta { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--fg-2); margin-bottom: 8px; }
+  .lead-quote { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; font-size: 15px; color: var(--fg-2); line-height: 1.35; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .lead-foot { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--fg-3); }
+
+  .pill { display: inline-block; padding: 2px 7px; border-radius: 999px; border: 1px solid; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; font-weight: 600; }
+  .pill.hot { background: rgba(220,38,38,0.10); color: #991B1B; border-color: rgba(220,38,38,0.25); }
+
+  .score-grid { display: flex; flex-direction: column; gap: 8px; }
+  .score-row { display: grid; grid-template-columns: 110px 1fr 40px; gap: 12px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+  .score-row .l { color: var(--fg-3); letter-spacing: 0.04em; text-transform: uppercase; font-size: 10px; }
+  .score-track { height: 5px; background: rgba(10,10,18,0.06); border-radius: 999px; overflow: hidden; }
+  .score-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--brand), var(--brand-bright)); width: 0; transition: width 1s cubic-bezier(.2,.7,.2,1); }
+  .stage-card.s2.on .score-fill { width: var(--w); }
+  .score-row .v { color: var(--fg); font-weight: 600; text-align: right; }
+
+  .exec-grid { display: flex; flex-direction: column; gap: 6px; }
+  .exec-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; background: rgba(10,10,18,0.025); border: 1px solid var(--line); border-radius: 9px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--fg-2); }
+  .exec-row .name { color: var(--fg); font-weight: 500; }
+  .exec-row.chosen { background: linear-gradient(180deg, rgba(124,92,255,0.10), rgba(124,92,255,0.04)); border-color: rgba(124,92,255,0.35); }
+  .exec-row.chosen .name { color: var(--brand); }
+
+  .visit-area { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; }
+  .visit-block { width: 88px; border: 1px solid var(--line-2); border-radius: var(--r-md); overflow: hidden; text-align: center; background: rgba(255,255,255,0.6); }
+  .visit-day { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: white; background: linear-gradient(135deg, var(--brand), var(--brand-deep)); padding: 5px 0; }
+  .visit-date { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; font-size: 32px; line-height: 1; color: var(--fg); padding: 10px 0 4px; letter-spacing: -0.02em; }
+  .visit-month { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--fg-3); padding: 0 0 8px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .visit-info { display: flex; flex-direction: column; gap: 4px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-2); }
+  .visit-info .big { font-family: 'Inter'; font-weight: 600; font-size: 17px; color: var(--fg); letter-spacing: -0.02em; margin-bottom: 2px; }
+  .visit-info .conf { color: var(--mint-300); margin-top: 2px; font-size: 10.5px; }
+
+  .booked-area { display: flex; flex-direction: column; gap: 8px; }
+  .booked-unit { font-weight: 600; font-size: 15px; color: var(--fg); letter-spacing: -0.01em; }
+  .booked-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-3); }
+  .booked-amount { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; font-size: 56px; line-height: 0.95; letter-spacing: -0.04em; color: var(--fg); margin: 4px 0 4px; opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+  .stage-card.s5.on .booked-amount { opacity: 1; transform: none; transition-delay: .15s; }
+  .booked-amount .cr { font-family: 'Inter'; font-style: normal; font-weight: 600; font-size: 28px; color: var(--mint-300); margin-left: 6px; letter-spacing: -0.01em; }
+  .stage-card.s5 { background: linear-gradient(180deg, rgba(220,252,231,0.7) 0%, rgba(220,252,231,0.2) 100%); border-color: rgba(21,128,61,0.20); }
+
+  /* Booking notification — emerges above the panel's top-right
+     when stage 5 fires. A drop-down toast that says "this just happened". */
+  .booking-ribbon {
+    position: absolute;
+    top: -20px;
+    right: 16px;
+    background: linear-gradient(135deg, var(--mint-300), #166534);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.20) inset,
+      0 12px 32px rgba(21,128,61,0.35);
+    opacity: 0;
+    transform: translateY(-12px) scale(0.95);
+    transition: opacity .5s ease, transform .5s cubic-bezier(.2,.7,.2,1);
+    z-index: 5;
+    pointer-events: none;
+    text-align: right;
+  }
+  .booking-ribbon.show { opacity: 1; transform: translateY(0) scale(1); }
+  .booking-ribbon .booked-tag {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.78);
+    margin-bottom: 2px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .booking-ribbon .booked-amt { font-weight: 700; font-size: 14px; letter-spacing: -0.01em; }
+
+  /* ============================================================
+     VARIANT 2 — THE LIVING FLOOR
+     A real-time view of an actual project. Lead pings appear
+     next to apartments. They progress through the journey
+     invisibly (system-tracked), then either book (gold) or
+     return to available (mint). Watch the tower fill up.
+     ============================================================ */
+  .v2 {
+    background:
+      radial-gradient(50% 40% at 80% 50%, rgba(255,176,74,0.08) 0%, transparent 60%),
+      radial-gradient(40% 40% at 20% 30%, rgba(124,92,255,0.06) 0%, transparent 60%),
+      var(--canvas);
+    padding: 80px 0 96px;
+  }
+  .v2 .v2-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .v2-stage {
+    position: relative;
+    height: 580px;
+    perspective: 1600px;
+  }
+  .v2-tower {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%) rotateX(50deg) rotateZ(-42deg);
+    transform-style: preserve-3d;
+  }
+  .v2-floor {
+    position: absolute;
+    left: -150px;
+    top: -150px;
+    width: 300px;
+    height: 300px;
+    display: grid;
+    grid-template-columns: repeat(6, 44px);
+    grid-template-rows: repeat(6, 44px);
+    gap: 4px;
+    padding: 8px;
+    background: rgba(255,255,255,0.55);
+    border: 1px solid var(--line-2);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(20,19,26,0.05);
+  }
+  .v2-floor::before {
+    content: attr(data-floor);
+    position: absolute;
+    right: -28px; top: 50%;
+    transform: translateY(-50%) rotate(42deg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px; color: var(--fg-4);
+    letter-spacing: 0.08em;
+  }
+  .v2-unit {
+    width: 44px; height: 44px;
+    border-radius: 5px;
+    background: rgba(21,128,61,0.20);
+    border: 1px solid rgba(21,128,61,0.32);
+    transition: background .5s ease, border-color .5s ease, box-shadow .4s ease;
+    position: relative;
+  }
+  .v2-unit.u-blocked {
+    background: rgba(245,158,11,0.18);
+    border-color: rgba(245,158,11,0.40);
+  }
+  .v2-unit.u-sold {
+    background: rgba(202,138,4,0.40);
+    border-color: rgba(202,138,4,0.60);
+    box-shadow: 0 0 12px rgba(202,138,4,0.30);
+  }
+  .v2-unit.u-pinging {
+    background: rgba(124,92,255,0.30);
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(124,92,255,0.20), 0 0 20px rgba(124,92,255,0.5);
+    animation: unit-pulse 1.4s ease-in-out;
+  }
+  @keyframes unit-pulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(124,92,255,0.20), 0 0 20px rgba(124,92,255,0.5); }
+    50%      { box-shadow: 0 0 0 5px rgba(124,92,255,0.10), 0 0 28px rgba(124,92,255,0.7); }
+  }
+  .v2-unit.u-just-sold::after {
+    content: '';
+    position: absolute; inset: -4px;
+    border-radius: 8px;
+    border: 2px solid var(--gold-500);
+    opacity: 0;
+    animation: just-sold-ring 1s ease-out forwards;
+  }
+  @keyframes just-sold-ring {
+    0%   { opacity: 1; transform: scale(0.8); }
+    100% { opacity: 0; transform: scale(1.6); }
+  }
+
+  /* Live tooltip — appears next to the pinging unit */
+  .v2-tooltip {
+    position: absolute;
+    top: 0; left: 0;
+    transform: translate(40px, 40px);
+    background: white;
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-md);
+    padding: 10px 14px;
+    box-shadow: var(--shadow-3);
+    font-size: 12px;
+    color: var(--fg);
+    font-family: 'JetBrains Mono', monospace;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .3s ease, transform .3s ease;
+    min-width: 220px;
+    max-width: 280px;
+  }
+  .v2-tooltip.show {
+    opacity: 1;
+    transform: translate(40px, 40px) scale(1);
+  }
+  .v2-tooltip::before {
+    content: '';
+    position: absolute;
+    left: -6px; top: 16px;
+    width: 10px; height: 10px;
+    background: white;
+    border-left: 1px solid var(--line-2);
+    border-bottom: 1px solid var(--line-2);
+    transform: rotate(45deg);
+  }
+  .v2-tooltip .tt-h {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600; font-size: 13px;
+    color: var(--fg);
+    margin-bottom: 4px;
+  }
+  .v2-tooltip .tt-h .src-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    padding: 1px 6px;
+    background: var(--brand-tint);
+    color: var(--brand-deep);
+    border-radius: 999px;
+    letter-spacing: 0.04em;
+  }
+  .v2-tooltip .tt-meta { color: var(--fg-3); font-size: 10.5px; letter-spacing: 0.02em; }
+  .v2-tooltip .tt-pill {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 2px 7px;
+    background: rgba(220,38,38,0.10);
+    color: #991B1B;
+    border: 1px solid rgba(220,38,38,0.25);
+    border-radius: 999px;
+    font-size: 10px; font-weight: 600;
+  }
+
+  /* Booked notification — slides in from right when a unit books */
+  .v2-booking {
+    position: absolute;
+    right: 0; bottom: 32px;
+    background: linear-gradient(135deg, var(--gold-500), #92400E);
+    color: white;
+    padding: 14px 18px;
+    border-radius: var(--r-md);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.18) inset,
+      0 12px 32px rgba(202,138,4,0.30);
+    font-family: 'Inter', sans-serif;
+    z-index: 5;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity .4s ease, transform .5s cubic-bezier(.2,.7,.2,1);
+    min-width: 220px;
+  }
+  .v2-booking.show { opacity: 1; transform: translateX(0); }
+  .v2-booking .b-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .v2-booking .b-unit { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .v2-booking .b-amt { font-family: 'Fraunces', serif; font-style: italic; font-weight: 300; font-size: 26px; line-height: 1; }
+  .v2-booking .b-amt .cr { font-family: 'Inter'; font-style: normal; font-weight: 700; font-size: 14px; margin-left: 4px; }
+
+  /* Tower title overlay */
+  .v2-tower-title {
+    position: absolute;
+    top: 0; left: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-3);
+    letter-spacing: 0.06em;
+  }
+  .v2-tower-title strong { color: var(--fg); font-weight: 600; }
+  .v2-tower-title .live-dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--mint-300);
+    margin-right: 6px;
+    animation: pulse-d 1.6s infinite;
+  }
+
+  /* Tower legend */
+  .v2-legend {
+    position: absolute;
+    bottom: 0; left: 16px;
+    display: flex; gap: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--fg-3);
+  }
+  .v2-legend span {
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .v2-legend .ld {
+    display: inline-block; width: 8px; height: 8px; border-radius: 2px;
+    border: 1px solid;
+  }
+  .v2-legend .ld-avail { background: rgba(21,128,61,0.18); border-color: rgba(21,128,61,0.40); }
+  .v2-legend .ld-block { background: rgba(245,158,11,0.18); border-color: rgba(245,158,11,0.40); }
+  .v2-legend .ld-sold { background: rgba(202,138,4,0.40); border-color: rgba(202,138,4,0.60); }
+
+  @media (max-width: 980px) {
+    .v1 .v1-grid, .v2 .v2-grid { grid-template-columns: 1fr; gap: 40px; }
+    .v1-particles { display: none; }
+    .v2-stage { height: 420px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .v1-card, .booking-ribbon, .v2-unit, .v2-tooltip, .v2-booking {
+      transition-duration: 0s !important;
+      animation-duration: 0s !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="variant-toc">
+  <a href="#variant-a">A · Convergence</a>
+  <a href="#variant-b">B · Living Floor</a>
+</div>
+
+<!-- ============================================================
+     VARIANT 1 — THE CONVERGENCE
+     ============================================================ -->
+<section class="variant-frame v1" id="variant-a">
+  <div class="variant-label">// VARIANT 1 · the convergence</div>
+
+  <div class="v1-particles" id="particles"></div>
+
+  <div class="wrap">
+    <div class="v1-grid">
+      <div class="v1-copy">
+        <span class="h-tag">
+          <span class="pulse"></span>
+          <span>Sales OS for builders tired of chasing leads</span>
+        </span>
+        <h1 class="h-h1">
+          Every lead.<br>
+          <span class="ink">One inbox.</span><br>
+          Every booking.
+        </h1>
+        <p class="h-sub">
+          Your enquiries come in from WhatsApp, 99acres, Meta ads, channel partners
+          and <strong>Trythat.ai</strong>. RealtorOS collects every one, scores it
+          before your exec picks up the phone, routes it to the right person, and
+          keeps follow-ups going automatically.
+        </p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="#" class="h-cta h-cta-pri">
+            See how it works
+            <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#" class="h-cta h-cta-sec">Book a demo</a>
+        </div>
+      </div>
+
+      <div class="v1-panel-stage">
+        <div class="v1-panel" id="v1Panel">
+          <div class="panel-head">
+            <span class="panel-head-l">one lead · <strong>fully handled</strong></span>
+            <span class="panel-head-r">realtoros.com</span>
+          </div>
+
+          <div class="stages-rail">
+            <div class="stage-step on" data-stage="1"><span class="stage-dot"></span><span class="stage-step-l">Captured</span></div>
+            <div class="stage-step" data-stage="2"><span class="stage-dot"></span><span class="stage-step-l">Scored</span></div>
+            <div class="stage-step" data-stage="3"><span class="stage-dot"></span><span class="stage-step-l">Routed</span></div>
+            <div class="stage-step" data-stage="4"><span class="stage-dot"></span><span class="stage-step-l">Site visit</span></div>
+            <div class="stage-step" data-stage="5"><span class="stage-dot"></span><span class="stage-step-l">Booked</span></div>
+          </div>
+
+          <div class="stage-area">
+            <div class="stage-card s1 on" data-stage="1">
+              <div class="stage-card-h">
+                <span class="l">captured · <strong>trythat.ai</strong></span>
+                <span class="t">4s ago</span>
+              </div>
+              <div class="lead-name">Priya Mehta</div>
+              <div class="lead-meta">3BHK · Kharadi · ₹1.2 – 1.5 Cr</div>
+              <div class="lead-quote">"Looking for a ready-to-move 3BHK in Kharadi, possession by Diwali."</div>
+              <div class="lead-foot"><span class="pill hot">9.2 hot</span> &nbsp;auto-tagged · skyline heights</div>
+            </div>
+
+            <div class="stage-card s2" data-stage="2">
+              <div class="stage-card-h"><span class="l">scoring · <strong>1–10</strong></span><span class="t">computing…</span></div>
+              <div class="score-grid">
+                <div class="score-row"><span class="l">Budget match</span><div class="score-track"><div class="score-fill" style="--w:95%"></div></div><span class="v">95%</span></div>
+                <div class="score-row"><span class="l">Timeline</span><div class="score-track"><div class="score-fill" style="--w:90%"></div></div><span class="v">90%</span></div>
+                <div class="score-row"><span class="l">Intent signals</span><div class="score-track"><div class="score-fill" style="--w:88%"></div></div><span class="v">88%</span></div>
+                <div class="score-row"><span class="l">Source quality</span><div class="score-track"><div class="score-fill" style="--w:100%"></div></div><span class="v">A+</span></div>
+              </div>
+              <div class="lead-foot" style="border-top:1px solid var(--line);padding-top:10px;margin-top:10px;">
+                resolves to → <span class="pill hot">9.2 hot</span> &nbsp; <strong style="color: var(--fg);">Priya Mehta</strong>
+              </div>
+            </div>
+
+            <div class="stage-card s3" data-stage="3">
+              <div class="stage-card-h"><span class="l">routing · <strong>round-robin</strong></span><span class="t">finding exec…</span></div>
+              <div class="exec-grid">
+                <div class="exec-row"><span class="name">Priya Naidu</span><span style="color:var(--fg-4);">5 active</span></div>
+                <div class="exec-row chosen"><span class="name">→ Mihir Bhatt</span><span style="color:var(--brand);">3 active · ✓</span></div>
+                <div class="exec-row"><span class="name">Sneha Kulkarni</span><span style="color:var(--fg-4);">4 active</span></div>
+                <div class="exec-row"><span class="name">Rohan Iyer</span><span style="color:var(--fg-4);">6 active</span></div>
+              </div>
+            </div>
+
+            <div class="stage-card s4" data-stage="4">
+              <div class="stage-card-h"><span class="l">site visit · <strong>auto-booked</strong></span><span class="t">slot link sent</span></div>
+              <div class="visit-area">
+                <div class="visit-block">
+                  <div class="visit-day">SAT</div>
+                  <div class="visit-date">09</div>
+                  <div class="visit-month">May · 11 AM</div>
+                </div>
+                <div class="visit-info">
+                  <div class="big">Skyline Heights</div>
+                  <div>Tower A · sample flat A-1204</div>
+                  <div>Mihir Bhatt assigned</div>
+                  <div class="conf">✓ Confirmed via WhatsApp</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="stage-card s5" data-stage="5">
+              <div class="stage-card-h"><span class="l">booked · <strong>agreement drafted</strong></span><span class="t">10 days from capture</span></div>
+              <div class="booked-area">
+                <div class="booked-unit">A-1204 · 3BHK · East-facing</div>
+                <div class="booked-meta">Skyline Heights · Tower A · 1,420 sq ft</div>
+                <div class="booked-amount">₹1.42 <span class="cr">Cr</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-ribbon" id="bookingRibbon">
+          <span class="booked-tag">Booked</span>
+          <span class="booked-amt">A-1204 · ₹1.42 Cr</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VARIANT 2 — THE LIVING FLOOR
+     ============================================================ -->
+<section class="variant-frame v2" id="variant-b">
+  <div class="variant-label">// VARIANT 2 · the living floor</div>
+
+  <div class="wrap">
+    <div class="v2-grid">
+      <div class="v2-copy">
+        <span class="h-tag">
+          <span class="pulse"></span>
+          <span>Sales OS for builders tired of chasing leads</span>
+        </span>
+        <h1 class="h-h1">
+          Every lead.<br>
+          <span class="ink">One inbox.</span><br>
+          Every booking.
+        </h1>
+        <p class="h-sub">
+          Your enquiries come in from WhatsApp, 99acres, Meta ads, channel partners
+          and <strong>Trythat.ai</strong>. RealtorOS routes them to the right exec,
+          confirms site visits, and turns interest into bookings — flat by flat,
+          floor by floor.
+        </p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a href="#" class="h-cta h-cta-pri">
+            See how it works
+            <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#" class="h-cta h-cta-sec">Book a demo</a>
+        </div>
+        <div class="h-meta">
+          <span class="h-meta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            All leads in one place
+          </span>
+          <span class="h-meta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            Live in 14 days
+          </span>
+        </div>
+      </div>
+
+      <div class="v2-stage">
+        <div class="v2-tower-title">
+          <span class="live-dot"></span>
+          <strong>Skyline Heights · Tower A</strong> &nbsp; live · this week
+        </div>
+
+        <div class="v2-tower" id="v2Tower"></div>
+
+        <div class="v2-tooltip" id="v2Tooltip">
+          <div class="tt-h">
+            <span class="tt-name">Priya Mehta</span>
+            <span class="tt-src src-tag">trythat</span>
+          </div>
+          <div class="tt-meta tt-unit">3BHK · A-1204 · ₹1.2 – 1.5 Cr</div>
+          <div><span class="tt-pill">9.2 hot</span></div>
+        </div>
+
+        <div class="v2-booking" id="v2Booking">
+          <div class="b-tag">Booked</div>
+          <div class="b-unit b-unit-text">A-1204 · 3BHK</div>
+          <div class="b-amt"><span class="b-amt-text">₹1.42</span> <span class="cr">Cr</span></div>
+        </div>
+
+        <div class="v2-legend">
+          <span><span class="ld ld-avail"></span>available</span>
+          <span><span class="ld ld-block"></span>held</span>
+          <span><span class="ld ld-sold"></span>booked</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* ============================================================
+     VARIANT 1 — CONVERGENCE
+     Choreography:
+     0.0 – 4.0s   25 cards drift in from viewport edges, staggered
+     4.0 – 4.5s   Cards reach panel center, fade out into panel
+     4.5 – 5.0s   Panel solidifies (capture stage visible)
+     5.0 – 12.5s  5 stages cycle, ~1.5s each
+     12.5 – 15s   Booking ribbon emerges, holds
+     15 – 17s     Reset transition: panel dissolves into 25 cards
+                  flying outward, loop restarts
+     ============================================================ */
+  (function v1Setup() {
+    const particles = document.getElementById('particles');
+    const panel = document.getElementById('v1Panel');
+    const ribbon = document.getElementById('bookingRibbon');
+    const steps = panel.querySelectorAll('.stage-step');
+    const cards = panel.querySelectorAll('.stage-card');
+    if (!particles || !panel) return;
+
+    // Channel-tagged lead seeds. Mix reflects the user's audience:
+    // WhatsApp + Trythat are the heaviest, with portals and partners
+    // sprinkled in for source diversity.
+    const leadSeeds = [
+      { ch: 'wa',  src: 'whatsapp',  name: 'Priya M.' },
+      { ch: 'wa',  src: 'whatsapp',  name: 'Aditya N.' },
+      { ch: 'wa',  src: 'whatsapp',  name: 'Karan D.' },
+      { ch: 'wa',  src: 'whatsapp',  name: 'Anita S.' },
+      { ch: 'wa',  src: 'whatsapp',  name: 'Sneha P.' },
+      { ch: 'tt',  src: 'trythat',   name: 'Rohan G.' },
+      { ch: 'tt',  src: 'trythat',   name: 'Vikram T.' },
+      { ch: 'tt',  src: 'trythat',   name: 'Megha R.' },
+      { ch: 'tt',  src: 'trythat',   name: 'Arjun K.' },
+      { ch: 'fb',  src: 'meta ads',  name: 'Tanvi I.' },
+      { ch: 'fb',  src: 'meta ads',  name: 'Yash B.' },
+      { ch: 'fb',  src: 'meta ads',  name: 'Riya A.' },
+      { ch: 'go',  src: 'google',    name: 'Devansh K.' },
+      { ch: 'go',  src: 'google',    name: 'Saanvi R.' },
+      { ch: 'go',  src: 'google',    name: 'Aaryan P.' },
+      { ch: 'ac',  src: '99acres',   name: 'Ishaan G.' },
+      { ch: 'ac',  src: '99acres',   name: 'Pooja S.' },
+      { ch: 'ac',  src: '99acres',   name: 'Mehul J.' },
+      { ch: 'mb',  src: 'magicbricks',name: 'Niharika V.' },
+      { ch: 'mb',  src: 'magicbricks',name: 'Tejas M.' },
+      { ch: 'cp',  src: 'partner',   name: 'Aryan H.' },
+      { ch: 'cp',  src: 'partner',   name: 'Kabir L.' },
+      { ch: 'ig',  src: 'instagram', name: 'Naina O.' },
+      { ch: 'ig',  src: 'instagram', name: 'Vihaan U.' },
+      { ch: 'wi',  src: 'walk-in',   name: 'Reyansh F.' },
+    ];
+
+    // Build 25 card DOM nodes
+    const cardEls = leadSeeds.map(seed => {
+      const el = document.createElement('div');
+      el.className = 'v1-card';
+      el.innerHTML = `
+        <span class="v1-icon ${seed.ch}">${seed.src.charAt(0).toUpperCase()}</span>
+        <span><span class="v1-src">${seed.src}</span> · <span class="v1-name">${seed.name}</span></span>
+      `;
+      el.style.opacity = '0';
+      particles.appendChild(el);
+      return el;
+    });
+
+    function setStage(target) {
+      steps.forEach(s => {
+        const n = +s.dataset.stage;
+        s.classList.toggle('on', n === target);
+        s.classList.toggle('past', n < target);
+      });
+      cards.forEach(c => {
+        const n = +c.dataset.stage;
+        c.classList.toggle('on', n === target);
+      });
+    }
+
+    function getViewportEdgePoint() {
+      // Returns a random point just outside the viewport edge.
+      // Positions are computed in viewport-fixed coords because particles
+      // are positioned absolutely within .variant-frame which is the hero.
+      const rect = particles.getBoundingClientRect();
+      const w = rect.width, h = rect.height;
+      const edge = Math.floor(Math.random() * 4);
+      const margin = 120;
+      switch (edge) {
+        case 0: return { x: Math.random() * w, y: -margin };
+        case 1: return { x: w + margin, y: Math.random() * h };
+        case 2: return { x: Math.random() * w, y: h + margin };
+        case 3: return { x: -margin, y: Math.random() * h };
+      }
+    }
+
+    function getPanelCenterPoint() {
+      const pRect = panel.getBoundingClientRect();
+      const partRect = particles.getBoundingClientRect();
+      // Center of panel relative to the particles container
+      const x = pRect.left - partRect.left + pRect.width / 2;
+      const y = pRect.top - partRect.top + pRect.height / 2;
+      return { x, y };
+    }
+
+    function runCycle() {
+      const target = getPanelCenterPoint();
+
+      // PHASE 1 — converge in
+      cardEls.forEach((el, i) => {
+        const start = getViewportEdgePoint();
+        const dx = target.x - start.x;
+        const dy = target.y - start.y;
+        // Slight curve via mid-point offset
+        const midX = start.x + dx * 0.55 + (Math.random() - 0.5) * 80;
+        const midY = start.y + dy * 0.45 + (Math.random() - 0.5) * 80;
+
+        // Place card at start position
+        el.style.left = '0px';
+        el.style.top = '0px';
+        el.style.transform = `translate(${start.x}px, ${start.y}px) scale(0.85)`;
+        el.style.opacity = '0';
+
+        const delay = i * 110; // staggered entry over ~2.7s
+
+        el.animate([
+          { transform: `translate(${start.x}px, ${start.y}px) scale(0.85)`, opacity: 0 },
+          { transform: `translate(${start.x}px, ${start.y}px) scale(0.95)`, opacity: 1, offset: 0.10 },
+          { transform: `translate(${midX}px, ${midY}px) scale(0.98)`, opacity: 1, offset: 0.55 },
+          { transform: `translate(${target.x}px, ${target.y}px) scale(0.6)`, opacity: 0, offset: 1 }
+        ], {
+          duration: 2400,
+          delay: delay,
+          fill: 'forwards',
+          easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+        });
+      });
+
+      // PHASE 2 — panel solidifies just as cards converge
+      setTimeout(() => {
+        panel.classList.add('solid');
+        setStage(1);
+      }, 4400);
+
+      // PHASE 3 — stage cycle (1.5s per stage = 7.5s total)
+      const stageBeats = [
+        { stage: 2, at: 6000 },
+        { stage: 3, at: 7500 },
+        { stage: 4, at: 9000 },
+        { stage: 5, at: 10500 },
+      ];
+      stageBeats.forEach(b => setTimeout(() => setStage(b.stage), b.at));
+
+      // PHASE 4 — booking ribbon emerges as s5 holds
+      setTimeout(() => ribbon.classList.add('show'), 11500);
+
+      // PHASE 5 — reset and loop
+      setTimeout(() => {
+        ribbon.classList.remove('show');
+        panel.classList.remove('solid');
+        setStage(1);
+      }, 14500);
+
+      // PHASE 6 — outflow: cards fly out of panel back to edges
+      setTimeout(() => {
+        cardEls.forEach((el, i) => {
+          const exit = getViewportEdgePoint();
+          el.animate([
+            { transform: `translate(${target.x}px, ${target.y}px) scale(0.6)`, opacity: 0 },
+            { transform: `translate(${target.x}px, ${target.y}px) scale(0.95)`, opacity: 1, offset: 0.15 },
+            { transform: `translate(${exit.x}px, ${exit.y}px) scale(0.85)`, opacity: 0, offset: 1 }
+          ], {
+            duration: 1800,
+            delay: i * 60,
+            fill: 'forwards',
+            easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+          });
+        });
+      }, 15000);
+    }
+
+    // Initial state
+    cardEls.forEach(el => { el.style.opacity = '0'; });
+    setStage(1);
+
+    // Kick off, then loop
+    runCycle();
+    setInterval(runCycle, 17500);
+
+    // Reposition target on resize
+    window.addEventListener('resize', () => {
+      // Targets recompute on next cycle automatically
+    });
+  })();
+
+  /* ============================================================
+     VARIANT 2 — LIVING FLOOR
+     Choreography:
+     - 6 floors × 6 units = 36 units, all start as available
+     - Every 2.4s, pick a random available unit, ping it
+     - 70% of pings convert to booked (gold) within 1.5s
+     - 30% return to available (lost lead)
+     - When all units near booked, reset to all-available
+     ============================================================ */
+  (function v2Setup() {
+    const towerEl = document.getElementById('v2Tower');
+    const tooltipEl = document.getElementById('v2Tooltip');
+    const bookingEl = document.getElementById('v2Booking');
+    if (!towerEl) return;
+
+    const FLOORS = 6;
+    const UNITS_PER_FLOOR = 6;
+    const FLOOR_HEIGHT_3D = 42; // px between floors in 3D space (vertical separation)
+    const PING_INTERVAL = 2400;
+    const PING_HOLD = 1500;
+    const BOOK_PROBABILITY = 0.72;
+
+    // Build the tower
+    for (let f = FLOORS; f >= 1; f--) {
+      const floor = document.createElement('div');
+      floor.className = 'v2-floor';
+      floor.dataset.floor = '0' + f;
+      floor.style.transform = `translateZ(${(f - 1) * FLOOR_HEIGHT_3D}px)`;
+      for (let u = 1; u <= UNITS_PER_FLOOR; u++) {
+        const unit = document.createElement('div');
+        unit.className = 'v2-unit u-avail';
+        unit.dataset.id = 'A' + f + (u < 10 ? '0' + u : u);
+        floor.appendChild(unit);
+      }
+      towerEl.appendChild(floor);
+    }
+
+    // Soft-block ~6 random units initially for visual variety
+    const allUnits = [...towerEl.querySelectorAll('.v2-unit')];
+    for (let i = 0; i < 6; i++) {
+      const u = allUnits[Math.floor(Math.random() * allUnits.length)];
+      if (u.classList.contains('u-avail')) {
+        u.classList.remove('u-avail');
+        u.classList.add('u-blocked');
+      }
+    }
+
+    const leadPool = [
+      { name: 'Priya Mehta',   src: 'trythat',  cfg: '3BHK', budget: '₹1.2 – 1.5 Cr', hot: '9.2 hot' },
+      { name: 'Aditya N.',     src: 'magicbricks', cfg: '3BHK', budget: '₹1.3 Cr',     hot: '8.6 hot' },
+      { name: 'Karan Desai',   src: 'partner',  cfg: '4BHK', budget: '₹2.4 Cr',       hot: '9.5 hot' },
+      { name: 'Rohan Gupta',   src: 'website',  cfg: '2BHK', budget: '₹85 L – 95 L',  hot: '7.4 warm' },
+      { name: 'Anita Sharma',  src: 'meta ads', cfg: '3BHK', budget: '₹95 L – 1.1 Cr',hot: '8.8 hot' },
+      { name: 'Sneha Patil',   src: '99acres',  cfg: '2BHK', budget: '₹78 L',         hot: '7.0 warm' },
+      { name: 'Vikram Thakur', src: 'partner',  cfg: '3BHK', budget: '₹1.4 Cr',       hot: '7.8 warm' },
+      { name: 'Megha R.',      src: 'walk-in',  cfg: '3BHK', budget: '₹1.5 Cr',       hot: '8.4 hot' },
+      { name: 'Arjun K.',      src: 'whatsapp', cfg: '2BHK', budget: '₹82 L',         hot: '6.8 warm' },
+      { name: 'Tanvi Iyer',    src: 'trythat',  cfg: '3BHK', budget: '₹1.3 Cr',       hot: '8.5 hot' },
+    ];
+    const amounts = ['₹1.42 Cr', '₹1.38 Cr', '₹1.55 Cr', '₹2.18 Cr', '₹95 L', '₹1.06 Cr', '₹1.27 Cr', '₹2.40 Cr'];
+
+    function showTooltip(unit, lead) {
+      // Position tooltip relative to the stage container, pointing at the unit
+      const stage = unit.closest('.v2-stage');
+      const stageRect = stage.getBoundingClientRect();
+      const unitRect = unit.getBoundingClientRect();
+      const x = unitRect.right - stageRect.left + 16;
+      const y = unitRect.top - stageRect.top - 8;
+      tooltipEl.style.left = x + 'px';
+      tooltipEl.style.top = y + 'px';
+      tooltipEl.querySelector('.tt-name').textContent = lead.name;
+      tooltipEl.querySelector('.tt-src').textContent = lead.src;
+      tooltipEl.querySelector('.tt-unit').textContent = lead.cfg + ' · ' + unit.dataset.id + ' · ' + lead.budget;
+      tooltipEl.querySelector('.tt-pill').textContent = lead.hot;
+      tooltipEl.classList.add('show');
+    }
+    function hideTooltip() { tooltipEl.classList.remove('show'); }
+
+    function showBooking(unit) {
+      const amt = amounts[Math.floor(Math.random() * amounts.length)];
+      const [rs, cr] = amt.split(' ');
+      bookingEl.querySelector('.b-unit-text').textContent = unit.dataset.id + ' · 3BHK';
+      bookingEl.querySelector('.b-amt-text').textContent = rs;
+      bookingEl.querySelector('.cr').textContent = cr || '';
+      bookingEl.classList.add('show');
+      setTimeout(() => bookingEl.classList.remove('show'), 2800);
+    }
+
+    function pickAvailable() {
+      const avail = [...towerEl.querySelectorAll('.v2-unit.u-avail')];
+      if (avail.length === 0) return null;
+      return avail[Math.floor(Math.random() * avail.length)];
+    }
+
+    function resetTower() {
+      towerEl.querySelectorAll('.v2-unit').forEach(u => {
+        u.classList.remove('u-sold', 'u-blocked', 'u-pinging', 'u-just-sold');
+        u.classList.add('u-avail');
+      });
+      // Re-soft-block a few
+      for (let i = 0; i < 6; i++) {
+        const u = allUnits[Math.floor(Math.random() * allUnits.length)];
+        if (u.classList.contains('u-avail')) {
+          u.classList.remove('u-avail');
+          u.classList.add('u-blocked');
+        }
+      }
+    }
+
+    function tick() {
+      const unit = pickAvailable();
+      if (!unit) {
+        // Almost all sold — reset and continue
+        setTimeout(resetTower, 1800);
+        return;
+      }
+      const lead = leadPool[Math.floor(Math.random() * leadPool.length)];
+
+      unit.classList.add('u-pinging');
+      showTooltip(unit, lead);
+
+      setTimeout(() => {
+        unit.classList.remove('u-pinging');
+        hideTooltip();
+
+        if (Math.random() < BOOK_PROBABILITY) {
+          unit.classList.remove('u-avail');
+          unit.classList.add('u-sold', 'u-just-sold');
+          showBooking(unit);
+        }
+      }, PING_HOLD);
+    }
+
+    // Stagger the first tick so the page doesn't fire instantly
+    setTimeout(() => {
+      tick();
+      setInterval(tick, PING_INTERVAL);
+    }, 1200);
+
+    // If the tower fills up too fast, reset every 30s as a safety
+    setInterval(() => {
+      const sold = towerEl.querySelectorAll('.v2-unit.u-sold').length;
+      if (sold > 22) resetTower();
+    }, 30000);
+  })();
+</script>
+</body>
+</html>

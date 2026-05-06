@@ -920,6 +920,124 @@
     color: var(--fg-5);
   }
 
+  /* ============================================================
+     CONVERGENCE — hero animation
+     25 channel-tagged lead cards drift in from viewport edges and
+     converge on the journey panel, which solidifies and runs the
+     5-stage cycle. Booking toast emerges. Cards re-emerge and fly
+     outward to reset the loop.
+     ============================================================ */
+  .hero-particles {
+    position: absolute;
+    inset: 0;
+    overflow: visible;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-card {
+    position: absolute;
+    left: 0; top: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px 6px 6px;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 11.5px;
+    color: var(--fg);
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+    transform-origin: center;
+    will-change: transform, opacity;
+  }
+  .hero-card .hc-icon {
+    width: 18px; height: 18px;
+    border-radius: 5px;
+    display: grid; place-items: center;
+    color: white;
+    font-size: 9px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .hero-card .hc-src {
+    color: var(--fg-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+  }
+  .hero-card .hc-name { color: var(--fg); font-weight: 500; }
+  .hc-icon.wa  { background: #25D366; }
+  .hc-icon.tt  { background: linear-gradient(135deg, #7C5CFF, #5A38E6); }
+  .hc-icon.fb  { background: #1877F2; }
+  .hc-icon.ig  { background: linear-gradient(135deg, #E1306C, #F77737, #FCAF45); }
+  .hc-icon.go  { background: linear-gradient(135deg, #4285F4, #EA4335, #34A853, #FBBC05); }
+  .hc-icon.web { background: var(--fg); }
+  .hc-icon.cp  { background: #D97706; }
+  .hc-icon.wi  { background: #0F766E; }
+  .hc-icon.ac  { background: #DC2626; }
+  .hc-icon.mb  { background: #991B1B; }
+
+  /* Journey panel reveal state — starts hidden, solidifies after
+     cards converge, then cycles. The .journey base styles handle
+     the steady-state look; .hidden-pre adds the pre-reveal state
+     and the transition unifies them. */
+  .journey-stage {
+    position: relative;
+    width: 100%;
+  }
+  .journey {
+    transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1);
+  }
+  .journey.hidden-pre {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  .journey.solid {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Booking toast — drops in above the panel's top-right when
+     stage 5 fires. Says: this just happened in the system. */
+  .booking-toast {
+    position: absolute;
+    top: -16px;
+    right: 16px;
+    background: linear-gradient(135deg, var(--mint-300), #166534);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.20) inset,
+      0 12px 32px rgba(21,128,61,0.35);
+    opacity: 0;
+    transform: translateY(-12px) scale(0.95);
+    transition: opacity .5s ease, transform .5s cubic-bezier(.2,.7,.2,1);
+    z-index: 5;
+    pointer-events: none;
+    text-align: right;
+  }
+  .booking-toast.show { opacity: 1; transform: translateY(0) scale(1); }
+  .booking-toast .bt-tag {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.78);
+    margin-bottom: 2px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .booking-toast .bt-amt { font-weight: 700; font-size: 14px; letter-spacing: -0.01em; }
+
+  [data-theme="light"] .hero-card {
+    background: rgba(255,255,255,0.92);
+    box-shadow: 0 4px 12px rgba(20,19,26,0.08), 0 1px 2px rgba(20,19,26,0.04);
+  }
+
   /* Live lead stream */
   .stream-head {
     display: flex; align-items: center; justify-content: space-between;
@@ -2985,6 +3103,7 @@
   <div class="hero-aurora"></div>
   <div class="hero-grid-bg"></div>
   <div class="hero-noise"></div>
+  <div class="hero-particles" id="heroParticles" aria-hidden="true"></div>
 
   <div class="wrap hero-inner">
     <div class="hero-row">
@@ -3035,8 +3154,9 @@
         </div>
       </div>
 
-      <!-- HERO — A LEAD'S JOURNEY -->
-      <div class="journey">
+      <!-- HERO — A LEAD'S JOURNEY (with convergence reveal) -->
+      <div class="journey-stage">
+      <div class="journey hidden-pre" id="heroPanel">
         <div class="journey-head">
           <span class="journey-head-l">one lead · fully handled</span>
           <span class="journey-head-r"><span class="dot"></span>realtoros.com</span>
@@ -3186,6 +3306,11 @@
           <span class="a-item"><strong>12</strong> follow-ups due</span>
           <span class="sep">·</span>
           <span class="a-item"><strong>3</strong> bookings this week</span>
+        </div>
+      </div>
+        <div class="booking-toast" id="bookingToast" aria-hidden="true">
+          <span class="bt-tag">Booked</span>
+          <span class="bt-amt">A-1204 · ₹1.42 Cr</span>
         </div>
       </div>
     </div>
@@ -4197,73 +4322,194 @@
     }
   })();
 
-  /* Hero — Lead's Journey cycler.
-     Five stages, each gets ~2.6s of focus, with stage 5 lingering longer
-     for the booked moment. Past stages get a green checkmark; the active
-     one pulses indigo. After stage 5, a brief reset clears everything and
-     the journey loops. */
-  (function initJourney() {
-    const stageEls = document.querySelectorAll('#stageArea .stage-card');
-    const stepEls  = document.querySelectorAll('#stages .stage-step');
-    if (!stageEls.length) return;
+  /* Hero — Convergence choreography.
+     25 channel-tagged lead cards drift in from the viewport edges,
+     converge on the journey panel which solidifies, then runs the
+     5-stage cycle. Booking toast appears at stage 5. Cards re-emerge
+     and fly outward to reset. Loops continuously while in view.
 
-    const STAGE_HOLD = 2600;       // ms each stage holds
-    const FINAL_HOLD = 4200;       // booked stage lingers
-    const RESET_GAP  = 700;        // brief blank between cycles
+     Phase timing (per cycle):
+       0     – 3000ms   cards converge in (staggered)
+       3500ms           panel solidifies, stage 1
+       5000ms           stage 2
+       6500ms           stage 3
+       8000ms           stage 4
+       9500ms           stage 5 + booking toast
+       13500ms          reset begins (panel hides, cards fly out)
+       16000ms          loop restarts
+  */
+  (function initConvergence() {
+    const particles = document.getElementById('heroParticles');
+    const panel     = document.getElementById('heroPanel');
+    const toast     = document.getElementById('bookingToast');
+    const stageEls  = panel ? panel.querySelectorAll('.stage-card') : [];
+    const stepEls   = panel ? panel.querySelectorAll('.stage-step') : [];
+    if (!particles || !panel || !stageEls.length) return;
 
-    let i = 0;
-    const setActive = (idx) => {
-      stageEls.forEach((el, k) => {
-        el.classList.toggle('on', k === idx);
-        el.classList.toggle('past', k < idx);
+    // Channel-tagged lead seeds. Mix reflects the audience: WhatsApp +
+    // Trythat heaviest, with portals and partners sprinkled in.
+    const seeds = [
+      { ch: 'wa',  src: 'whatsapp',    name: 'Priya M.' },
+      { ch: 'wa',  src: 'whatsapp',    name: 'Aditya N.' },
+      { ch: 'wa',  src: 'whatsapp',    name: 'Karan D.' },
+      { ch: 'wa',  src: 'whatsapp',    name: 'Anita S.' },
+      { ch: 'wa',  src: 'whatsapp',    name: 'Sneha P.' },
+      { ch: 'tt',  src: 'trythat',     name: 'Rohan G.' },
+      { ch: 'tt',  src: 'trythat',     name: 'Vikram T.' },
+      { ch: 'tt',  src: 'trythat',     name: 'Megha R.' },
+      { ch: 'tt',  src: 'trythat',     name: 'Arjun K.' },
+      { ch: 'fb',  src: 'meta ads',    name: 'Tanvi I.' },
+      { ch: 'fb',  src: 'meta ads',    name: 'Yash B.' },
+      { ch: 'fb',  src: 'meta ads',    name: 'Riya A.' },
+      { ch: 'go',  src: 'google',      name: 'Devansh K.' },
+      { ch: 'go',  src: 'google',      name: 'Saanvi R.' },
+      { ch: 'go',  src: 'google',      name: 'Aaryan P.' },
+      { ch: 'ac',  src: '99acres',     name: 'Ishaan G.' },
+      { ch: 'ac',  src: '99acres',     name: 'Pooja S.' },
+      { ch: 'ac',  src: '99acres',     name: 'Mehul J.' },
+      { ch: 'mb',  src: 'magicbricks', name: 'Niharika V.' },
+      { ch: 'mb',  src: 'magicbricks', name: 'Tejas M.' },
+      { ch: 'cp',  src: 'partner',     name: 'Aryan H.' },
+      { ch: 'cp',  src: 'partner',     name: 'Kabir L.' },
+      { ch: 'ig',  src: 'instagram',   name: 'Naina O.' },
+      { ch: 'ig',  src: 'instagram',   name: 'Vihaan U.' },
+      { ch: 'wi',  src: 'walk-in',     name: 'Reyansh F.' },
+    ];
+
+    const cardEls = seeds.map(s => {
+      const el = document.createElement('div');
+      el.className = 'hero-card';
+      el.innerHTML = `
+        <span class="hc-icon ${s.ch}">${s.src.charAt(0).toUpperCase()}</span>
+        <span><span class="hc-src">${s.src}</span> · <span class="hc-name">${s.name}</span></span>
+      `;
+      el.style.opacity = '0';
+      particles.appendChild(el);
+      return el;
+    });
+
+    const setStage = (target) => {
+      stageEls.forEach(c => {
+        const n = +c.dataset.stage;
+        c.classList.toggle('on', n === target);
+        c.classList.toggle('past', n < target);
       });
-      stepEls.forEach((el, k) => {
-        el.classList.toggle('on', k === idx);
-        el.classList.toggle('past', k < idx);
+      stepEls.forEach(s => {
+        const n = +s.dataset.stage;
+        s.classList.toggle('on', n === target);
+        s.classList.toggle('past', n < target);
       });
     };
 
-    const clearAll = () => {
-      stageEls.forEach(el => { el.classList.remove('on', 'past'); });
-      stepEls.forEach(el => { el.classList.remove('on', 'past'); });
+    const clearStages = () => {
+      stageEls.forEach(c => c.classList.remove('on', 'past'));
+      stepEls.forEach(s => s.classList.remove('on', 'past'));
     };
 
-    const tick = () => {
-      i = i + 1;
-      if (i >= stageEls.length) {
-        // Reset cycle
-        clearAll();
-        setTimeout(() => { i = 0; setActive(0); schedule(); }, RESET_GAP);
-        return;
+    const edgePoint = () => {
+      const r = particles.getBoundingClientRect();
+      const margin = 120;
+      const edge = Math.floor(Math.random() * 4);
+      switch (edge) {
+        case 0: return { x: Math.random() * r.width,  y: -margin };
+        case 1: return { x: r.width + margin,         y: Math.random() * r.height };
+        case 2: return { x: Math.random() * r.width,  y: r.height + margin };
+        default: return { x: -margin,                 y: Math.random() * r.height };
       }
-      setActive(i);
-      schedule();
     };
 
-    const schedule = () => {
-      const isFinal = (i === stageEls.length - 1);
-      setTimeout(tick, isFinal ? FINAL_HOLD : STAGE_HOLD);
+    const panelCenter = () => {
+      const pR = panel.getBoundingClientRect();
+      const partR = particles.getBoundingClientRect();
+      return {
+        x: pR.left - partR.left + pR.width / 2,
+        y: pR.top  - partR.top  + pR.height / 2
+      };
     };
 
-    // Start only when the hero is visible (avoids burning cycles offscreen).
-    const start = () => {
-      setActive(0);
-      schedule();
+    let timers = [];
+    const after = (ms, fn) => { const id = setTimeout(fn, ms); timers.push(id); return id; };
+    const cancelAll = () => { timers.forEach(t => clearTimeout(t)); timers = []; };
+
+    const cycle = () => {
+      cancelAll();
+      const target = panelCenter();
+
+      // Phase 1 — converge in, staggered
+      cardEls.forEach((el, i) => {
+        const start = edgePoint();
+        const midX = start.x + (target.x - start.x) * 0.55 + (Math.random() - 0.5) * 80;
+        const midY = start.y + (target.y - start.y) * 0.45 + (Math.random() - 0.5) * 80;
+        const delay = i * 110;
+
+        el.animate([
+          { transform: `translate(${start.x}px, ${start.y}px) scale(0.85)`, opacity: 0 },
+          { transform: `translate(${start.x}px, ${start.y}px) scale(0.95)`, opacity: 1, offset: 0.10 },
+          { transform: `translate(${midX}px, ${midY}px) scale(0.98)`, opacity: 1, offset: 0.55 },
+          { transform: `translate(${target.x}px, ${target.y}px) scale(0.6)`, opacity: 0, offset: 1 }
+        ], {
+          duration: 2400,
+          delay: delay,
+          fill: 'forwards',
+          easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+        });
+      });
+
+      // Phase 2 — panel solidifies as cards arrive
+      after(3500, () => {
+        panel.classList.remove('hidden-pre');
+        panel.classList.add('solid');
+        clearStages();
+        setStage(1);
+      });
+
+      // Phase 3 — stages 2-5
+      after(5000,  () => setStage(2));
+      after(6500,  () => setStage(3));
+      after(8000,  () => setStage(4));
+      after(9500,  () => { setStage(5); toast.classList.add('show'); });
+
+      // Phase 4 — reset: hide toast, dissolve panel, outflow cards
+      after(13500, () => {
+        toast.classList.remove('show');
+        panel.classList.remove('solid');
+        panel.classList.add('hidden-pre');
+      });
+
+      after(13700, () => {
+        const exitTarget = panelCenter();
+        cardEls.forEach((el, i) => {
+          const exit = edgePoint();
+          el.animate([
+            { transform: `translate(${exitTarget.x}px, ${exitTarget.y}px) scale(0.6)`, opacity: 0 },
+            { transform: `translate(${exitTarget.x}px, ${exitTarget.y}px) scale(0.95)`, opacity: 1, offset: 0.15 },
+            { transform: `translate(${exit.x}px, ${exit.y}px) scale(0.85)`, opacity: 0, offset: 1 }
+          ], {
+            duration: 1600,
+            delay: i * 50,
+            fill: 'forwards',
+            easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+          });
+        });
+      });
+
+      // Phase 5 — loop
+      after(16000, cycle);
     };
 
-    const journey = document.querySelector('.journey');
-    if (journey && 'IntersectionObserver' in window) {
+    // Initial state — panel hidden, cards offscreen
+    setStage(1);
+
+    // Start when the hero is visible (avoids burning cycles offscreen)
+    if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries, obs) => {
         entries.forEach(e => {
-          if (e.isIntersecting) {
-            start();
-            obs.unobserve(e.target);
-          }
+          if (e.isIntersecting) { cycle(); obs.unobserve(e.target); }
         });
       }, { threshold: 0.2 });
-      io.observe(journey);
+      io.observe(panel);
     } else {
-      start();
+      cycle();
     }
   })();
 </script>
