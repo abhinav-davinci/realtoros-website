@@ -292,6 +292,19 @@
     box-shadow: 0 8px 32px rgba(244,241,234,0.2);
     transform: translateY(-1px);
   }
+  /* Nav CTA — brand-indigo (quieter than hero glow, on-brand instead
+     of black). Hierarchy: hero CTA (loud indigo glow) > nav CTA (solid
+     indigo) > final CTA punctuation (cream on dark gradient). */
+  .nav-actions .btn-pri {
+    background: var(--brand);
+    color: white;
+    box-shadow: 0 4px 14px rgba(124,92,255,0.32);
+  }
+  .nav-actions .btn-pri:hover {
+    background: var(--brand-deep);
+    box-shadow: 0 8px 22px rgba(124,92,255,0.42);
+    transform: translateY(-1px);
+  }
   .btn-ghost { color: var(--fg-2); border-color: var(--line-2); }
   .btn-ghost:hover { color: var(--fg); border-color: var(--line-3); background: rgba(255,255,255,0.03); }
   .btn-glow {
@@ -970,7 +983,7 @@
   }
   .hero-card .hc-name { color: var(--fg); font-weight: 500; }
   .hc-icon.wa  { background: #25D366; }
-  .hc-icon.tt  { background: linear-gradient(135deg, #7C5CFF, #5A38E6); }
+  .hc-icon.tt  { background: #2563EB; }
   .hc-icon.fb  { background: #1877F2; }
   .hc-icon.ig  { background: linear-gradient(135deg, #E1306C, #F77737, #FCAF45); }
   .hc-icon.go  { background: linear-gradient(135deg, #4285F4, #EA4335, #34A853, #FBBC05); }
@@ -1160,10 +1173,13 @@
     background-size: 64%;
   }
 
-  /* Trythat.ai — violet sparkle */
+  /* Trythat.ai — real brand: blue tile, chunky white T monogram.
+     Geometry uses integer coords + thicker proportions so the shape
+     holds up at 22px source-badge size. */
   .src-tt {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%237C5CFF'><path d='M12 1.5l2.4 7.7 7.6 2.8-7.6 2.8L12 22.5l-2.4-7.7L2 12l7.6-2.8L12 1.5z'/></svg>");
-    background-size: 60%;
+    background-color: #2563EB;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='white' d='M4 6h16v4h-6v9h-4v-9H4z'/></svg>");
+    background-size: 80%;
   }
 
   /* Website — dark indigo globe */
@@ -1846,16 +1862,30 @@
     border-radius: var(--r-xl);
     box-shadow: var(--shadow-3);
   }
-  .tt-side .icon-lg {
+  /* Brand marks in the Trythat.ai integration section.
+     Trythat.ai uses its real ".ai" bug (white text on TryThat blue),
+     RealtorOS uses the navbar's R-glyph SVG. Each mark carries its
+     own brand color anchor — they're meant to feel related but not
+     identical, since they're two distinct products. */
+  .tt-side .tt-mark {
     width: 64px; height: 64px;
-    border-radius: 16px;
-    display: grid; place-items: center;
+    display: block;
     margin: 0 auto 18px;
-    color: white; font-weight: 700; font-size: 22px;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.12) inset;
   }
-  .tt-side.left .icon-lg { background: linear-gradient(135deg, var(--indigo-300), var(--indigo-500), var(--indigo-600)); box-shadow: 0 0 0 1px rgba(255,255,255,0.12) inset, 0 0 30px rgba(124,92,255,0.5); }
-  .tt-side.right .icon-lg { background: linear-gradient(135deg, #1A1A2E, #050510); box-shadow: 0 0 0 1px rgba(255,255,255,0.12) inset; }
+  .tt-mark-tt {
+    background: #2563EB;
+    border-radius: 14px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    display: grid; place-items: center;
+    filter: drop-shadow(0 8px 22px rgba(37,99,235,0.35));
+  }
+  .tt-side .tt-mark-r .bg { fill: var(--brand); }
+  .tt-side .tt-mark-r .glyph { fill: white; }
+  .tt-mark-r { filter: drop-shadow(0 8px 22px rgba(124,92,255,0.40)); }
   .tt-side h4 { font-size: 19px; font-weight: 600; color: var(--fg); margin-bottom: 6px; letter-spacing: -0.02em; }
   .tt-side .desc { font-size: 13px; color: var(--fg-3); }
   .tt-side .meta { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--fg-3); }
@@ -2560,6 +2590,17 @@
     background: #1F1F36;
     box-shadow: 0 12px 32px rgba(10,10,18,0.18);
   }
+  /* Nav CTA stays brand-indigo in light theme too — see comment near
+     base .nav-actions .btn-pri rule for hierarchy rationale. */
+  [data-theme="light"] .nav-actions .btn-pri {
+    background: var(--brand);
+    color: white;
+    box-shadow: 0 4px 14px rgba(124,92,255,0.32);
+  }
+  [data-theme="light"] .nav-actions .btn-pri:hover {
+    background: var(--brand-deep);
+    box-shadow: 0 8px 22px rgba(124,92,255,0.42);
+  }
   [data-theme="light"] .btn-ghost {
     color: var(--fg-2);
     border-color: var(--line-2);
@@ -2919,12 +2960,8 @@
     border-color: var(--line-2);
     box-shadow: 0 16px 40px rgba(10,10,18,0.08);
   }
-  [data-theme="light"] .tt-side .icon-lg {
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.30) inset, 0 0 28px rgba(124,92,255,0.30);
-  }
-  [data-theme="light"] .tt-side.right .icon-lg {
-    background: linear-gradient(135deg, #0A0A12, #1F1F36);
-  }
+  [data-theme="light"] .tt-mark-tt { filter: drop-shadow(0 6px 18px rgba(37,99,235,0.28)); }
+  [data-theme="light"] .tt-mark-r  { filter: drop-shadow(0 6px 18px rgba(90,56,230,0.28)); }
   [data-theme="light"] .tt-rail .meta-line {
     background: white;
     border-color: var(--line-2);
@@ -3149,11 +3186,8 @@
 
         <div class="hero-cta-row">
           <a href="#modules" class="btn btn-glow btn-lg">
-            See how it works
+            Access now
             <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
-          <a href="#cta" class="btn btn-ghost btn-lg">
-            Book a demo
           </a>
         </div>
 
@@ -3211,7 +3245,7 @@
           <!-- Stage 1 — Captured -->
           <div class="stage-card s1 on" data-stage="1">
             <div class="stage-card-h">
-              <span class="src src-tt">TT</span>
+              <span class="src src-tt" aria-label="Trythat.ai"></span>
               <span class="l">captured · <strong>trythat.ai</strong></span>
               <span class="t">4s ago</span>
             </div>
@@ -3346,7 +3380,7 @@
   <div class="marquee">
     <div class="marquee-track">
       <div class="channel"><span class="src src-web">W</span><span class="channel-name">Your Website</span><span class="channel-cat">forms · chat</span></div>
-      <div class="channel"><span class="src src-tt">TT</span><span class="channel-name">Trythat.ai</span><span class="channel-cat">native · 2-way</span></div>
+      <div class="channel"><span class="src src-tt" aria-label="Trythat.ai"></span><span class="channel-name">Trythat.ai</span><span class="channel-cat">native · 2-way</span></div>
       <div class="channel"><span class="src src-wa">WA</span><span class="channel-name">WhatsApp</span><span class="channel-cat">official API</span></div>
       <div class="channel"><span class="src src-fb">M</span><span class="channel-name">Meta Ads</span><span class="channel-cat">lead forms</span></div>
       <div class="channel"><span class="src src-ig">IG</span><span class="channel-name">Instagram</span><span class="channel-cat">DMs · forms</span></div>
@@ -3357,7 +3391,7 @@
       <div class="channel"><span class="src src-wi">WI</span><span class="channel-name">Walk-ins</span><span class="channel-cat">2-tap mobile</span></div>
       <!-- duplicate for marquee -->
       <div class="channel"><span class="src src-web">W</span><span class="channel-name">Your Website</span><span class="channel-cat">forms · chat</span></div>
-      <div class="channel"><span class="src src-tt">TT</span><span class="channel-name">Trythat.ai</span><span class="channel-cat">native · 2-way</span></div>
+      <div class="channel"><span class="src src-tt" aria-label="Trythat.ai"></span><span class="channel-name">Trythat.ai</span><span class="channel-cat">native · 2-way</span></div>
       <div class="channel"><span class="src src-wa">WA</span><span class="channel-name">WhatsApp</span><span class="channel-cat">official API</span></div>
       <div class="channel"><span class="src src-fb">M</span><span class="channel-name">Meta Ads</span><span class="channel-cat">lead forms</span></div>
       <div class="channel"><span class="src src-ig">IG</span><span class="channel-name">Instagram</span><span class="channel-cat">DMs · forms</span></div>
@@ -3538,7 +3572,7 @@
         <div class="viz-body">
           <div class="stream stream-animated" id="streamAnim">
             <div class="stream-row" style="--di:0;--si:0">
-              <span class="src src-tt">TT</span>
+              <span class="src src-tt" aria-label="Trythat.ai"></span>
               <div class="stream-info">
                 <div class="stream-name">Priya Mehta · 3BHK · Kharadi</div>
                 <div class="stream-meta">trythat.ai · "looking for ready-to-move" · ₹1.2–1.5 Cr</div>
@@ -3847,8 +3881,8 @@
       <span class="tt-star">★ NATIVE INTEGRATION</span>
     </div>
     <h2 class="h2 reveal">
-      Built together,<br>
-      not bolted together.
+      Two products.<br>
+      One system.
     </h2>
     <p class="overture-sub reveal" style="margin-top:24px;">
       When a buyer enquires through Trythat.ai, the lead is in RealtorOS before you see the
@@ -3858,7 +3892,7 @@
 
     <div class="tt-flow reveal">
       <div class="tt-side left">
-        <div class="icon-lg">TT</div>
+        <div class="tt-mark tt-mark-tt" aria-hidden="true">.ai</div>
         <h4>Trythat.ai</h4>
         <div class="desc">Buyer-facing AI assistant.<br>Public property platform.</div>
         <div class="meta">→ <strong>captures intent</strong> · qualifies · books slots</div>
@@ -3878,7 +3912,10 @@
       </div>
 
       <div class="tt-side right">
-        <div class="icon-lg">R</div>
+        <svg class="tt-mark tt-mark-r" viewBox="0 0 32 32" aria-hidden="true">
+          <rect class="bg" x="0" y="0" width="32" height="32" rx="7.5"/>
+          <path class="glyph" fill-rule="evenodd" clip-rule="evenodd" d="M8 7.5h9.5c3.6 0 6 2.3 6 5.7 0 2.6-1.5 4.6-3.9 5.4l4.4 6.4h-4.5l-4-5.7h-3v5.7H8V7.5zm4.5 3.4v4.7H17c1.6 0 2.5-.9 2.5-2.4s-.9-2.3-2.5-2.3h-4.5z"/>
+        </svg>
         <h4>RealtorOS</h4>
         <div class="desc">Internal sales OS.<br>Lead, pipeline, inventory.</div>
         <div class="meta">→ <strong style="color: var(--mint-300);">routes &amp; books</strong> · updates inventory</div>
