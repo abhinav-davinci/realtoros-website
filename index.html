@@ -2451,7 +2451,10 @@
     padding: 80px 0 32px;
     border-top: 1px solid var(--line);
     color: var(--fg-3);
+    position: relative;
+    overflow: hidden;
   }
+  footer > .wrap { position: relative; z-index: 1; }
   .foot-grid {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -2483,20 +2486,31 @@
     font-family: 'JetBrains Mono', monospace;
   }
   .foot-bottom .live { color: var(--mint-300); }
+  /* Footer wordmark — sits as a giant watermark BEHIND the footer
+     content, with its baseline resting on the .foot-bottom horizontal
+     divider line. Columns layer above; copyright bar sits below the
+     line. The gradient makes the BASE of the letters most opaque so
+     the wordmark visually "settles" on the line, fading upward into
+     the column area like a horizon line. */
   .foot-wordmark {
-    margin-top: 80px;
+    position: absolute;
+    left: -2%;
+    right: -2%;
+    bottom: 70px;
     font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: clamp(80px, 16vw, 220px);
+    font-weight: 700;
+    font-size: clamp(120px, 22vw, 280px);
     letter-spacing: -0.06em;
     line-height: 0.85;
-    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.02) 60%, transparent 100%);
+    background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0.14) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     text-align: center;
     user-select: none;
     pointer-events: none;
+    z-index: 0;
+    white-space: nowrap;
   }
   .foot-wordmark em {
     font-family: 'Fraunces', serif; font-style: italic; font-weight: 300;
@@ -3087,7 +3101,7 @@
   }
   [data-theme="light"] .foot-bottom { border-top-color: var(--line); }
   [data-theme="light"] .foot-wordmark {
-    background: linear-gradient(180deg, rgba(10,10,18,0.10) 0%, rgba(10,10,18,0.03) 60%, transparent 100%);
+    background: linear-gradient(180deg, transparent 0%, rgba(10,10,18,0.04) 50%, rgba(10,10,18,0.10) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -4416,9 +4430,9 @@
       <span>© 2026 RealtorOS · for real estate sales teams</span>
       <span><span class="live">●</span> all systems operational · v1.0 deployed 04 May 2026</span>
     </div>
-
-    <div class="foot-wordmark" aria-hidden="true">RealtorOS.</div>
   </div>
+
+  <div class="foot-wordmark" aria-hidden="true">RealtorOS.</div>
 </footer>
 
 <script>
