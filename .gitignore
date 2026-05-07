@@ -4,3 +4,6 @@
 # Local dev artifacts
 .audit/
 .playwright-mcp/
+
+# Playwright verification screenshots (root only — preserves images/*.png)
+/*.png
