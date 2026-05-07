@@ -163,6 +163,38 @@
   }
   .label-accent { color: var(--indigo-300); }
 
+  /* ============================================================
+     SECTION EYEBROW — Architect's section stamp
+     A blueprint-style section reference: a circular stamp with
+     the section number inside, a thin horizontal rule extending
+     to a tick mark, then the section name in JetBrains Mono caps.
+     The whole composition reads as an architectural drawing
+     callout — native vocabulary for real estate builders.
+     ============================================================ */
+  .section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--brand);
+    line-height: 1;
+  }
+  .se-stamp {
+    width: 72px;
+    height: 22px;
+    flex-shrink: 0;
+    display: block;
+    color: var(--brand);
+  }
+  .se-title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brand);
+    line-height: 1;
+  }
+
   /* ============== LAYOUT ============== */
   .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
   .wrap-narrow { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
@@ -3410,7 +3442,17 @@
 <section class="overture" id="overture">
   <div class="overture-aurora"></div>
   <div class="wrap overture-content">
-    <div class="overture-eyebrow label label-accent">// the problem</div>
+    <div class="overture-eyebrow">
+      <div class="section-eyebrow">
+        <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">01</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <span class="se-title">The Problem</span>
+      </div>
+    </div>
     <h2 class="h2 reveal">
       Demand isn't your problem.<br>
       Disorganisation is.
@@ -3449,7 +3491,15 @@
 <section class="modules" id="modules">
   <div class="wrap">
     <div class="section-head reveal">
-      <div class="label label-accent">// the lead &amp; crm module</div>
+      <div class="section-eyebrow" style="justify-content:center;">
+        <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">02</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <span class="se-title">The System</span>
+      </div>
       <h2 class="h2" style="margin-top:18px;">Everything your sales team needs.<br>Without the spreadsheet.</h2>
       <p class="sub">Not another CRM. A system that actually tells your team what to do next.</p>
     </div>
@@ -3550,7 +3600,17 @@
   <div class="wrap">
     <div class="feat-row">
       <div class="feat-copy">
-        <div class="feat-eyebrow label label-accent">// 01 · Capture</div>
+        <div class="feat-eyebrow">
+          <div class="section-eyebrow">
+            <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+              <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">03</text>
+              <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+              <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            <span class="se-title">Capture</span>
+          </div>
+        </div>
         <h3 class="h3">All your leads.<br>One inbox.</h3>
         <p class="feat-desc">No more switching tabs. No screenshots forwarded from WhatsApp groups. Leads from ten channels land here within seconds, tagged with project, BHK and budget on the way in.</p>
         <ul class="feat-list">
@@ -3658,7 +3718,17 @@
   <div class="wrap">
     <div class="feat-row flip">
       <div class="feat-copy">
-        <div class="feat-eyebrow label label-accent">// 02 · Scoring</div>
+        <div class="feat-eyebrow">
+          <div class="section-eyebrow">
+            <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+              <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">04</text>
+              <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+              <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            <span class="se-title">Scoring</span>
+          </div>
+        </div>
         <h3 class="h3">Stop treating every<br>lead the same.</h3>
         <p class="feat-desc">Some buyers are browsing. Some are ready to book. RealtorOS scores every lead on the way in, looking at budget match, timeline, intent and source quality. Your team's morning call list is already sorted by who's most likely to close.</p>
         <ul class="feat-list">
@@ -3724,7 +3794,17 @@
   <div class="wrap">
     <div class="feat-row">
       <div class="feat-copy">
-        <div class="feat-eyebrow label label-accent">// 03 · Pipeline</div>
+        <div class="feat-eyebrow">
+          <div class="section-eyebrow">
+            <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+              <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">05</text>
+              <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+              <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            <span class="se-title">Pipeline</span>
+          </div>
+        </div>
         <h3 class="h3">Your team should sell,<br>not run the system.</h3>
         <p class="feat-desc">A drag-and-drop Kanban from <span class="mono" style="color:var(--fg);">New</span> to <span class="mono" style="color:var(--mint-300);">Booked</span>. Leads go to the right person automatically. If a lead sits past your SLA, the manager hears about it. If it stays cold, it gets reassigned. Your salespeople sell. They don't manage the system.</p>
         <ul class="feat-list">
@@ -3813,7 +3893,17 @@
   <div class="wrap">
     <div class="feat-row flip">
       <div class="feat-copy">
-        <div class="feat-eyebrow label label-accent">// 04 · Inventory</div>
+        <div class="feat-eyebrow">
+          <div class="section-eyebrow">
+            <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+              <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">06</text>
+              <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+              <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            <span class="se-title">Inventory</span>
+          </div>
+        </div>
         <h3 class="h3">See every flat.<br>Hold the right one.</h3>
         <p class="feat-desc">Live availability inside every lead. Hold a flat for a serious buyer for 24 to 48 hours. It releases itself if the deal doesn't close. Mark Booked, and the legal flow, payment schedule, token receipt and Trythat.ai update on their own. No more &ldquo;sorry, that one went yesterday&rdquo; at a site visit.</p>
         <ul class="feat-list">
@@ -3878,7 +3968,15 @@
   <div class="trythat-grid"></div>
   <div class="wrap trythat-content">
     <div class="tt-mark">
-      <span class="tt-star">★ NATIVE INTEGRATION</span>
+      <div class="section-eyebrow" style="justify-content:center;">
+        <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">07</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <span class="se-title">Native Integration</span>
+      </div>
     </div>
     <h2 class="h2 reveal">
       Two products.<br>
@@ -3932,7 +4030,17 @@
   <div class="wrap">
     <div class="feat-row">
       <div class="feat-copy">
-        <div class="feat-eyebrow label label-accent">// 05 · Visibility</div>
+        <div class="feat-eyebrow">
+          <div class="section-eyebrow">
+            <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+              <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">08</text>
+              <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+              <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            <span class="se-title">Visibility</span>
+          </div>
+        </div>
         <h3 class="h3">Know exactly<br>what's happening.</h3>
         <p class="feat-desc">No more asking &ldquo;what's the status of this lead?&rdquo; Open RealtorOS at 9 AM and see new leads, pending follow-ups, today's visits, this week's bookings, source quality, exec performance, funnel drop-off and project velocity. All on one screen, all exportable to Excel.</p>
         <ul class="feat-list">
@@ -4019,7 +4127,17 @@
   <div class="wrap">
     <div class="feat-row flip">
       <div class="feat-copy">
-        <div class="feat-eyebrow label label-accent">// 06 · Mobile-first</div>
+        <div class="feat-eyebrow">
+          <div class="section-eyebrow">
+            <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+              <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+              <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">09</text>
+              <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+              <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            <span class="se-title">Mobile</span>
+          </div>
+        </div>
         <h3 class="h3">Built where your<br>team actually works.</h3>
         <p class="feat-desc">Your execs aren't at desks. They're at site, in meetings, in the car between visits. Logging a call, scheduling a visit, moving a stage or holding a unit takes <strong style="color: var(--fg);">two taps</strong>. They won't fight the tool. They'll actually use it.</p>
         <ul class="feat-list">
@@ -4131,7 +4249,15 @@
 <section class="instr">
   <div class="wrap">
     <div class="section-head">
-      <div class="label label-accent">// non-negotiables · from the spec</div>
+      <div class="section-eyebrow" style="justify-content:center;">
+        <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">10</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <span class="se-title">Non‑Negotiables</span>
+      </div>
       <h2 class="h2" style="margin-top:18px;">Promises we keep.</h2>
       <p class="sub">Six lines we wrote into the RealtorOS spec. Non-negotiable, regardless of timeline, budget or convenience.</p>
     </div>
@@ -4182,7 +4308,15 @@
 <section class="testi">
   <div class="testi-aurora"></div>
   <div class="wrap testi-content">
-    <div class="label">// what changed</div>
+    <div class="section-eyebrow" style="justify-content:center;">
+      <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+        <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">11</text>
+        <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+        <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <span class="se-title">What Changed</span>
+    </div>
     <p class="testi-quote">
       &ldquo;We were running three projects on six WhatsApp groups and one Excel sheet.<br>
       Now Monday starts with <span class="hi">one screen</span>. Every lead, every miss, every rupee of ad spend in one place.&rdquo;
@@ -4203,7 +4337,15 @@
 <section class="cta" id="cta">
   <div class="cta-noise"></div>
   <div class="wrap cta-content">
-    <div class="label label-accent" style="margin-bottom: 24px;">// see it on your numbers</div>
+    <div class="section-eyebrow" style="justify-content:center; margin-bottom: 24px;">
+      <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+        <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">12</text>
+        <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+        <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+      </svg>
+      <span class="se-title">Your Numbers</span>
+    </div>
     <h2 class="h2 display">
       If your leads are scattered,<br>
       your revenue is too.
