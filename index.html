@@ -228,6 +228,51 @@
      cut (fill-rule: evenodd) — same construction as Söhne / Founders
      Grotesk capital R, optically corrected for small sizes.
      ============================================================ */
+  /* Brand block — wraps the main brand link and the parent-brand
+     tagline ("by TryThat.ai") that appears beneath. The tagline is
+     a separate clickable link to trythat.ai/info, styled to mirror
+     the actual TryThat.ai logo: dark "TryThat" wordmark + white
+     ".ai" on a blue (#2563EB) rounded bug. */
+  .brand-block {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    line-height: 1;
+  }
+  .brand-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--fg-3);
+    margin-left: 37px;
+    letter-spacing: 0.005em;
+    line-height: 1;
+    transition: color .2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .brand-tag:hover { color: var(--fg-2); }
+  .brand-tag .bt-tt {
+    color: var(--fg);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: -0.02em;
+    transition: color .2s ease;
+  }
+  .brand-tag .bt-bug {
+    background: #2563EB;
+    color: white;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 1px 5px 2px;
+    border-radius: 3px;
+    letter-spacing: -0.01em;
+    margin-left: -1px;
+    line-height: 1;
+  }
+
   .brand {
     display: inline-flex; align-items: center; gap: 9px;
     font-weight: 600; font-size: 15px; letter-spacing: -0.018em;
@@ -3173,13 +3218,16 @@
      ============================================================ -->
 <nav class="nav">
   <div class="nav-row">
-    <a href="#" class="brand" aria-label="RealtorOS — home">
-      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
-        <rect class="bg" x="0" y="0" width="32" height="32" rx="7.5"/>
-        <path class="glyph" fill-rule="evenodd" clip-rule="evenodd" d="M8 7.5h9.5c3.6 0 6 2.3 6 5.7 0 2.6-1.5 4.6-3.9 5.4l4.4 6.4h-4.5l-4-5.7h-3v5.7H8V7.5zm4.5 3.4v4.7H17c1.6 0 2.5-.9 2.5-2.4s-.9-2.3-2.5-2.3h-4.5z"/>
-      </svg>
-      <span class="brand-text">Realtor<span class="os">OS</span></span>
-    </a>
+    <div class="brand-block">
+      <a href="#" class="brand" aria-label="RealtorOS — home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect class="bg" x="0" y="0" width="32" height="32" rx="7.5"/>
+          <path class="glyph" fill-rule="evenodd" clip-rule="evenodd" d="M8 7.5h9.5c3.6 0 6 2.3 6 5.7 0 2.6-1.5 4.6-3.9 5.4l4.4 6.4h-4.5l-4-5.7h-3v5.7H8V7.5zm4.5 3.4v4.7H17c1.6 0 2.5-.9 2.5-2.4s-.9-2.3-2.5-2.3h-4.5z"/>
+        </svg>
+        <span class="brand-text">Realtor<span class="os">OS</span></span>
+      </a>
+      <a href="https://trythat.ai/info" class="brand-tag" target="_blank" rel="noopener noreferrer">by <span class="bt-tt">TryThat</span><span class="bt-bug">.ai</span></a>
+    </div>
     <div class="nav-links">
       <a href="https://trythat.ai/info" class="nav-link" target="_blank" rel="noopener noreferrer">Trythat.ai</a>
       <a href="#" class="nav-link active" aria-current="page">RealtorOS</a>
