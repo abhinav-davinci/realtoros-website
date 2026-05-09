@@ -673,6 +673,29 @@
     box-shadow: 0 0 8px var(--mint-300);
     animation: pulse-d 1.6s infinite;
   }
+  .journey-head-l .jh-text {
+    display: inline-block;
+    min-height: 1em;
+  }
+  /* Typewriter cursor — visible during streaming, fades after the
+     text finishes. Mimics the streaming-output cue from LLM chat
+     interfaces. */
+  .journey-head-l .jh-cursor {
+    display: inline-block;
+    width: 6px;
+    height: 11px;
+    background: var(--brand);
+    margin-left: 3px;
+    vertical-align: -1px;
+    opacity: 0;
+    transition: opacity .35s ease;
+    animation: jh-cursor-blink 0.9s steps(2) infinite;
+  }
+  .journey-head-l .jh-cursor.active { opacity: 1; }
+  @keyframes jh-cursor-blink {
+    0%, 49%   { background: var(--brand); }
+    50%, 100% { background: transparent; }
+  }
   .journey-head-l em {
     font-style: normal;
     color: var(--fg);
@@ -3715,7 +3738,9 @@
       <div class="journey-stage">
       <div class="journey hidden-pre" id="heroPanel">
         <div class="journey-head">
-          <span class="journey-head-l">one lead · fully handled</span>
+          <span class="journey-head-l">
+            <span class="jh-text"></span><span class="jh-cursor" aria-hidden="true"></span>
+          </span>
         </div>
 
         <!-- 5-stage progress rail -->
@@ -4569,7 +4594,36 @@
     const toast     = document.getElementById('bookingToast');
     const stageEls  = panel ? panel.querySelectorAll('.stage-card') : [];
     const stepEls   = panel ? panel.querySelectorAll('.stage-step') : [];
+    const jhText    = panel ? panel.querySelector('.jh-text') : null;
+    const jhCursor  = panel ? panel.querySelector('.jh-cursor') : null;
     if (!particles || !panel || !stageEls.length) return;
+
+    // Typewriter effect for the panel header — types "one lead ·
+    // fully handled" character by character with slight randomness,
+    // mimicking LLM streaming output. The cursor blinks during
+    // typing and fades 1.2s after the text completes.
+    let typewriterTimers = [];
+    function runHeaderTypewriter() {
+      if (!jhText || !jhCursor) return;
+      typewriterTimers.forEach(t => clearTimeout(t));
+      typewriterTimers = [];
+      const fullText = 'one lead · fully handled';
+      jhText.textContent = '';
+      jhCursor.classList.add('active');
+      let i = 0;
+      function tick() {
+        if (i < fullText.length) {
+          jhText.textContent = fullText.substring(0, i + 1);
+          i++;
+          typewriterTimers.push(setTimeout(tick, 45 + Math.random() * 30));
+        } else {
+          typewriterTimers.push(setTimeout(() => {
+            jhCursor.classList.remove('active');
+          }, 1200));
+        }
+      }
+      tick();
+    }
 
     // Channel-tagged lead seeds. Mix reflects the audience: WhatsApp +
     // Trythat heaviest, with portals and partners sprinkled in.
@@ -4686,6 +4740,7 @@
         panel.classList.add('solid');
         clearStages();
         setStage(1);
+        runHeaderTypewriter();
       });
 
       // Phase 3 — stages 2-5
