@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Terms of Use — RealtorOS</title>
+<meta name="description" content="Terms of Use, Compliance, Fair Usage and Service Agreement for RealtorOS, operated by AltRr Software Services Pvt. Ltd. within the TryThat.ai ecosystem." />
+<script>
+  (function() {
+    try {
+      var stored = localStorage.getItem('realtoros-theme');
+      document.documentElement.dataset.theme = stored || 'light';
+    } catch (e) {
+      document.documentElement.dataset.theme = 'light';
+    }
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     RealtorOS — Terms of Use page
+     Long-form legal document. Same brand identity as the main site
+     (TryThat blue, Inter spine), with reading-optimised typography
+     and the architect's section stamp on each clause.
+     ============================================================ */
+  :root {
+    --canvas:           #FAF9F5;
+    --surface:          #FFFFFF;
+    --line:             rgba(10,10,18,0.07);
+    --line-2:           rgba(10,10,18,0.11);
+    --line-3:           rgba(10,10,18,0.16);
+    --fg:               #0A0A12;
+    --fg-2:             #3A3A4A;
+    --fg-3:             #6B6877;
+    --fg-4:             #9B98A8;
+    --brand:            #2157A6;
+    --brand-deep:       #163A6E;
+    --brand-tint:       #DBE4F2;
+  }
+  [data-theme="dark"] {
+    --canvas:           #07070C;
+    --surface:          #11111E;
+    --line:             rgba(255,255,255,0.06);
+    --line-2:           rgba(255,255,255,0.10);
+    --line-3:           rgba(255,255,255,0.16);
+    --fg:               #F4F1EA;
+    --fg-2:             #C7C4D1;
+    --fg-3:             #908DA0;
+    --fg-4:             #5C5A6E;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--canvas);
+    color: var(--fg);
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a { color: var(--brand); text-decoration: none; }
+  a:hover { color: var(--brand-deep); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ============== NAV (simplified) ============== */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(22px) saturate(140%);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    background: rgba(250,249,245,0.85);
+    border-bottom: 1px solid var(--line);
+  }
+  [data-theme="dark"] .nav { background: rgba(7,7,12,0.78); }
+  .nav-row {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px; max-width: 1080px; margin: 0 auto; padding: 0 32px;
+  }
+  .brand {
+    display: inline-flex; align-items: center; gap: 12px;
+    line-height: 1;
+  }
+  .brand-logo {
+    height: 32px;
+    width: auto;
+    display: block;
+    flex-shrink: 0;
+    content: url('images/trythat-logo-wordmark-dark.svg');
+  }
+  [data-theme="light"] .brand-logo {
+    content: url('images/trythat-logo-wordmark.svg');
+  }
+  .brand-divider {
+    width: 1px; height: 28px;
+    background: var(--line-2);
+    flex-shrink: 0;
+  }
+  .brand-vertical {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    line-height: 1;
+  }
+  .bv-cat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px; font-weight: 500;
+    color: var(--fg-3);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .bv-aud { font-size: 13px; font-weight: 500; color: var(--fg-2); }
+  .bv-aud strong { color: var(--brand); font-weight: 700; font-size: 14px; }
+  .nav-back {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--fg-2);
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    transition: color .2s, border-color .2s, background .2s;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .nav-back:hover {
+    color: var(--brand);
+    border-color: var(--brand);
+    background: var(--brand-tint);
+    text-decoration: none;
+  }
+
+  /* ============== PAGE LAYOUT ============== */
+  main.terms {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 32px 120px;
+  }
+  .terms-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--brand);
+    margin-bottom: 24px;
+  }
+  .terms-eyebrow svg {
+    width: 72px; height: 22px;
+  }
+  .terms-eyebrow .te-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brand);
+  }
+  .terms h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(32px, 4.4vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--fg);
+    margin-bottom: 18px;
+  }
+  .terms-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--fg-3);
+    letter-spacing: 0.04em;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--line);
+  }
+  .terms-intro {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--fg-2);
+    margin-bottom: 16px;
+  }
+  .terms-intro strong { color: var(--fg); font-weight: 600; }
+
+  /* ============== SECTION ============== */
+  .terms-section {
+    padding-top: 56px;
+    margin-top: 16px;
+    scroll-margin-top: 80px;
+  }
+  .terms-section + .terms-section { border-top: 1px solid var(--line); }
+  .terms-section header { margin-bottom: 18px; }
+  .section-stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--brand);
+    margin-bottom: 14px;
+  }
+  .section-stamp svg {
+    width: 72px; height: 22px;
+    display: block;
+  }
+  .terms-section h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(22px, 2.6vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: var(--fg);
+  }
+  .terms-section p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--fg-2);
+    margin-bottom: 14px;
+  }
+  .terms-section p strong { color: var(--fg); font-weight: 600; }
+  .terms-section em { font-style: italic; color: var(--fg); }
+  .terms-section ul {
+    list-style: none;
+    margin: 0 0 18px;
+    padding: 0;
+  }
+  .terms-section ul li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--fg-2);
+    margin-bottom: 6px;
+  }
+  .terms-section ul li::before {
+    content: '';
+    position: absolute;
+    left: 4px; top: 12px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--brand);
+    opacity: 0.85;
+  }
+  .terms-section ul.tight li { margin-bottom: 2px; }
+
+  /* Inline emphasis used for clause headings within paragraphs */
+  .terms-section .clause-lead {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  /* ============== FOOTER ============== */
+  footer.terms-foot {
+    border-top: 1px solid var(--line);
+    padding: 40px 32px;
+    text-align: center;
+    color: var(--fg-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    background: var(--canvas);
+  }
+  footer.terms-foot a { color: var(--fg-2); }
+  footer.terms-foot a:hover { color: var(--brand); }
+
+  @media (max-width: 600px) {
+    main.terms { padding: 48px 20px 96px; }
+    .nav-row { padding: 0 20px; }
+    .brand-divider, .brand-vertical { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-row">
+    <a href="index.html" class="brand" aria-label="TryThat.ai for Realtors — home">
+      <img class="brand-logo" src="images/trythat-logo-wordmark.svg" alt="TryThat.ai for Realtors" />
+      <span class="brand-divider"></span>
+      <span class="brand-vertical">
+        <span class="bv-cat">Sales OS</span>
+        <span class="bv-aud">for <strong>Realtors</strong></span>
+      </span>
+    </a>
+    <a href="index.html" class="nav-back">← Back to home</a>
+  </div>
+</nav>
+
+<main class="terms">
+  <div class="terms-eyebrow">
+    <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+      <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+      <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">§</text>
+      <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+      <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+    </svg>
+    <span class="te-label">Legal · Terms of Use</span>
+  </div>
+
+  <h1>Terms of Use, Compliance, Fair Usage &amp; Service Agreement</h1>
+  <p class="terms-meta">Effective 9 May 2026 · Pune, Maharashtra · India</p>
+
+  <p class="terms-intro">Welcome to <strong>RealtorOS</strong>, a real-estate focused AI operating platform within the TryThat.ai ecosystem, operated by <strong>AltRr Software Services Pvt. Ltd.</strong>, having its registered office at 6th Floor, VB Capitol, Range Hills Road, Bhosalenagar, Shivajinagar, Pune – 411007, Maharashtra, India.</p>
+
+  <p class="terms-intro">By registering, onboarding, integrating, subscribing, recharging, accessing, or using RealtorOS and any associated services, products, communication systems, APIs, dashboards, AI tools, automation systems, or integrations (<em>"Services"</em>), the Client agrees to comply with and remain bound by the following Terms of Use, Compliance Policies, Fair Usage Policies, and Service Conditions.</p>
+
+  <!-- 1 -->
+  <section class="terms-section" id="s1">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">01</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Service Scope &amp; Platform Access</h2>
+    </header>
+    <p>RealtorOS provides AI-powered business automation tools including but not limited to:</p>
+    <ul>
+      <li>AI calling</li>
+      <li>Lead qualification</li>
+      <li>CRM workflows</li>
+      <li>Communication automation</li>
+      <li>WhatsApp integrations</li>
+      <li>Campaign tools</li>
+      <li>Inventory management utilities</li>
+      <li>Analytics</li>
+      <li>Integrations</li>
+      <li>And related business automation services.</li>
+    </ul>
+    <p>Platform access, usage limits, calling capacity, storage, integrations, APIs, workflows, projects, users, communication credits, support access, and feature availability shall depend upon the active subscription plan, prepaid balance, custom agreement, or commercial arrangement approved by RealtorOS.</p>
+    <p>Certain features may be experimental, beta, limited-release, AI-assisted, roadmap-based, or dependent upon third-party systems.</p>
+    <p>RealtorOS reserves the absolute right to <strong>modify, update, discontinue, restrict, suspend, throttle, redesign, or remove</strong> any feature, integration, pricing structure, commercial model, service limitation, or roadmap item at any time without prior notice.</p>
+    <p>Future roadmap discussions, demos, presentations, or proposed features shall not constitute legally binding delivery commitments.</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="terms-section" id="s2">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">02</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Client Responsibility &amp; Legal Compliance</h2>
+    </header>
+    <p>The Client acknowledges and agrees that RealtorOS acts strictly as a technology platform and automation service provider.</p>
+    <p>The Client shall remain solely responsible for:</p>
+    <ul>
+      <li>All uploaded databases</li>
+      <li>Customer information</li>
+      <li>Leads</li>
+      <li>Property listings</li>
+      <li>Advertisements</li>
+      <li>Scripts</li>
+      <li>Campaigns</li>
+      <li>Approvals</li>
+      <li>Communication content</li>
+      <li>Inventory accuracy</li>
+      <li>Employee access</li>
+      <li>Customer consent</li>
+      <li>And all activities conducted using the platform.</li>
+    </ul>
+    <p>The Client further confirms that all customer data has been lawfully collected, required communication permissions and opt-ins have been obtained, and all campaigns comply with applicable laws, regulations, and industry policies.</p>
+    <p>The Client shall remain fully liable for compliance with:</p>
+    <ul>
+      <li>TRAI regulations</li>
+      <li>DLT requirements</li>
+      <li>Telemarketing rules</li>
+      <li>RERA regulations</li>
+      <li>Data protection obligations</li>
+      <li>WhatsApp / Meta policies</li>
+      <li>Advertising standards</li>
+      <li>Telecom laws</li>
+      <li>And all other applicable statutory or regulatory requirements.</li>
+    </ul>
+    <p>RealtorOS shall not be liable for spam complaints, telecom violations, opt-out disputes, blacklisting, account suspensions, customer complaints, regulatory penalties, or legal actions arising from client activities or communications.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="terms-section" id="s3">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">03</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>AI Calling, Automation &amp; Communication Disclaimer</h2>
+    </header>
+    <p>RealtorOS may provide AI-driven communication tools including:</p>
+    <ul>
+      <li>Inbound and outbound AI calling</li>
+      <li>AI lead qualification</li>
+      <li>AI-generated classifications</li>
+      <li>Conversational workflows</li>
+      <li>Automated messaging</li>
+      <li>AI-generated summaries</li>
+      <li>Recommendations</li>
+      <li>And marketing automation features.</li>
+    </ul>
+    <p>The Client understands and agrees that AI systems are probabilistic technologies and outputs may contain inaccuracies, produce incomplete responses, generate unintended outcomes, or fail to meet specific business expectations.</p>
+    <p>All AI scripts, workflows, prompts, campaign logic, and communication structures are deemed approved by the Client upon deployment or usage. Final business decisions, customer engagement actions, and communication approvals shall remain entirely the Client's responsibility.</p>
+    <p>RealtorOS does not guarantee lead conversion, sales outcomes, campaign performance, response rates, customer behavior, business growth, or operational results.</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="terms-section" id="s4">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">04</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Third-Party Integrations &amp; External Platforms</h2>
+    </header>
+    <p>RealtorOS may integrate with third-party systems including but not limited to WhatsApp Business APIs, Meta platforms, Google platforms, telephony providers, SIP trunk providers, CRMs, cloud infrastructure, ad platforms, and external APIs.</p>
+    <p>Such services remain controlled by their respective providers and are subject to third-party policies, restrictions, uptime, approvals, and availability.</p>
+    <p>RealtorOS shall not be liable for API failures, delivery issues, sync delays, telecom outages, account bans, Meta/Google restrictions, WhatsApp limitations, infrastructure downtime, or interruptions caused by third-party providers.</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="terms-section" id="s5">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">05</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Fair Usage Policy</h2>
+    </header>
+    <p>Clients agree to use RealtorOS strictly for lawful and intended business purposes. The following activities are strictly prohibited:</p>
+    <ul>
+      <li>Spam messaging</li>
+      <li>Unsolicited bulk communication</li>
+      <li>Illegal telemarketing</li>
+      <li>Scraping</li>
+      <li>Reverse engineering</li>
+      <li>Unauthorized automation abuse</li>
+      <li>Phishing</li>
+      <li>Credential sharing</li>
+      <li>Bot attacks</li>
+      <li>Fake listings</li>
+      <li>Fraudulent promotions</li>
+      <li>Platform exploitation</li>
+      <li>Excessive infrastructure abuse</li>
+      <li>Or any activity affecting platform stability, security, or reputation.</li>
+    </ul>
+    <p>All <em>"Unlimited"</em> plans remain subject to reasonable and commercially acceptable fair-usage thresholds as determined solely by RealtorOS.</p>
+    <p>RealtorOS reserves the right to monitor activity, throttle usage, restrict services, suspend campaigns, block integrations, or terminate accounts where suspicious, abusive, harmful, or non-standard usage is detected.</p>
+  </section>
+
+  <!-- 6 -->
+  <section class="terms-section" id="s6">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">06</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Intellectual Property Rights</h2>
+    </header>
+    <p>All rights, title, ownership, and intellectual property related to RealtorOS — including software, source code, workflows, prompts, AI systems, automation logic, communication structures, dashboards, integrations, templates, custom automations, UI/UX, branding, and operational systems — shall remain the exclusive property of <strong>AltRr Software Services Pvt. Ltd.</strong></p>
+    <p>Clients shall not copy, reproduce, distribute, reverse engineer, sublicense, resell, commercially exploit, or create derivative offerings without prior written authorization.</p>
+    <p>Custom automations and platform workflows created within RealtorOS shall remain company property unless otherwise agreed in writing.</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="terms-section" id="s7">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">07</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Data Privacy, Recordings &amp; Retention</h2>
+    </header>
+    <p>Client data, recordings, transcripts, campaign information, and uploaded content may be processed and stored for operational purposes, analytics, quality monitoring, support, compliance, training, research, and product improvement.</p>
+    <p>The Client authorizes RealtorOS to utilize anonymized and aggregated telemetry data for analytics and service enhancement. Call recordings and AI-generated transcripts may be stored for operational and compliance purposes.</p>
+    <p>Upon subscription expiry, inactivity, suspension, or termination, access to data may be restricted immediately, and RealtorOS reserves the right to permanently delete stored data after <strong>14 days</strong>.</p>
+    <p>Data exports may be provided subject to operational feasibility and account standing.</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="terms-section" id="s8">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">08</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Payments, Commercials &amp; Subscription Terms</h2>
+    </header>
+    <p>All subscriptions, communication credits, AI calling balances, and usage charges are <strong>prepaid</strong> unless otherwise agreed in writing. Applicable taxes including GST shall be charged additionally.</p>
+    <p>Failure to maintain payment balance or clear outstanding dues may result in suspension, service restriction, limited functionality, or permanent account termination.</p>
+    <p>All payments shall be considered <strong>non-refundable</strong> unless explicitly approved otherwise in writing.</p>
+    <p>RealtorOS reserves the right to revise pricing, modify plans, alter usage limits, change commercial structures, or discontinue offers at its discretion.</p>
+    <p>Trial plans, PoCs, beta access, and promotional offerings shall remain governed by the conditions published on official RealtorOS platforms.</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="terms-section" id="s9">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">09</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Suspension, Monitoring &amp; Termination</h2>
+    </header>
+    <p>RealtorOS reserves the right to monitor platform activity for abuse, fraud prevention, security threats, operational integrity, compliance enforcement, and suspicious behavior.</p>
+    <p>Accounts may be suspended, restricted, investigated, or terminated without prior notice in cases including but not limited to:</p>
+    <ul>
+      <li>Non-payment</li>
+      <li>Telecom violations</li>
+      <li>Spam complaints</li>
+      <li>Fake inventory</li>
+      <li>Abusive conduct</li>
+      <li>Unlawful usage</li>
+      <li>Suspicious activity</li>
+      <li>Credential sharing</li>
+      <li>Reverse engineering</li>
+      <li>Platform misuse</li>
+      <li>Or reputational / legal risk.</li>
+    </ul>
+    <p>RealtorOS additionally reserves the right to pursue civil or criminal legal remedies where applicable.</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="terms-section" id="s10">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">10</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Limitation of Liability</h2>
+    </header>
+    <p>To the maximum extent permitted under applicable law, RealtorOS, TryThat.ai, AltRr Software Services Pvt. Ltd., and their employees, affiliates, vendors, and partners shall not be liable for:</p>
+    <ul>
+      <li>Sales loss</li>
+      <li>Revenue loss</li>
+      <li>Missed opportunities</li>
+      <li>Customer disputes</li>
+      <li>Campaign failures</li>
+      <li>Inaccurate AI outputs</li>
+      <li>Data loss</li>
+      <li>CRM failures</li>
+      <li>Inventory mismatches</li>
+      <li>Ad performance issues</li>
+      <li>Communication failures</li>
+      <li>Telecom disruptions</li>
+      <li>Account bans</li>
+      <li>Or indirect / consequential damages of any nature.</li>
+    </ul>
+    <p>Under no circumstance shall the aggregate liability of RealtorOS exceed the total amount paid by the Client during the <strong>three months</strong> immediately preceding the claim.</p>
+  </section>
+
+  <!-- 11 -->
+  <section class="terms-section" id="s11">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">11</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Indemnification</h2>
+    </header>
+    <p>The Client agrees to fully indemnify and hold harmless RealtorOS, TryThat.ai, AltRr Software Services Pvt. Ltd., and their affiliates against any claims, liabilities, penalties, losses, damages, regulatory actions, disputes, or legal proceedings arising from:</p>
+    <ul>
+      <li>Client campaigns</li>
+      <li>Uploaded data</li>
+      <li>Customer communications</li>
+      <li>Telecom violations</li>
+      <li>Misleading advertisements</li>
+      <li>Unlawful activity</li>
+      <li>Policy breaches</li>
+      <li>Consent violations</li>
+      <li>Or misuse of the platform.</li>
+    </ul>
+  </section>
+
+  <!-- 12 -->
+  <section class="terms-section" id="s12">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">12</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Marketing &amp; Branding Rights</h2>
+    </header>
+    <p>Unless restricted in writing, the Client grants RealtorOS the right to:</p>
+    <ul>
+      <li>Use company name and logo</li>
+      <li>Publish partnership announcements</li>
+      <li>Create anonymized case studies</li>
+      <li>Showcase campaign screenshots</li>
+      <li>And reference the Client for branding, portfolio, investor, sales, or promotional purposes.</li>
+    </ul>
+  </section>
+
+  <!-- 13 -->
+  <section class="terms-section" id="s13">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">13</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Force Majeure</h2>
+    </header>
+    <p>RealtorOS shall not be liable for delays, failures, interruptions, or data issues caused by events beyond reasonable control including:</p>
+    <ul>
+      <li>Telecom failures</li>
+      <li>Cloud outages</li>
+      <li>Cyberattacks</li>
+      <li>Internet disruptions</li>
+      <li>Government restrictions</li>
+      <li>Regulatory changes</li>
+      <li>Natural disasters</li>
+      <li>War</li>
+      <li>Pandemics</li>
+      <li>Labor disputes</li>
+      <li>Or third-party infrastructure failures.</li>
+    </ul>
+  </section>
+
+  <!-- 14 -->
+  <section class="terms-section" id="s14">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">14</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Governing Law &amp; Jurisdiction</h2>
+    </header>
+    <p>These Terms shall be governed by and interpreted in accordance with the laws of <strong>India</strong>.</p>
+    <p>The parties agree to first attempt good-faith resolution by contacting RealtorOS support and management prior to initiating legal proceedings.</p>
+    <p>All disputes shall be subject exclusively to the jurisdiction of courts located in <strong>Pune, Maharashtra</strong>.</p>
+  </section>
+
+  <!-- 15 -->
+  <section class="terms-section" id="s15">
+    <header>
+      <div class="section-stamp">
+        <svg viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">15</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+      <h2>Electronic Acceptance &amp; Severability</h2>
+    </header>
+    <p>Submission of onboarding forms, digital approvals, payments, integrations, recharge, platform access, or continued usage of RealtorOS shall constitute valid <strong>electronic acceptance</strong> of these Terms and Policies.</p>
+    <p>If any provision of these Terms is found unenforceable, the remaining provisions shall continue in full force and effect.</p>
+  </section>
+</main>
+
+<footer class="terms-foot">
+  <p>© 2026 AltRr Software Services Pvt. Ltd. · RealtorOS · part of the TryThat.ai ecosystem</p>
+  <p style="margin-top:6px;"><a href="index.html">← Back to home</a></p>
+</footer>
+
+</body>
+</html>

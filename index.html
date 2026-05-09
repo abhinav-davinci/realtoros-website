@@ -3265,6 +3265,358 @@
     .visit-block { width: 100%; max-width: 200px; }
   }
 
+  /* ============================================================
+     PRICING SECTION
+     Four-tier plan grid with the middle "Pro" tier featured.
+     Premium polish: subtle hover lift on non-featured cards,
+     elevated featured card with brand-blue border + "Most Popular"
+     badge, two-column feature rows (label / value in mono), and a
+     soft notes block below. Pay-as-you-go consumables in a
+     secondary row at the bottom.
+     ============================================================ */
+  .pricing {
+    padding: 96px 0 112px;
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .pricing::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(50% 40% at 70% 0%, rgba(33,87,166,0.06) 0%, transparent 60%),
+      radial-gradient(40% 35% at 20% 100%, rgba(33,87,166,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .pricing > .wrap { position: relative; z-index: 1; }
+  .pricing-head {
+    max-width: 720px;
+    margin: 0 auto 64px;
+    text-align: center;
+  }
+  .pricing-head h2 {
+    font-size: clamp(36px, 4.8vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: var(--fg);
+    margin: 18px 0 18px;
+  }
+  .pricing-head .sub {
+    font-size: 17px;
+    color: var(--fg-2);
+    line-height: 1.55;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1280px;
+    margin: 0 auto;
+    align-items: stretch;
+  }
+  .plan {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-3);
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-xl);
+    padding: 32px 26px;
+    transition: transform .35s cubic-bezier(.2,.7,.2,1), border-color .25s ease, box-shadow .35s ease;
+  }
+  .plan:hover {
+    transform: translateY(-4px);
+    border-color: var(--line-3);
+    box-shadow: 0 16px 40px rgba(20,19,26,0.10);
+  }
+  .plan.featured {
+    border-color: var(--brand);
+    border-width: 1.5px;
+    background: linear-gradient(180deg, rgba(33,87,166,0.04) 0%, var(--bg-3) 60%);
+    box-shadow:
+      0 0 0 4px rgba(33,87,166,0.08),
+      0 24px 48px rgba(33,87,166,0.18);
+    transform: translateY(-8px);
+  }
+  .plan.featured:hover {
+    transform: translateY(-10px);
+  }
+  .plan-badge {
+    position: absolute;
+    top: -12px; left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 12px 6px;
+    border-radius: 999px;
+    box-shadow: 0 6px 14px rgba(33,87,166,0.30);
+    white-space: nowrap;
+  }
+  .plan-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--fg);
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    line-height: 1;
+  }
+  .plan-tagline {
+    font-size: 13px;
+    color: var(--fg-3);
+    line-height: 1.45;
+    margin-bottom: 24px;
+    min-height: 38px;
+  }
+  .plan-price {
+    padding-bottom: 22px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+  }
+  .price-amount {
+    font-family: 'Inter', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--fg);
+    letter-spacing: -0.035em;
+    line-height: 1;
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .price-currency {
+    font-size: 22px;
+    font-weight: 600;
+    margin-right: 1px;
+    color: var(--fg-2);
+    transform: translateY(-12px);
+  }
+  .price-period {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-3);
+    letter-spacing: 0.04em;
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+  .plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px;
+    flex: 1;
+  }
+  .plan-features li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13.5px;
+  }
+  .plan-features li:last-child {
+    border-bottom: none;
+  }
+  .plan-features .feature-label {
+    color: var(--fg-2);
+    line-height: 1.3;
+  }
+  .plan-features .feature-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--fg);
+    text-align: right;
+    letter-spacing: -0.005em;
+    flex-shrink: 0;
+  }
+  .plan-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px 18px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--fg);
+    background: transparent;
+    border: 1px solid var(--line-3);
+    transition: all .2s ease;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .plan-cta:hover {
+    color: var(--brand);
+    border-color: var(--brand);
+    background: rgba(33,87,166,0.06);
+  }
+  .plan-cta .arrow-r {
+    width: 13px; height: 13px;
+    transition: transform .2s ease;
+  }
+  .plan-cta:hover .arrow-r { transform: translateX(2px); }
+  .plan.featured .plan-cta {
+    background: linear-gradient(135deg, var(--brand), var(--brand-deep));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(33,87,166,0.32);
+  }
+  .plan.featured .plan-cta:hover {
+    background: linear-gradient(135deg, var(--brand-deep), var(--brand));
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(33,87,166,0.45);
+  }
+
+  /* Notes block — softly styled callout below the plan cards */
+  .pricing-notes {
+    max-width: 880px;
+    margin: 56px auto 0;
+    padding: 28px 32px;
+    background: var(--bg-3);
+    border: 1px solid var(--line-2);
+    border-left: 3px solid var(--brand);
+    border-radius: 0 var(--r-md) var(--r-md) 0;
+  }
+  .pricing-notes h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--brand);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .pricing-notes ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .pricing-notes li {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--fg-2);
+    padding-left: 22px;
+    position: relative;
+  }
+  .pricing-notes li::before {
+    content: '';
+    position: absolute;
+    left: 4px; top: 9px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--brand);
+    opacity: 0.85;
+  }
+  .pricing-notes li strong {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  /* Pay-as-you-go consumables — secondary row at the bottom */
+  .pricing-consumables {
+    margin-top: 64px;
+    padding-top: 56px;
+    border-top: 1px solid var(--line);
+  }
+  .pricing-consumables-head {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .pricing-consumables-head h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--fg);
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .pricing-consumables-head p {
+    font-size: 14px;
+    color: var(--fg-3);
+    line-height: 1.5;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .consumables-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .consumable {
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 22px 20px;
+    text-align: center;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .consumable:hover {
+    border-color: var(--brand);
+    transform: translateY(-2px);
+  }
+  .consumable-label {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--brand);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .consumable-price {
+    font-family: 'Inter', sans-serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--fg);
+    letter-spacing: -0.025em;
+    line-height: 1;
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .consumable-price .c-cur {
+    font-size: 16px;
+    color: var(--fg-2);
+    margin-right: 1px;
+  }
+  .consumable-unit {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--fg-3);
+    margin-top: 8px;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 1100px) {
+    .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+    .plan.featured { transform: none; }
+  }
+  @media (max-width: 640px) {
+    .pricing-grid { grid-template-columns: 1fr; }
+    .consumables-grid { grid-template-columns: 1fr; }
+  }
+
   /* Reveal-on-scroll */
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
   .reveal.in { opacity: 1; transform: translateY(0); }
@@ -4422,6 +4774,154 @@
 </section>
 
 <!-- ============================================================
+     PRICING
+     ============================================================ -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <div class="pricing-head">
+      <div class="section-eyebrow" style="justify-content:center;">
+        <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">11</text>
+          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <span class="se-title">Pricing</span>
+      </div>
+      <h2>Choose your plan.</h2>
+      <p class="sub">Start with a free POC. Scale as you grow. Every plan includes unlimited listings, multi-channel marketing, and Trythat.ai marketplace distribution.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Free POC -->
+      <article class="plan">
+        <div class="plan-name">Free POC</div>
+        <p class="plan-tagline">Test the platform with real AI calling.</p>
+        <div class="plan-price">
+          <span class="price-amount"><span class="price-currency">₹</span>3,000</span>
+          <span class="price-period">One-time · 3 months phone rental</span>
+        </div>
+        <ul class="plan-features">
+          <li><span class="feature-label">AI calling credits</span><span class="feature-value">6,000 sec</span></li>
+          <li><span class="feature-label">Users / seats</span><span class="feature-value">1</span></li>
+          <li><span class="feature-label">Property listings</span><span class="feature-value">Unlimited</span></li>
+          <li><span class="feature-label">Marketing channels</span><span class="feature-value">All included</span></li>
+          <li><span class="feature-label">Data terminal</span><span class="feature-value">45 days</span></li>
+          <li><span class="feature-label">CRM integration</span><span class="feature-value">✓</span></li>
+        </ul>
+        <a href="#cta" class="plan-cta">
+          Start free POC
+          <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </article>
+
+      <!-- Starter -->
+      <article class="plan">
+        <div class="plan-name">Starter</div>
+        <p class="plan-tagline">For solo agents and small teams.</p>
+        <div class="plan-price">
+          <span class="price-amount"><span class="price-currency">₹</span>50,000</span>
+          <span class="price-period">Per year</span>
+        </div>
+        <ul class="plan-features">
+          <li><span class="feature-label">AI calling credits</span><span class="feature-value">50,000 sec/yr</span></li>
+          <li><span class="feature-label">WhatsApp messages</span><span class="feature-value">1,200/yr</span></li>
+          <li><span class="feature-label">SMS messages</span><span class="feature-value">12,000/yr</span></li>
+          <li><span class="feature-label">Users / seats</span><span class="feature-value">3</span></li>
+          <li><span class="feature-label">Property listings</span><span class="feature-value">Unlimited</span></li>
+          <li><span class="feature-label">Data terminal</span><span class="feature-value">3 months + 1 report</span></li>
+        </ul>
+        <a href="#cta" class="plan-cta">
+          Choose Starter
+          <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </article>
+
+      <!-- Pro (Featured) -->
+      <article class="plan featured">
+        <span class="plan-badge">Most Popular</span>
+        <div class="plan-name">Pro</div>
+        <p class="plan-tagline">For growing brokerages.</p>
+        <div class="plan-price">
+          <span class="price-amount"><span class="price-currency">₹</span>1,20,000</span>
+          <span class="price-period">Per year</span>
+        </div>
+        <ul class="plan-features">
+          <li><span class="feature-label">AI calling credits</span><span class="feature-value">1,80,000 sec/yr</span></li>
+          <li><span class="feature-label">WhatsApp messages</span><span class="feature-value">3,600/yr</span></li>
+          <li><span class="feature-label">SMS messages</span><span class="feature-value">36,000/yr</span></li>
+          <li><span class="feature-label">Users / seats</span><span class="feature-value">10</span></li>
+          <li><span class="feature-label">Credit carryforward</span><span class="feature-value">1 year</span></li>
+          <li><span class="feature-label">Data terminal</span><span class="feature-value">1 yr + monthly reports</span></li>
+        </ul>
+        <a href="#cta" class="plan-cta">
+          Choose Pro
+          <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </article>
+
+      <!-- Ultimate -->
+      <article class="plan">
+        <div class="plan-name">Ultimate</div>
+        <p class="plan-tagline">For large developers and enterprises.</p>
+        <div class="plan-price">
+          <span class="price-amount"><span class="price-currency">₹</span>2,40,000</span>
+          <span class="price-period">Per year</span>
+        </div>
+        <ul class="plan-features">
+          <li><span class="feature-label">AI calling credits</span><span class="feature-value">4,00,000 sec/yr</span></li>
+          <li><span class="feature-label">WhatsApp messages</span><span class="feature-value">12,000/yr</span></li>
+          <li><span class="feature-label">SMS messages</span><span class="feature-value">1,20,000/yr</span></li>
+          <li><span class="feature-label">Users / seats</span><span class="feature-value">Up to 100</span></li>
+          <li><span class="feature-label">Credit carryforward</span><span class="feature-value">2 years</span></li>
+          <li><span class="feature-label">Data terminal</span><span class="feature-value">1 yr + 12 reports</span></li>
+        </ul>
+        <a href="#cta" class="plan-cta">
+          Choose Ultimate
+          <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </article>
+    </div>
+
+    <!-- Notes -->
+    <div class="pricing-notes">
+      <h4>What you need to know</h4>
+      <ul>
+        <li><strong>All plans include</strong> full AI chat &amp; calling setup, unlimited property listings, multi-channel marketing distribution, Trythat.ai marketplace inclusion, and integration with your existing CRM.</li>
+        <li><strong>Pay-as-you-go top-ups</strong> are available below — AI calling at ₹0.14 / sec, WhatsApp at ₹1.05 / msg, SMS at ₹0.18 / msg.</li>
+        <li><strong>No hidden fees.</strong> What you see is what you pay. Credits are consumed as you use them, with monthly allocation for budgeting.</li>
+        <li><strong>Upgrade anytime.</strong> Start small, scale as you grow. Unused credits in Pro &amp; Ultimate carry forward.</li>
+      </ul>
+    </div>
+
+    <!-- Pay-as-you-go consumables -->
+    <div class="pricing-consumables">
+      <div class="pricing-consumables-head">
+        <h3>Pay as you go.</h3>
+        <p>Need more than your plan includes? Top up additional credits anytime.</p>
+      </div>
+      <div class="consumables-grid">
+        <div class="consumable">
+          <span class="consumable-label">AI Calling</span>
+          <span class="consumable-price"><span class="c-cur">₹</span>0.14</span>
+          <span class="consumable-unit">per second</span>
+        </div>
+        <div class="consumable">
+          <span class="consumable-label">WhatsApp</span>
+          <span class="consumable-price"><span class="c-cur">₹</span>1.05</span>
+          <span class="consumable-unit">per message</span>
+        </div>
+        <div class="consumable">
+          <span class="consumable-label">SMS</span>
+          <span class="consumable-price"><span class="c-cur">₹</span>0.18</span>
+          <span class="consumable-unit">per message</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
      TESTIMONIAL
      ============================================================ -->
 <section class="testi">
@@ -4430,7 +4930,7 @@
     <div class="section-eyebrow" style="justify-content:center;">
       <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
         <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
-        <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">11</text>
+        <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">12</text>
         <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
         <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
       </svg>
@@ -4459,7 +4959,7 @@
     <div class="section-eyebrow" style="justify-content:center; margin-bottom: 24px;">
       <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
         <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
-        <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">12</text>
+        <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">13</text>
         <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
         <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
       </svg>
@@ -4526,7 +5026,7 @@
           <li><a href="#">Customers</a></li>
           <li><a href="#">Careers</a></li>
           <li><a href="#">Privacy</a></li>
-          <li><a href="#">Terms</a></li>
+          <li><a href="terms.html">Terms</a></li>
         </ul>
       </div>
     </div>
