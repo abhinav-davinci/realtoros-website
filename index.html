@@ -1599,8 +1599,8 @@
   .mod:nth-child(2) { --mod-rgb: 255,176,74;  --mod-c: var(--amber-300); }
   .mod:nth-child(3) { --mod-rgb: 74,222,154;  --mod-c: var(--mint-300); }
   .mod:nth-child(4) { --mod-rgb: 255,106,106; --mod-c: var(--rose-300); }
-  .mod:nth-child(5) { --mod-rgb: 93,173,226;  --mod-c: var(--sky-300); }
-  /* mod 6 keeps the indigo default */
+  .mod:nth-child(6) { --mod-rgb: 93,173,226;  --mod-c: var(--sky-300); }
+  /* nth-child(5) is the TryThat brand-feature card; its colour is set by .mod-feature */
 
   /* Staggered entrance — each card delayed by 70ms so they read
      1 → 2 → 3 → 4 → 5 → 6 instead of all snapping in together. */
@@ -1649,10 +1649,11 @@
   .mod:hover::before, .mod:hover::after { opacity: 1; }
 
   .mod-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
     color: var(--fg-4);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.04em;
   }
   .mod-num em { color: var(--mod-c); font-style: normal; }
   .mod-icon {
@@ -1692,6 +1693,128 @@
     background: rgba(255,255,255,0.04);
     color: var(--fg-2);
     border: 1px solid var(--line-2);
+  }
+
+  /* ============================================================
+     BRAND FEATURE CARD (TryThat.ai)
+     Sits in the bottom-middle slot of the modules grid. Centered
+     wordmark with rays emerging in five directions toward the
+     surrounding cards, plus expanding ripple rings. Pure CSS
+     animation, infinite loop, staggered ray timing.
+     ============================================================ */
+  .mod.mod-feature {
+    --mod-rgb: 33,87,166;
+    --mod-c: var(--brand);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 36px 28px 32px;
+    background:
+      radial-gradient(120% 80% at 50% 35%, rgba(33,87,166,0.06) 0%, transparent 70%),
+      var(--bg-2);
+  }
+  .mf-stage {
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 1.55 / 1;
+    display: grid;
+    place-items: center;
+    margin-bottom: 14px;
+  }
+  .mf-glow {
+    position: absolute;
+    width: 150px; height: 150px;
+    background: radial-gradient(circle, rgba(var(--mod-rgb), 0.22) 0%, rgba(var(--mod-rgb), 0.06) 35%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(6px);
+    pointer-events: none;
+    animation: mf-glow-breathe 4s ease-in-out infinite;
+  }
+  @keyframes mf-glow-breathe {
+    0%, 100% { opacity: 0.55; transform: scale(0.92); }
+    50%      { opacity: 0.95; transform: scale(1.06); }
+  }
+  .mf-ray {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 220px; height: 1.6px;
+    background: linear-gradient(to right,
+      rgba(var(--mod-rgb), 0)     0%,
+      rgba(var(--mod-rgb), 0.45)  20%,
+      rgba(var(--mod-rgb), 0.95)  70%,
+      rgba(var(--mod-rgb), 0.6)   95%,
+      rgba(var(--mod-rgb), 0)    100%);
+    transform-origin: left center;
+    transform: translateY(-50%) rotate(var(--angle)) scaleX(0);
+    animation: mf-ray-emit 4.2s var(--delay) cubic-bezier(.65,0,.35,1) infinite;
+    border-radius: 1px;
+    pointer-events: none;
+    filter: drop-shadow(0 0 6px rgba(var(--mod-rgb), 0.45));
+    opacity: 0;
+  }
+  .mf-stage { overflow: visible; }
+  @keyframes mf-ray-emit {
+    0%   { opacity: 0; transform: translateY(-50%) rotate(var(--angle)) scaleX(0);    }
+    14%  { opacity: 1; }
+    55%  { opacity: 0.9; transform: translateY(-50%) rotate(var(--angle)) scaleX(1);  }
+    82%  { opacity: 0; transform: translateY(-50%) rotate(var(--angle)) scaleX(1.08); }
+    100% { opacity: 0; transform: translateY(-50%) rotate(var(--angle)) scaleX(1.08); }
+  }
+  .mf-ring {
+    position: absolute;
+    width: 60px; height: 60px;
+    border: 1px solid rgba(var(--mod-rgb), 0.5);
+    border-radius: 50%;
+    transform: scale(0.7);
+    opacity: 0;
+    animation: mf-ring-pulse 4s ease-out infinite;
+    pointer-events: none;
+  }
+  .mf-ring-2 { animation-delay: 1.6s; }
+  @keyframes mf-ring-pulse {
+    0%   { transform: scale(0.7); opacity: 0.6; }
+    100% { transform: scale(2.6); opacity: 0; }
+  }
+  .mf-logo {
+    position: relative;
+    z-index: 2;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mf-logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+    content: url('images/trythat-logo-wordmark-dark.svg');
+  }
+  [data-theme="light"] .mf-logo img {
+    content: url('images/trythat-logo-wordmark.svg');
+  }
+  .mf-tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--fg);
+    letter-spacing: -0.01em;
+    margin-top: 4px;
+  }
+  .mf-tagline .mf-accent { color: var(--brand); }
+  .mf-meta {
+    margin-top: 6px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--fg-4);
+    letter-spacing: 0.03em;
+  }
+  .mf-meta strong { color: var(--brand); font-weight: 600; }
+  @media (prefers-reduced-motion: reduce) {
+    .mf-ray, .mf-ring, .mf-glow { animation: none; opacity: 0.5; transform: none; }
+    .mf-ray { transform: translateY(-50%) rotate(var(--angle)) scaleX(0.7); opacity: 0.5; }
   }
 
   /* ============== FEATURE BLOCK (ALTERNATING) ============== */
@@ -4544,21 +4667,7 @@
       </div>
 
       <div class="mod reveal">
-        <div class="mod-num"><em>03</em> · Routing</div>
-        <div class="mod-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="6" height="18" rx="1"/><rect x="11" y="3" width="6" height="12" rx="1"/><rect x="19" y="3" width="2" height="7" rx="1"/></svg>
-        </div>
-        <div class="mod-title">The right lead, <em>the right person.</em></div>
-        <p class="mod-desc">No more random assignments. Leads go to the salesperson most likely to close them, set by project, location, budget band or round-robin. SLA escalation is built in.</p>
-        <div class="mod-tags">
-          <span class="mod-tag">7-stage kanban</span>
-          <span class="mod-tag">SLA escalation</span>
-          <span class="mod-tag">auto-routing</span>
-        </div>
-      </div>
-
-      <div class="mod reveal">
-        <div class="mod-num"><em>04</em> · Follow-up</div>
+        <div class="mod-num"><em>03</em> · Follow-up</div>
         <div class="mod-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-8-3 18-6-7-9-3z"/></svg>
         </div>
@@ -4572,7 +4681,7 @@
       </div>
 
       <div class="mod reveal">
-        <div class="mod-num"><em>05</em> · Inventory</div>
+        <div class="mod-num"><em>04</em> · Inventory</div>
         <div class="mod-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/><path d="M9 9h.01M9 13h.01M9 17h.01"/></svg>
         </div>
@@ -4585,8 +4694,25 @@
         </div>
       </div>
 
+      <div class="mod mod-feature reveal" aria-label="TryThat.ai · Sales OS for Realtors">
+        <div class="mf-stage">
+          <div class="mf-glow"></div>
+          <div class="mf-ring mf-ring-1"></div>
+          <div class="mf-ring mf-ring-2"></div>
+          <div class="mf-ray" style="--angle: 225deg; --delay: 0ms"></div>
+          <div class="mf-ray" style="--angle: 270deg; --delay: 280ms"></div>
+          <div class="mf-ray" style="--angle: 315deg; --delay: 560ms"></div>
+          <div class="mf-ray" style="--angle: 180deg; --delay: 840ms"></div>
+          <div class="mf-ray" style="--angle: 0deg;   --delay: 1120ms"></div>
+          <div class="mf-logo">
+            <img src="images/trythat-logo-wordmark-dark.svg" alt="TryThat.ai" />
+          </div>
+        </div>
+        <div class="mf-tagline">Sales OS for <span class="mf-accent">Realtors</span></div>
+      </div>
+
       <div class="mod reveal">
-        <div class="mod-num"><em>06</em> · Visibility</div>
+        <div class="mod-num"><em>05</em> · Visibility</div>
         <div class="mod-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 6-6"/></svg>
         </div>
