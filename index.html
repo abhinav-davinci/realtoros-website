@@ -246,11 +246,27 @@
   }
   .brand-divider {
     width: 1px;
-    height: 22px;
+    height: 28px;
     background: var(--line-2);
     flex-shrink: 0;
   }
   .brand-vertical {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    line-height: 1;
+  }
+  .brand-vertical .bv-cat {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9.5px;
+    font-weight: 500;
+    color: var(--fg-3);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .brand-vertical .bv-aud {
     font-family: 'Inter', sans-serif;
     font-size: 13px;
     font-weight: 500;
@@ -260,7 +276,7 @@
   }
   /* "Realtors" gets emphasis: TryThat blue, heavier weight,
      slightly larger size — draws the eye to the audience vertical. */
-  .brand-vertical strong {
+  .brand-vertical .bv-aud strong {
     color: #2157A6;
     font-weight: 700;
     font-size: 14px;
@@ -3269,7 +3285,10 @@
     <a href="https://trythat.ai/info" class="brand" aria-label="TryThat.ai for Realtors">
       <img class="brand-logo" src="images/trythat-logo-wordmark.svg" alt="TryThat.ai for Realtors" />
       <span class="brand-divider"></span>
-      <span class="brand-vertical">for <strong>Realtors</strong></span>
+      <span class="brand-vertical">
+        <span class="bv-cat">Sales OS</span>
+        <span class="bv-aud">for <strong>Realtors</strong></span>
+      </span>
     </a>
     <div class="nav-links">
       <a href="#about" class="nav-link">About Us</a>
@@ -3302,11 +3321,6 @@
   <div class="wrap hero-inner">
     <div class="hero-row">
       <div class="hero-copy">
-        <span class="hero-tag">
-          <span class="pulse"></span>
-          <span>Sales OS for builders tired of chasing leads</span>
-        </span>
-
         <h1 class="h1">
           Every lead.<br>
           <span class="ink">One inbox.</span><br>
