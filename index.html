@@ -648,7 +648,7 @@
   .journey > * { position: relative; }
 
   .journey-head {
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; justify-content: center;
     gap: 12px;
     padding-bottom: 14px;
     border-bottom: 1px solid var(--line);
@@ -657,13 +657,15 @@
   .journey-head-l {
     display: inline-flex; align-items: center; gap: 8px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--fg-2);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--fg);
     letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
   .journey-head-l::before {
     content: '';
-    width: 6px; height: 6px; border-radius: 50%;
+    width: 7px; height: 7px; border-radius: 50%;
     background: var(--mint-300);
     box-shadow: 0 0 8px var(--mint-300);
     animation: pulse-d 1.6s infinite;
@@ -671,18 +673,7 @@
   .journey-head-l em {
     font-style: normal;
     color: var(--fg);
-    font-weight: 600;
-  }
-  .journey-head-r {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--fg-3);
-  }
-  .journey-head-r .dot {
-    display: inline-block; width: 4px; height: 4px;
-    border-radius: 50%; background: var(--mint-300);
-    box-shadow: 0 0 6px var(--mint-300);
-    margin-right: 6px; vertical-align: middle;
+    font-weight: 700;
   }
 
   /* 5-stage progress rail */
@@ -3373,7 +3364,6 @@
       <div class="journey hidden-pre" id="heroPanel">
         <div class="journey-head">
           <span class="journey-head-l">one lead · fully handled</span>
-          <span class="journey-head-r"><span class="dot"></span>realtoros.com</span>
         </div>
 
         <!-- 5-stage progress rail -->
