@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>RealtorOS — An execution engine for real estate sales teams</title>
-<meta name="description" content="An execution engine for real estate sales teams. RealtorOS brings every lead from WhatsApp, ads, brokers, portals and walk-ins into one pipeline. Your team knows who to call, when to act, and what will close." />
+<title>TryThat.ai for Realtors — An execution engine for real estate sales teams</title>
+<meta name="description" content="An execution engine for real estate sales teams. TryThat.ai for Realtors brings every lead from WhatsApp, ads, brokers, portals and walk-ins into one pipeline. Your team knows who to call, when to act, and what will close." />
 <script>
   /* Set theme as early as possible to prevent FOUC.
      Light is the default for everyone; the user can switch to
      dark via the nav toggle and the choice is remembered. */
   (function() {
     try {
-      var stored = localStorage.getItem('realtoros-theme');
+      var stored = localStorage.getItem('trythat-theme');
       document.documentElement.dataset.theme = stored || 'light';
     } catch (e) {
       document.documentElement.dataset.theme = 'light';
@@ -23,7 +23,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&display=swap" rel="stylesheet">
 <style>
   /* ============================================================
-     RealtorOS — Futuristic Landing
+     TryThat.ai for Realtors — Futuristic Landing
      Design system: ink-dark canvas, warm cream type, electric indigo
      accent, amber for "hot" moments, mono for technical authenticity.
      ============================================================ */
@@ -86,7 +86,7 @@
     --shadow-glow: 0 0 80px rgba(33,87,166,0.35), 0 30px 80px rgba(0,0,0,0.5);
 
     /* ──────────────────────────────────────────────────────────
-       Design system semantic aliases (RealtorOS DS v1.0)
+       Design system semantic aliases (TryThat.ai DS v1.0)
        Engineers code against these; theme switches resolve them.
        ────────────────────────────────────────────────────────── */
     --canvas:           var(--bg);
@@ -220,7 +220,7 @@
     height: 64px; max-width: 1280px; margin: 0 auto; padding: 0 32px;
   }
   /* ============================================================
-     BRAND LOCKUP — RealtorOS
+     BRAND LOCKUP — TryThat.ai for Realtors
      A geometric R glyph in a brand-indigo rounded square, paired
      with the wordmark "Realtor" + "OS" set with weight contrast
      on the OS to reinforce the "operating system" idea. The glyph
@@ -289,28 +289,20 @@
     color: var(--fg);
     line-height: 1;
   }
-  .brand-mark {
-    width: 28px; height: 28px;
-    flex-shrink: 0;
-    display: block;
-    filter: drop-shadow(0 4px 10px rgba(33,87,166,0.28));
+  /* Footer brand: smaller wordmark + "for Realtors" tag */
+  .brand-logo-foot { height: 24px; }
+  .foot-brand-link { gap: 8px; }
+  .foot-brand-aud {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--fg-3);
+    letter-spacing: -0.005em;
+    line-height: 1;
+    padding-left: 8px;
+    border-left: 1px solid var(--line-2);
   }
-  .brand-mark .bg { fill: var(--brand); }
-  .brand-mark .glyph { fill: white; }
-  .brand-text {
-    display: inline-flex;
-    align-items: baseline;
-    color: var(--fg);
-  }
-  .brand-text .os {
-    font-weight: 700;
-    letter-spacing: -0.028em;
-    margin-left: 0.5px;
-  }
-  /* In light theme, soften the mark's drop shadow */
-  [data-theme="light"] .brand-mark {
-    filter: drop-shadow(0 3px 8px rgba(22,58,110,0.22));
-  }
+  .foot-brand-aud strong { color: var(--brand); font-weight: 700; }
   .nav-links {
     display: flex; gap: 2px; align-items: center;
     padding: 4px;
@@ -2151,10 +2143,7 @@
     box-shadow: var(--shadow-3);
   }
   /* Brand marks in the Trythat.ai integration section.
-     Trythat.ai uses its real ".ai" bug (white text on TryThat blue),
-     RealtorOS uses the navbar's R-glyph SVG. Each mark carries its
-     own brand color anchor — they're meant to feel related but not
-     identical, since they're two distinct products. */
+     Trythat.ai uses its real ".ai" bug (white text on TryThat blue). */
   .tt-side .tt-mark {
     width: 64px; height: 64px;
     display: block;
@@ -4155,7 +4144,6 @@
       <img class="brand-logo" src="images/trythat-logo-wordmark.svg" alt="TryThat.ai for Realtors" />
       <span class="brand-divider"></span>
       <span class="brand-vertical">
-        <span class="bv-cat">Sales OS</span>
         <span class="bv-aud">for <strong>Realtors</strong></span>
       </span>
     </a>
@@ -4203,7 +4191,7 @@
         <p class="hero-sub">
           Your enquiries come in from WhatsApp, 66 Acres, Meta ads, channel partners and
           <strong>Trythat.ai</strong>, but right now they're scattered across six different
-          places. RealtorOS collects every one of them, scores each lead before your exec picks
+          places. Trythat.ai collects every one of them, scores each lead before your exec picks
           up the phone, routes it to the right person, and keeps the follow-ups going
           automatically. Nothing slips through. And your team stops copy-pasting from Ads Manager
           at midnight.
@@ -4658,7 +4646,7 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
         </div>
         <div class="mod-title">Know who's <em>serious</em>, instantly.</div>
-        <p class="mod-desc">Not all leads are equal. RealtorOS scores every lead on capture and highlights the ones most likely to convert, so your team works the right pipeline first.</p>
+        <p class="mod-desc">Not all leads are equal. Trythat.ai scores every lead on capture and highlights the ones most likely to convert, so your team works the right pipeline first.</p>
         <div class="mod-tags">
           <span class="mod-tag">auto-score</span>
           <span class="mod-tag">duplicate merge</span>
@@ -4694,7 +4682,7 @@
         </div>
       </div>
 
-      <div class="mod mod-feature reveal" aria-label="TryThat.ai · Sales OS for Realtors">
+      <div class="mod mod-feature reveal" aria-label="TryThat.ai for Realtors">
         <div class="mf-stage">
           <div class="mf-glow"></div>
           <div class="mf-ring mf-ring-1"></div>
@@ -4708,7 +4696,7 @@
             <img src="images/trythat-logo-wordmark-dark.svg" alt="TryThat.ai" />
           </div>
         </div>
-        <div class="mf-tagline">Sales OS for <span class="mf-accent">Realtors</span></div>
+        <div class="mf-tagline">Built for <span class="mf-accent">Realtors</span></div>
       </div>
 
       <div class="mod reveal">
@@ -5045,7 +5033,7 @@
     <p class="cta-sub">Bring structure to your sales process. Close more without increasing spend. Twenty minutes on a call, connected to your real lead sources and inventory, and you'll see how it runs.</p>
     <div class="cta-actions">
       <a href="#" class="btn btn-pri btn-lg">
-        See RealtorOS in action
+        See Trythat.ai in action
         <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
       <a href="#" class="btn btn-ghost btn-lg">Book a demo
@@ -5063,14 +5051,11 @@
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <a href="#" class="brand" aria-label="RealtorOS — home">
-          <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
-            <rect class="bg" x="0" y="0" width="32" height="32" rx="7.5"/>
-            <path class="glyph" fill-rule="evenodd" clip-rule="evenodd" d="M8 7.5h9.5c3.6 0 6 2.3 6 5.7 0 2.6-1.5 4.6-3.9 5.4l4.4 6.4h-4.5l-4-5.7h-3v5.7H8V7.5zm4.5 3.4v4.7H17c1.6 0 2.5-.9 2.5-2.4s-.9-2.3-2.5-2.3h-4.5z"/>
-          </svg>
-          <span class="brand-text">Realtor<span class="os">OS</span></span>
+        <a href="#" class="brand foot-brand-link" aria-label="TryThat.ai for Realtors — home">
+          <img class="brand-logo brand-logo-foot" src="images/trythat-logo-wordmark.svg" alt="TryThat.ai for Realtors" />
+          <span class="foot-brand-aud">for <strong>Realtors</strong></span>
         </a>
-        <p class="foot-tag">An execution engine for real estate sales teams running multiple projects. Built in India, day-one ready for Trythat.ai.</p>
+        <p class="foot-tag">An execution engine for real estate sales teams running multiple projects. Built in India by AltRr Software Services.</p>
       </div>
       <div class="foot-col">
         <h6>Product</h6>
@@ -5085,11 +5070,11 @@
       <div class="foot-col">
         <h6>Integrations</h6>
         <ul>
-          <li><a href="#trythat">Trythat.ai</a></li>
           <li><a href="#">WhatsApp Business</a></li>
           <li><a href="#">Meta &amp; Google Ads</a></li>
           <li><a href="#">66 Acres / Jaddu Bricks</a></li>
           <li><a href="#">Channel Partners</a></li>
+          <li><a href="#">Telephony &amp; SIP</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -5105,12 +5090,12 @@
     </div>
 
     <div class="foot-bottom">
-      <span>© 2026 RealtorOS · for real estate sales teams</span>
+      <span>© 2026 TryThat.ai · for Realtors</span>
       <span><span class="live">●</span> all systems operational · v1.0 deployed 04 May 2026</span>
     </div>
   </div>
 
-  <div class="foot-wordmark" aria-hidden="true">RealtorOS.</div>
+  <div class="foot-wordmark" aria-hidden="true">TryThat.ai</div>
 </footer>
 
 <script>
@@ -5121,7 +5106,7 @@
     tog.addEventListener('click', () => {
       const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
       document.documentElement.dataset.theme = next;
-      try { localStorage.setItem('realtoros-theme', next); } catch (e) {}
+      try { localStorage.setItem('trythat-theme', next); } catch (e) {}
     });
   })();
 
@@ -5247,7 +5232,7 @@
       if (!jhText || !jhCursor) return;
       typewriterTimers.forEach(t => clearTimeout(t));
       typewriterTimers = [];
-      const fullText = 'one lead · fully handled';
+      const fullText = 'Every Lead Fully Handled';
       jhText.textContent = '';
       jhCursor.classList.add('active');
       let i = 0;
