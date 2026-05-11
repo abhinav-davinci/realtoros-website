@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TryThat.ai for Realtors — An execution engine for real estate sales teams</title>
-<meta name="description" content="An execution engine for real estate sales teams. TryThat.ai for Realtors brings every lead from WhatsApp, ads, brokers, portals and walk-ins into one pipeline. Your team knows who to call, when to act, and what will close." />
+<title>TryThat.ai for Realtors — Design System v1.0</title>
+<meta name="description" content="Design system reference for TryThat.ai for Realtors — colors, typography, components, and voice. Hand-off doc for the product team." />
 <script>
-  /* Set theme as early as possible to prevent FOUC.
-     Light is the default for everyone; the user can switch to
-     dark via the nav toggle and the choice is remembered. */
   (function() {
     try {
-      var stored = localStorage.getItem('trythat-theme');
+      var stored = localStorage.getItem('trythat-ds-theme');
       document.documentElement.dataset.theme = stored || 'light';
     } catch (e) {
       document.documentElement.dataset.theme = 'light';
@@ -21,7 +18,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
+
+<!-- Core production CSS, inlined below — the same CSS the live site uses,
+     so every component on this page renders pixel-identical to production. -->
+<style id="ds-core">
   /* ============================================================
      TryThat.ai for Realtors — Futuristic Landing
      Design system: ink-dark canvas, warm cream type, electric indigo
@@ -4176,555 +4176,891 @@
     *, *::before, *::after { animation-duration: 0s !important; transition-duration: 0s !important; }
   }
 </style>
+
+<!-- Design-system page styles (layout only) -->
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    margin: 0;
+  }
+  .ds-wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+  /* DS top bar */
+  .ds-top {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(var(--bg-rgb, 246,244,238), 0.85);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .ds-top-inner {
+    display: flex; align-items: center; gap: 24px;
+    padding: 16px 32px;
+    max-width: 1180px; margin: 0 auto;
+  }
+  .ds-brand {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-weight: 600; color: var(--fg);
+    text-decoration: none;
+  }
+  .ds-brand-logo {
+    height: 26px;
+    content: url('images/trythat-logo-wordmark.svg');
+  }
+  [data-theme="dark"] .ds-brand-logo {
+    content: url('images/trythat-logo-wordmark-dark.svg');
+  }
+  .ds-brand-tag {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--fg-3); padding-left: 12px; border-left: 1px solid var(--line-2);
+  }
+  .ds-version {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--fg-3); letter-spacing: 0.06em;
+  }
+  .ds-theme-btn {
+    width: 32px; height: 32px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    background: transparent;
+    color: var(--fg-2);
+    display: inline-grid; place-items: center;
+    cursor: pointer;
+  }
+  .ds-theme-btn svg { width: 16px; height: 16px; }
+  [data-theme="light"] .ds-theme-btn .icon-moon { display: none; }
+  [data-theme="dark"] .ds-theme-btn .icon-sun { display: none; }
+
+  /* Hero header */
+  .ds-hero {
+    padding: 72px 0 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .ds-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--brand); margin-bottom: 14px;
+  }
+  .ds-h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: clamp(38px, 5vw, 64px);
+    letter-spacing: -0.04em; line-height: 1.02;
+    color: var(--fg); margin: 0 0 16px;
+  }
+  .ds-h1 .ink {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic; font-weight: 300;
+    color: var(--brand);
+  }
+  .ds-lede {
+    font-size: 17px; line-height: 1.6; color: var(--fg-2);
+    max-width: 720px; margin: 0;
+  }
+
+  /* TOC */
+  .ds-toc {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+    padding: 24px 0 56px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 56px;
+  }
+  .ds-toc a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.06em;
+    color: var(--fg-3); text-decoration: none;
+    padding: 8px 12px; border-radius: 8px;
+    border: 1px solid var(--line);
+    transition: all 200ms ease;
+  }
+  .ds-toc a:hover { color: var(--brand); border-color: var(--brand-tint); background: var(--bg-2); }
+
+  /* Section */
+  .ds-section {
+    padding: 56px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .ds-section:last-of-type { border-bottom: none; }
+  .ds-section-head { margin-bottom: 32px; }
+  .ds-section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.16em; color: var(--fg-4);
+  }
+  .ds-section h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700; font-size: 32px;
+    letter-spacing: -0.025em; color: var(--fg);
+    margin: 8px 0 8px;
+  }
+  .ds-section-sub {
+    font-size: 15px; line-height: 1.6;
+    color: var(--fg-3); max-width: 640px;
+    margin: 0;
+  }
+
+  /* Sub-headers within a section */
+  .ds-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--fg-4); margin: 32px 0 14px;
+  }
+
+  /* Swatches */
+  .ds-swatches {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+  }
+  .ds-swatch {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-2);
+  }
+  .ds-swatch-color {
+    height: 88px;
+    border-bottom: 1px solid var(--line);
+  }
+  .ds-swatch-body {
+    padding: 12px 14px;
+  }
+  .ds-swatch-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600; color: var(--fg);
+    margin: 0 0 2px;
+  }
+  .ds-swatch-hex {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--fg-3); letter-spacing: 0.04em;
+  }
+  .ds-swatch-var {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px; color: var(--fg-4);
+    margin-top: 4px;
+  }
+
+  /* Type specimens */
+  .ds-type-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px; padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .ds-type-row:last-child { border-bottom: none; }
+  .ds-type-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.06em;
+    color: var(--fg-3);
+  }
+  .ds-type-meta strong { display: block; color: var(--fg); font-weight: 600; margin-bottom: 2px; }
+  .ds-type-sample { color: var(--fg); }
+
+  /* Code blocks */
+  pre.ds-code {
+    margin: 12px 0 0;
+    padding: 14px 16px;
+    background: var(--bg-3);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; line-height: 1.6;
+    color: var(--fg-2);
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .ds-code .tag { color: #c95a5a; }
+  .ds-code .attr { color: #2157A6; }
+  .ds-code .str { color: #4a7c3a; }
+  .ds-code .com { color: var(--fg-4); }
+
+  /* Demo strip / card layouts */
+  .ds-demo {
+    padding: 28px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  .ds-demo-row {
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+  }
+  .ds-demo-grid-2 {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+  }
+  .ds-demo-grid-3 {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  @media (max-width: 720px) {
+    .ds-demo-grid-2, .ds-demo-grid-3 { grid-template-columns: 1fr; }
+  }
+  .ds-demo-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--fg-4);
+    margin-bottom: 14px;
+  }
+
+  /* Mini module card grid for the modules section */
+  .ds-mini-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  @media (max-width: 720px) { .ds-mini-grid { grid-template-columns: 1fr; } }
+
+  /* Icon grid (Lucide) */
+  .ds-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .ds-icon-cell {
+    background: var(--bg-2);
+    padding: 18px 12px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: background 200ms ease;
+  }
+  .ds-icon-cell:hover { background: var(--bg-3); }
+  .ds-icon-cell svg {
+    width: 22px; height: 22px;
+    color: var(--fg);
+    stroke-width: 2;
+  }
+  .ds-icon-cell code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--fg-3);
+    letter-spacing: 0.02em;
+    background: transparent; padding: 0;
+  }
+  .ds-icon-sizes {
+    display: flex; align-items: center; gap: 28px;
+    padding: 24px; flex-wrap: wrap;
+  }
+  .ds-icon-sizes > div {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .ds-icon-sizes svg { color: var(--fg); }
+  .ds-icon-sizes .ds-chip { font-size: 10px; }
+
+  /* Voice card */
+  .ds-voice {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 720px) { .ds-voice { grid-template-columns: 1fr; } }
+  .ds-voice-card {
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--bg-2);
+  }
+  .ds-voice-card.yes { border-left: 3px solid #2A9D5A; }
+  .ds-voice-card.no  { border-left: 3px solid #C53030; }
+  .ds-voice-card h6 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    margin: 0 0 10px;
+  }
+  .ds-voice-card.yes h6 { color: #2A9D5A; }
+  .ds-voice-card.no  h6 { color: #C53030; }
+  .ds-voice-card p {
+    margin: 0 0 8px; line-height: 1.6; color: var(--fg);
+    font-size: 14px;
+  }
+
+  /* Helper: token chip inline */
+  .ds-chip {
+    display: inline-block;
+    padding: 2px 8px;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--fg-2);
+    background: var(--bg-2);
+  }
+
+  /* Spacing scale */
+  .ds-space-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 80px;
+    gap: 16px; padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+  .ds-space-bar {
+    background: var(--brand);
+    height: 14px; border-radius: 4px;
+  }
+
+  /* Demo footer wordmark */
+  .ds-wordmark-demo {
+    position: relative;
+    height: 180px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex; align-items: end; justify-content: center;
+    padding-bottom: 18px;
+  }
+
+  /* Footer of the DS doc */
+  .ds-foot {
+    padding: 56px 0;
+    text-align: center;
+    color: var(--fg-3);
+    font-size: 13px;
+    border-top: 1px solid var(--line);
+  }
+</style>
 </head>
+
 <body>
 
 <!-- ============================================================
-     NAV
+     TOP BAR
      ============================================================ -->
-<nav class="nav">
-  <div class="nav-row">
-    <a href="https://trythat.ai/info" class="brand" aria-label="TryThat.ai for Realtors">
-      <img class="brand-logo" src="images/trythat-logo-wordmark.svg" alt="TryThat.ai for Realtors" />
-      <span class="brand-divider"></span>
-      <span class="brand-vertical">
-        <span class="bv-aud">for <strong>Realtors</strong></span>
-      </span>
+<header class="ds-top">
+  <div class="ds-top-inner">
+    <a href="#" class="ds-brand">
+      <img class="ds-brand-logo" alt="TryThat.ai" />
+      <span class="ds-brand-tag">Design&nbsp;System</span>
     </a>
-    <div class="nav-links">
-      <a href="#about" class="nav-link">About Us</a>
-      <a href="#pricing" class="nav-link">Pricing</a>
+    <span class="ds-version">v1.0 · 11 May 2026</span>
+    <button class="ds-theme-btn" id="dsThemeBtn" aria-label="Toggle theme" title="Toggle theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="ds-wrap">
+
+  <!-- HERO -->
+  <section class="ds-hero">
+    <div class="ds-eyebrow">Brand · Foundations · Components</div>
+    <h1 class="ds-h1">
+      The system <span class="ink">behind the system.</span>
+    </h1>
+    <p class="ds-lede">
+      This is the source-of-truth design reference for TryThat.ai for Realtors.
+      Every color, type token, and component below is rendered using the same CSS
+      that powers the live product — what you see here is what ships.
+    </p>
+  </section>
+
+  <!-- TOC -->
+  <nav class="ds-toc">
+    <a href="#brand">01 · Brand</a>
+    <a href="#colors">02 · Colors</a>
+    <a href="#typography">03 · Typography</a>
+    <a href="#spacing">04 · Spacing &amp; Radii</a>
+    <a href="#buttons">05 · Buttons</a>
+    <a href="#pills">06 · Pills &amp; Tags</a>
+    <a href="#cards">07 · Cards</a>
+    <a href="#eyebrows">08 · Eyebrows</a>
+    <a href="#icons">09 · Icons</a>
+    <a href="#voice">10 · Voice</a>
+  </nav>
+
+
+  <!-- ============================================================
+       01 · BRAND
+       ============================================================ -->
+  <section class="ds-section" id="brand">
+    <div class="ds-section-head">
+      <div class="ds-section-num">01</div>
+      <h2>Brand</h2>
+      <p class="ds-section-sub">
+        The brand lockup is the TryThat.ai wordmark paired with “for Realtors”
+        as the audience descriptor, separated by a thin vertical divider.
+        Never recompose the lockup, recolor the wordmark, or change the
+        divider position.
+      </p>
     </div>
-    <div class="nav-actions">
-      <button class="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
-      <a href="#cta" class="btn btn-ghost hide-mobile">Book a demo</a>
-      <a href="#cta" class="btn-poc" aria-label="Sign up for a free Proof of Concept">
+
+    <div class="ds-sub">Nav lockup (32px wordmark)</div>
+    <div class="ds-demo">
+      <a href="#" class="brand" aria-label="TryThat.ai for Realtors">
+        <img class="brand-logo" src="images/trythat-logo-wordmark.svg" alt="TryThat.ai" />
+        <span class="brand-divider"></span>
+        <span class="brand-vertical">
+          <span class="bv-aud">for <strong>Realtors</strong></span>
+        </span>
+      </a>
+      <pre class="ds-code">&lt;a class="brand"&gt;
+  &lt;img class="brand-logo" src="…wordmark.svg" alt="TryThat.ai"&gt;
+  &lt;span class="brand-divider"&gt;&lt;/span&gt;
+  &lt;span class="brand-vertical"&gt;
+    &lt;span class="bv-aud"&gt;for &lt;strong&gt;Realtors&lt;/strong&gt;&lt;/span&gt;
+  &lt;/span&gt;
+&lt;/a&gt;</pre>
+    </div>
+
+    <div class="ds-sub">Footer lockup (24px wordmark)</div>
+    <div class="ds-demo">
+      <a href="#" class="brand foot-brand-link">
+        <img class="brand-logo brand-logo-foot" src="images/trythat-logo-wordmark.svg" alt="TryThat.ai" />
+        <span class="foot-brand-aud">for <strong>Realtors</strong></span>
+      </a>
+    </div>
+
+    <div class="ds-sub">Theme-aware wordmark</div>
+    <p class="ds-section-sub" style="margin-bottom:14px;">
+      The CSS swaps the file source via <span class="ds-chip">content:</span> based on
+      <span class="ds-chip">[data-theme]</span>. Light theme uses the dark wordmark
+      file (dark ink on cream); dark theme uses the light wordmark (cream ink on dark).
+    </p>
+  </section>
+
+
+  <!-- ============================================================
+       02 · COLORS
+       ============================================================ -->
+  <section class="ds-section" id="colors">
+    <div class="ds-section-head">
+      <div class="ds-section-num">02</div>
+      <h2>Colors</h2>
+      <p class="ds-section-sub">
+        TryThat blue is the primary brand color. The orange and charcoal are
+        reserved accents — use sparingly. All other colors are spectrum hues used
+        only inside category-coded contexts (module cards, score pills).
+      </p>
+    </div>
+
+    <div class="ds-sub">Brand</div>
+    <div class="ds-swatches">
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:#2157A6;"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">TryThat Blue</div>
+          <div class="ds-swatch-hex">#2157A6</div>
+          <div class="ds-swatch-var">--brand</div>
+        </div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:#163A6E;"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Brand Deep</div>
+          <div class="ds-swatch-hex">#163A6E</div>
+          <div class="ds-swatch-var">--brand-deep</div>
+        </div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:#4A82D6;"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Brand Bright</div>
+          <div class="ds-swatch-hex">#4A82D6</div>
+          <div class="ds-swatch-var">--brand-bright</div>
+        </div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:#DBE4F2;"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Brand Tint</div>
+          <div class="ds-swatch-hex">#DBE4F2</div>
+          <div class="ds-swatch-var">--brand-tint</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-sub">Reserved accents</div>
+    <div class="ds-swatches">
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:#FF7E27;"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Brand Orange</div>
+          <div class="ds-swatch-hex">#FF7E27</div>
+          <div class="ds-swatch-var">reserved · use sparingly</div>
+        </div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:#565656;"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Charcoal</div>
+          <div class="ds-swatch-hex">#565656</div>
+          <div class="ds-swatch-var">neutral mark color</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-sub">Spectrum (category-coded only)</div>
+    <div class="ds-swatches">
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:rgba(33,87,166,0.18);border-bottom-color:rgba(33,87,166,0.4);"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Indigo · capture</div>
+          <div class="ds-swatch-hex">33, 87, 166</div>
+          <div class="ds-swatch-var">--mod-rgb · mod 01</div>
+        </div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:rgba(255,176,74,0.18);border-bottom-color:rgba(255,176,74,0.5);"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Amber · scoring</div>
+          <div class="ds-swatch-hex">255, 176, 74</div>
+          <div class="ds-swatch-var">--mod-rgb · mod 02</div>
+        </div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:rgba(74,222,154,0.18);border-bottom-color:rgba(74,222,154,0.5);"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Mint · follow-up</div>
+          <div class="ds-swatch-hex">74, 222, 154</div>
+          <div class="ds-swatch-var">--mod-rgb · mod 03</div>
+        </div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:rgba(255,106,106,0.18);border-bottom-color:rgba(255,106,106,0.5);"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Rose · inventory</div>
+          <div class="ds-swatch-hex">255, 106, 106</div>
+          <div class="ds-swatch-var">--mod-rgb · mod 04</div>
+        </div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:rgba(93,173,226,0.18);border-bottom-color:rgba(93,173,226,0.5);"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Sky · visibility</div>
+          <div class="ds-swatch-hex">93, 173, 226</div>
+          <div class="ds-swatch-var">--mod-rgb · mod 05</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-sub">Semantic (light theme)</div>
+    <div class="ds-swatches">
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:#F6F4EE;border-bottom-color:rgba(10,10,18,0.07);"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Canvas</div>
+          <div class="ds-swatch-hex">#F6F4EE</div>
+          <div class="ds-swatch-var">--bg</div>
+        </div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:#0A0A12;"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Ink</div>
+          <div class="ds-swatch-hex">#0A0A12</div>
+          <div class="ds-swatch-var">--fg</div>
+        </div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:#3A3A4A;"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Ink 2 (body)</div>
+          <div class="ds-swatch-hex">#3A3A4A</div>
+          <div class="ds-swatch-var">--fg-2</div>
+        </div>
+      </div>
+      <div class="ds-swatch">
+        <div class="ds-swatch-color" style="background:#6B6877;"></div>
+        <div class="ds-swatch-body">
+          <div class="ds-swatch-name">Ink 3 (meta)</div>
+          <div class="ds-swatch-hex">#6B6877</div>
+          <div class="ds-swatch-var">--fg-3</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       03 · TYPOGRAPHY
+       ============================================================ -->
+  <section class="ds-section" id="typography">
+    <div class="ds-section-head">
+      <div class="ds-section-num">03</div>
+      <h2>Typography</h2>
+      <p class="ds-section-sub">
+        Three families, each with a specific role. Never substitute. Never mix
+        Instrument Serif with anything other than headlines as an italic accent.
+      </p>
+    </div>
+
+    <div class="ds-sub">Families</div>
+    <div class="ds-type-row">
+      <div class="ds-type-meta">
+        <strong>Inter</strong>
+        400 / 500 / 600 / 700 / 800<br />
+        body, UI, headings
+      </div>
+      <div class="ds-type-sample" style="font-family:'Inter',sans-serif;font-size:24px;">
+        Every lead. One inbox. Faster bookings.
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <div class="ds-type-meta">
+        <strong>Instrument Serif</strong>
+        400 / 400 italic<br />
+        ink accents (only)
+      </div>
+      <div class="ds-type-sample" style="font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;font-size:32px;">
+        the system behind the system
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <div class="ds-type-meta">
+        <strong>JetBrains Mono</strong>
+        400 / 500 / 600<br />
+        labels, eyebrows, code, metadata
+      </div>
+      <div class="ds-type-sample" style="font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:0.06em;">
+        02 · the system &nbsp;·&nbsp; auto-tagged · skyline heights
+      </div>
+    </div>
+
+    <div class="ds-sub">Scale</div>
+    <div class="ds-type-row">
+      <div class="ds-type-meta"><strong>H1</strong>72 / 1.02 / -0.04em</div>
+      <div class="ds-type-sample" style="font-family:'Inter',sans-serif;font-weight:700;font-size:64px;line-height:1.02;letter-spacing:-0.04em;">
+        You will know.
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <div class="ds-type-meta"><strong>H2</strong>48 / 1.04 / -0.035em</div>
+      <div class="ds-type-sample" style="font-family:'Inter',sans-serif;font-weight:700;font-size:48px;line-height:1.04;letter-spacing:-0.035em;">
+        Demand isn’t your problem.
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <div class="ds-type-meta"><strong>H3</strong>36 / 1.04 / -0.035em</div>
+      <div class="ds-type-sample" style="font-family:'Inter',sans-serif;font-weight:600;font-size:36px;line-height:1.04;letter-spacing:-0.035em;">
+        All your leads. One inbox.
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <div class="ds-type-meta"><strong>Body lead</strong>17 / 1.6</div>
+      <div class="ds-type-sample" style="font-family:'Inter',sans-serif;font-size:17px;line-height:1.6;color:var(--fg-2);">
+        Your enquiries come in from WhatsApp, 66 Acres, Meta ads, channel partners and Trythat.ai, but right now they’re scattered across six different places.
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <div class="ds-type-meta"><strong>Body</strong>15 / 1.55</div>
+      <div class="ds-type-sample" style="font-family:'Inter',sans-serif;font-size:15px;line-height:1.55;color:var(--fg-2);">
+        Not all leads are equal. RealtorOS scores every lead on capture and highlights the ones most likely to convert.
+      </div>
+    </div>
+    <div class="ds-type-row">
+      <div class="ds-type-meta"><strong>Caption</strong>11 / 1.4 / 0.16em<br /><span class="ds-chip" style="margin-top:6px;">JetBrains Mono</span></div>
+      <div class="ds-type-sample" style="font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.4;letter-spacing:0.16em;text-transform:uppercase;color:var(--fg-3);">
+        Sales OS · for realtors
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       04 · SPACING & RADII
+       ============================================================ -->
+  <section class="ds-section" id="spacing">
+    <div class="ds-section-head">
+      <div class="ds-section-num">04</div>
+      <h2>Spacing &amp; Radii</h2>
+      <p class="ds-section-sub">
+        Spacing follows a 4-pt base. Border radii are matched to component size
+        — pills are fully rounded, cards use the “xl” radius, micro-controls use 8.
+      </p>
+    </div>
+
+    <div class="ds-sub">Spacing scale</div>
+    <div>
+      <div class="ds-space-row"><span class="ds-chip">space-2</span><div class="ds-space-bar" style="width:8px;"></div><span class="ds-chip">8px</span></div>
+      <div class="ds-space-row"><span class="ds-chip">space-3</span><div class="ds-space-bar" style="width:12px;"></div><span class="ds-chip">12px</span></div>
+      <div class="ds-space-row"><span class="ds-chip">space-4</span><div class="ds-space-bar" style="width:16px;"></div><span class="ds-chip">16px</span></div>
+      <div class="ds-space-row"><span class="ds-chip">space-6</span><div class="ds-space-bar" style="width:24px;"></div><span class="ds-chip">24px</span></div>
+      <div class="ds-space-row"><span class="ds-chip">space-8</span><div class="ds-space-bar" style="width:32px;"></div><span class="ds-chip">32px</span></div>
+      <div class="ds-space-row"><span class="ds-chip">space-12</span><div class="ds-space-bar" style="width:48px;"></div><span class="ds-chip">48px</span></div>
+      <div class="ds-space-row"><span class="ds-chip">space-16</span><div class="ds-space-bar" style="width:64px;"></div><span class="ds-chip">64px</span></div>
+      <div class="ds-space-row"><span class="ds-chip">space-22</span><div class="ds-space-bar" style="width:88px;"></div><span class="ds-chip">88px</span></div>
+    </div>
+
+    <div class="ds-sub">Radii</div>
+    <div class="ds-demo ds-demo-row">
+      <div style="width:64px;height:64px;background:var(--brand);border-radius:8px;"></div>
+      <span class="ds-chip">--r-sm · 8px</span>
+      <div style="width:64px;height:64px;background:var(--brand);border-radius:12px;margin-left:14px;"></div>
+      <span class="ds-chip">--r-md · 12px</span>
+      <div style="width:64px;height:64px;background:var(--brand);border-radius:16px;margin-left:14px;"></div>
+      <span class="ds-chip">--r-xl · 16px</span>
+      <div style="width:64px;height:64px;background:var(--brand);border-radius:999px;margin-left:14px;"></div>
+      <span class="ds-chip">--r-full · 999px</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       05 · BUTTONS
+       ============================================================ -->
+  <section class="ds-section" id="buttons">
+    <div class="ds-section-head">
+      <div class="ds-section-num">05</div>
+      <h2>Buttons</h2>
+      <p class="ds-section-sub">
+        One primary action per surface. Glow for the hero CTA. Ghost for the
+        passive partner. POC is reserved for the conversion top-bar slot.
+      </p>
+    </div>
+
+    <div class="ds-sub">Primary CTAs</div>
+    <div class="ds-demo ds-demo-row">
+      <a href="#" class="btn btn-glow btn-lg">
+        Access now
+        <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#" class="btn btn-pri btn-lg">
+        See Trythat.ai in action
+        <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#" class="btn btn-ghost btn-lg">
+        Book a demo
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <pre class="ds-code">&lt;a class="btn btn-glow btn-lg"&gt;Access now&lt;/a&gt;
+&lt;a class="btn btn-pri  btn-lg"&gt;See Trythat.ai in action&lt;/a&gt;
+&lt;a class="btn btn-ghost btn-lg"&gt;Book a demo&lt;/a&gt;</pre>
+
+    <div class="ds-sub">POC variant (nav only)</div>
+    <div class="ds-demo ds-demo-row">
+      <a href="#" class="btn-poc" aria-label="Sign up for a free Proof of Concept">
         <span class="poc-text">Sign up · <strong>Free POC</strong></span>
         <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         <span class="poc-shimmer" aria-hidden="true"></span>
       </a>
     </div>
-  </div>
-</nav>
+  </section>
 
-<!-- ============================================================
-     HERO
-     ============================================================ -->
-<header class="hero">
-  <div class="hero-aurora"></div>
-  <div class="hero-grid-bg"></div>
-  <div class="hero-noise"></div>
-  <div class="hero-particles" id="heroParticles" aria-hidden="true"></div>
 
-  <div class="wrap hero-inner">
-    <div class="hero-slider" id="heroSlider">
-
-    <!-- =========== SLIDE A — Convergence (lead → inbox → bookings) =========== -->
-    <div class="hero-slide active" data-slide="a">
-    <div class="hero-row">
-      <div class="hero-copy">
-        <h1 class="h1">
-          Every lead.<br>
-          <span class="ink">One inbox.</span><br>
-          Faster bookings.
-        </h1>
-
-        <p class="hero-sub">
-          Your enquiries come in from WhatsApp, 66 Acres, Meta ads, channel partners and
-          <strong>Trythat.ai</strong>, but right now they're scattered across six different
-          places. Trythat.ai collects every one of them, scores each lead before your exec picks
-          up the phone, routes it to the right person, and keeps the follow-ups going
-          automatically. Nothing slips through. And your team stops copy-pasting from Ads Manager
-          at midnight.
-        </p>
-
-        <div class="hero-cta-row">
-          <a href="#modules" class="btn btn-glow btn-lg">
-            Access now
-            <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-
-        <div class="hero-meta">
-          <span class="hero-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-            No more missed follow-ups
-          </span>
-          <span class="hero-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-            All leads in one place
-          </span>
-          <span class="hero-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-            Built for live projects
-          </span>
-        </div>
-      </div>
-
-      <!-- HERO — A LEAD'S JOURNEY (with convergence reveal) -->
-      <div class="journey-stage">
-      <div class="journey hidden-pre" id="heroPanel">
-        <div class="journey-head">
-          <span class="journey-head-l">
-            <span class="jh-text"></span><span class="jh-cursor" aria-hidden="true"></span>
-          </span>
-        </div>
-
-        <!-- 5-stage progress rail -->
-        <div class="stages" id="stages">
-          <div class="stage-step on" data-stage="1">
-            <span class="stage-dot"></span>
-            <span class="stage-step-l">Captured</span>
-          </div>
-          <div class="stage-step" data-stage="2">
-            <span class="stage-dot"></span>
-            <span class="stage-step-l">Scored</span>
-          </div>
-          <div class="stage-step" data-stage="3">
-            <span class="stage-dot"></span>
-            <span class="stage-step-l">Routed</span>
-          </div>
-          <div class="stage-step" data-stage="4">
-            <span class="stage-dot"></span>
-            <span class="stage-step-l">Site visit</span>
-          </div>
-          <div class="stage-step" data-stage="5">
-            <span class="stage-dot"></span>
-            <span class="stage-step-l">Booked</span>
-          </div>
-        </div>
-
-        <!-- Stage cards (one visible at a time) -->
-        <div class="stage-area" id="stageArea">
-
-          <!-- Stage 1 — Captured -->
-          <div class="stage-card s1 on" data-stage="1">
-            <div class="stage-card-h">
-              <span class="src src-tt" aria-label="Trythat.ai"></span>
-              <span class="l">captured · <strong>trythat.ai</strong></span>
-              <span class="t">4s ago</span>
-            </div>
-            <div class="lead-hero-name">Priya Mehta</div>
-            <div class="lead-meta">3BHK · Kharadi · ₹1.2 – 1.5 Cr</div>
-            <div class="lead-quote">&ldquo;Looking for a ready-to-move 3BHK in Kharadi, possession by Diwali.&rdquo;</div>
-            <div class="lead-foot">
-              <span class="score-pill hot">92 hot</span>
-              <span>auto-tagged · skyline heights</span>
-            </div>
-          </div>
-
-          <!-- Stage 2 — Scored -->
-          <div class="stage-card s2" data-stage="2">
-            <div class="stage-card-h">
-              <span class="l">scoring · <strong>1–100</strong></span>
-              <span class="t">computing…</span>
-            </div>
-            <div class="score-grid">
-              <div class="score-row-x">
-                <span class="l">Budget match</span>
-                <div class="score-row-track"><div class="score-row-fill" style="--w:95%"></div></div>
-                <span class="v">95%</span>
-              </div>
-              <div class="score-row-x">
-                <span class="l">Timeline</span>
-                <div class="score-row-track"><div class="score-row-fill" style="--w:90%"></div></div>
-                <span class="v">90%</span>
-              </div>
-              <div class="score-row-x">
-                <span class="l">Intent signals</span>
-                <div class="score-row-track"><div class="score-row-fill" style="--w:88%"></div></div>
-                <span class="v">88%</span>
-              </div>
-              <div class="score-row-x">
-                <span class="l">Source quality</span>
-                <div class="score-row-track"><div class="score-row-fill" style="--w:100%"></div></div>
-                <span class="v">A+</span>
-              </div>
-            </div>
-            <div class="score-resolve">
-              <span>resolves to</span>
-              <span class="arr">→</span>
-              <span class="score-pill hot">92 hot</span>
-              <span class="res">Priya Mehta</span>
-            </div>
-          </div>
-
-          <!-- Stage 3 — Routed -->
-          <div class="stage-card s3" data-stage="3">
-            <div class="stage-card-h">
-              <span class="l">routing · <strong>round-robin</strong></span>
-              <span class="t">finding exec…</span>
-            </div>
-            <div class="exec-grid">
-              <div class="exec-row"><span class="name">Priya Naidu</span><span class="load">5 active</span></div>
-              <div class="exec-row chosen"><span class="name">→ Mihir Bhatt</span><span class="load">3 active · ✓</span></div>
-              <div class="exec-row"><span class="name">Sneha Kulkarni</span><span class="load">4 active</span></div>
-              <div class="exec-row"><span class="name">Rohan Iyer</span><span class="load">6 active</span></div>
-            </div>
-          </div>
-
-          <!-- Stage 4 — Site visit -->
-          <div class="stage-card s4" data-stage="4">
-            <div class="stage-card-h">
-              <span class="l">site visit · <strong>auto-booked</strong></span>
-              <span class="t">slot link sent</span>
-            </div>
-            <div class="visit-area">
-              <div class="visit-block">
-                <div class="visit-day">SAT</div>
-                <div class="visit-date">09</div>
-                <div class="visit-month">May · 11 AM</div>
-              </div>
-              <div class="visit-info">
-                <div class="big">Skyline Heights</div>
-                <div>Tower A · sample flat A-1204</div>
-                <div>Mihir Bhatt assigned</div>
-                <div class="conf">Confirmed via WhatsApp</div>
-              </div>
-            </div>
-            <div class="visit-foot">
-              <span class="src src-wa">WA</span>
-              <span>buyer replied "yes, see you Saturday"</span>
-            </div>
-          </div>
-
-          <!-- Stage 5 — Booked -->
-          <div class="stage-card s5" data-stage="5">
-            <div class="stage-card-h">
-              <span class="l">booked · <strong>agreement drafted</strong></span>
-              <span class="t">10 days from capture</span>
-            </div>
-            <div class="booked-area">
-              <div class="booked-unit">A-1204 · 3BHK · East-facing</div>
-              <div class="booked-meta">Skyline Heights · Tower A · 1,420 sq ft</div>
-              <div class="booked-amount">₹1.42 <span class="cr">Cr</span></div>
-              <div class="booked-foot">
-                <span class="ok">✓ ₹2 L token paid</span>
-                <span>agreement &amp; payment schedule sent</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Activity strip -->
-        <div class="journey-activity">
-          <span class="a-item"><strong>47</strong> leads today</span>
-          <span class="sep">·</span>
-          <span class="a-item"><strong>12</strong> follow-ups due</span>
-          <span class="sep">·</span>
-          <span class="a-item"><strong>3</strong> bookings this week</span>
-        </div>
-      </div>
-        <div class="booking-toast" id="bookingToast" aria-hidden="true">
-          <span class="bt-tag">Booked</span>
-          <span class="bt-amt">A-1204 · ₹1.42 Cr</span>
-        </div>
-      </div>
-    </div>
-    </div>
-    <!-- =========== END SLIDE A =========== -->
-
-    <!-- =========== SLIDE B — Close-In (knowledge → AI calls → ranked leads) =========== -->
-    <div class="hero-slide" data-slide="b">
-    <div class="hero-row">
-      <div class="hero-copy">
-        <h1 class="h1">
-          You will know<br>
-          <span class="ink">whom to call</span><br>
-          first.
-        </h1>
-
-        <p class="hero-sub">
-          <span class="feature-tag">AI-Powered Calling and Qualification</span> picks up every enquiry
-          the second it lands, day or night. It rings the lead back, replies on WhatsApp, answers questions
-          from your <strong>knowledge base</strong>, and figures out who's actually ready to buy. By the
-          time your team logs in, every lead is ranked. They start with the one most likely to book.
-        </p>
-
-        <div class="hero-cta-row">
-          <a href="#cta" class="btn btn-glow btn-lg">
-            Access now
-            <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-
-        <div class="hero-meta">
-          <span class="hero-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-            AI on every channel
-          </span>
-          <span class="hero-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-            Ranked by intent
-          </span>
-          <span class="hero-meta-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-            Trained on your projects
-          </span>
-        </div>
-      </div>
-
-      <!-- HERO — CLOSE-IN PANEL (AI calling + ranking) -->
-      <div class="closeIn-stage">
-      <div class="closeIn-panel hidden-pre" id="closeInPanel">
-        <div class="ci-head">
-          <span class="ci-head-l">
-            <span class="ci-text"></span><span class="ci-cursor" aria-hidden="true"></span>
-          </span>
-        </div>
-
-        <!-- Knowledge base section -->
-        <div class="ci-kb" id="ciKb">
-          <div class="ci-kb-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v14a2 2 0 00-2-2H2V6z"/>
-              <path d="M22 6a2 2 0 00-2-2h-6a2 2 0 00-2 2v14a2 2 0 012-2h8V6z"/>
-            </svg>
-          </div>
-          <div class="ci-kb-text">
-            <span class="ci-kb-title">Knowledge base · 4 projects</span>
-            <span class="ci-kb-meta">listings · floor plans · price sheets · FAQs</span>
-          </div>
-          <span class="ci-kb-status">ready</span>
-        </div>
-
-        <!-- Lead rows (initial order: most-recent first; final order: by score desc) -->
-        <div class="ci-leads" id="ciLeads">
-          <div class="ci-lead" data-id="devraj" data-final="22" data-final-label="cold" data-rank="3">
-            <div class="ci-lead-pic" data-initial="D"></div>
-            <div class="ci-lead-info">
-              <div class="ci-lead-name">Devraj Patel</div>
-              <div class="ci-lead-meta">voice inbound · property inquiry</div>
-            </div>
-            <div class="ci-wave" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-            <div class="ci-score">
-              <span class="ci-score-num">0</span>
-              <span class="ci-score-label">casual</span>
-            </div>
-          </div>
-          <div class="ci-lead" data-id="chandan" data-final="51" data-final-label="cold" data-rank="2">
-            <div class="ci-lead-pic" data-initial="C"></div>
-            <div class="ci-lead-info">
-              <div class="ci-lead-name">Chandan Joshi</div>
-              <div class="ci-lead-meta">plot · sunshine smart city · ₹35 L</div>
-            </div>
-            <div class="ci-wave" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-            <div class="ci-score">
-              <span class="ci-score-num">0</span>
-              <span class="ci-score-label">casual</span>
-            </div>
-          </div>
-          <div class="ci-lead" data-id="anita" data-final="74" data-final-label="warm" data-rank="1">
-            <div class="ci-lead-pic" data-initial="A"></div>
-            <div class="ci-lead-info">
-              <div class="ci-lead-name">Anita Sharma</div>
-              <div class="ci-lead-meta">3BHK · trythat vista · ₹95L–1.1 Cr</div>
-            </div>
-            <div class="ci-wave" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-            <div class="ci-score">
-              <span class="ci-score-num">0</span>
-              <span class="ci-score-label">casual</span>
-            </div>
-          </div>
-          <div class="ci-lead" data-id="priya" data-final="92" data-final-label="hot" data-rank="0">
-            <div class="ci-lead-pic" data-initial="P"></div>
-            <div class="ci-lead-info">
-              <div class="ci-lead-name">Priya Mehta</div>
-              <div class="ci-lead-meta">3BHK · sunshine smart city · ₹1.2–1.5 Cr</div>
-            </div>
-            <div class="ci-wave" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-            <div class="ci-score">
-              <span class="ci-score-num">0</span>
-              <span class="ci-score-label">casual</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Action bar (slides in at end of cycle) -->
-        <div class="ci-action" id="ciAction" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          <span>Call <strong>Priya</strong> first</span>
-          <span class="ci-action-pill">92</span>
-        </div>
-      </div>
-      </div>
-    </div>
-    </div>
-    <!-- =========== END SLIDE B =========== -->
-
-    <!-- Slider dots -->
-    <div class="hero-slider-dots" role="tablist" aria-label="Hero stories">
-      <button class="hero-dot active" data-target="a" aria-label="Story 1: One inbox, faster bookings"></button>
-      <button class="hero-dot" data-target="b" aria-label="Story 2: AI ranks who to call first"></button>
+  <!-- ============================================================
+       06 · PILLS & TAGS
+       ============================================================ -->
+  <section class="ds-section" id="pills">
+    <div class="ds-section-head">
+      <div class="ds-section-num">06</div>
+      <h2>Pills &amp; Tags</h2>
+      <p class="ds-section-sub">
+        Score pills carry intent (hot / warm / cold / booked). Module tags are
+        feature anchors inside a card. Hero meta items are trust-strip checks.
+      </p>
     </div>
 
-    </div>
-    <!-- =========== END HERO SLIDER =========== -->
-  </div>
-</header>
-
-<!-- ============================================================
-     CHANNELS — UNIFIED INBOX
-     ============================================================ -->
-<section class="channels">
-  <div class="channels-label">
-    Your leads don't come from one place. Why should your system?
-  </div>
-  <div class="marquee">
-    <div class="marquee-track">
-      <div class="channel"><span class="src src-web">W</span><span class="channel-name">Your Website</span><span class="channel-cat">forms · chat</span></div>
-      <div class="channel"><span class="src src-tt" aria-label="Trythat.ai"></span><span class="channel-name">Trythat.ai</span><span class="channel-cat">native · 2-way</span></div>
-      <div class="channel"><span class="src src-wa">WA</span><span class="channel-name">WhatsApp</span><span class="channel-cat">official API</span></div>
-      <div class="channel"><span class="src src-fb">M</span><span class="channel-name">Meta Ads</span><span class="channel-cat">lead forms</span></div>
-      <div class="channel"><span class="src src-ig">IG</span><span class="channel-name">Instagram</span><span class="channel-cat">DMs · forms</span></div>
-      <div class="channel"><span class="src src-go">G</span><span class="channel-name">Google Ads</span><span class="channel-cat">lead forms</span></div>
-      <div class="channel"><span class="src src-pp" aria-hidden="true"></span><span class="channel-name">Property Portals</span><span class="channel-cat">66 Acres · Jaddu Bricks</span></div>
-      <div class="channel"><span class="src src-cp">CP</span><span class="channel-name">Channel Partners</span><span class="channel-cat">broker portal</span></div>
-      <div class="channel"><span class="src src-wi">WI</span><span class="channel-name">Walk-ins</span><span class="channel-cat">2-tap mobile</span></div>
-      <!-- duplicate for marquee -->
-      <div class="channel"><span class="src src-web">W</span><span class="channel-name">Your Website</span><span class="channel-cat">forms · chat</span></div>
-      <div class="channel"><span class="src src-tt" aria-label="Trythat.ai"></span><span class="channel-name">Trythat.ai</span><span class="channel-cat">native · 2-way</span></div>
-      <div class="channel"><span class="src src-wa">WA</span><span class="channel-name">WhatsApp</span><span class="channel-cat">official API</span></div>
-      <div class="channel"><span class="src src-fb">M</span><span class="channel-name">Meta Ads</span><span class="channel-cat">lead forms</span></div>
-      <div class="channel"><span class="src src-ig">IG</span><span class="channel-name">Instagram</span><span class="channel-cat">DMs · forms</span></div>
-      <div class="channel"><span class="src src-go">G</span><span class="channel-name">Google Ads</span><span class="channel-cat">lead forms</span></div>
-      <div class="channel"><span class="src src-pp" aria-hidden="true"></span><span class="channel-name">Property Portals</span><span class="channel-cat">66 Acres · Jaddu Bricks</span></div>
-      <div class="channel"><span class="src src-cp">CP</span><span class="channel-name">Channel Partners</span><span class="channel-cat">broker portal</span></div>
-      <div class="channel"><span class="src src-wi">WI</span><span class="channel-name">Walk-ins</span><span class="channel-cat">2-tap mobile</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     OVERTURE / MANIFESTO STATEMENT
-     ============================================================ -->
-<section class="overture" id="overture">
-  <div class="overture-aurora"></div>
-  <div class="wrap overture-content">
-    <div class="overture-eyebrow">
-      <div class="section-eyebrow">
-        <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
-          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
-          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">01</text>
-          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
-          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
-        </svg>
-        <span class="se-title">The Problem</span>
-      </div>
-    </div>
-    <h2 class="h2 reveal">
-      Demand isn't your problem.<br>
-      Disorganisation is.
-    </h2>
-    <p class="overture-sub reveal">
-      Real estate teams don't lose deals to a slow market. They lose them when leads go cold
-      because nobody followed up, when hot buyers get treated like cold traffic, when half the
-      morning is spent figuring out who should do what. The problem isn't effort. It's the lack
-      of a system.
-    </p>
-
-    <div class="overture-stats reveal">
-      <div class="ov-stat">
-        <div class="num">Cold<br>leads.</div>
-        <div class="lbl">Buried across platforms nobody opens together.</div>
-      </div>
-      <div class="ov-stat">
-        <div class="num">Lost<br>mornings.</div>
-        <div class="lbl">Spent figuring out who follows up with whom.</div>
-      </div>
-      <div class="ov-stat">
-        <div class="num">Missed<br>buyers.</div>
-        <div class="lbl">Hot traffic treated like cold leads.</div>
-      </div>
-      <div class="ov-stat">
-        <div class="num">Leaked<br>revenue.</div>
-        <div class="lbl">Poor execution, not poor demand.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     MODULES OVERVIEW
-     ============================================================ -->
-<section class="modules" id="modules">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <div class="section-eyebrow" style="justify-content:center;">
-        <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
-          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
-          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">02</text>
-          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
-          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
-        </svg>
-        <span class="se-title">The System</span>
-      </div>
-      <h2 class="h2" style="margin-top:18px;">Everything your sales team needs.<br>Without the spreadsheet.</h2>
-      <p class="sub">Not another CRM. A system that actually tells your team what to do next.</p>
+    <div class="ds-sub">Score pills</div>
+    <div class="ds-demo ds-demo-row">
+      <span class="score-pill hot">92 hot</span>
+      <span class="score-pill warm">74 warm</span>
+      <span class="score-pill cold">51 cold</span>
+      <span class="score-pill book">booked</span>
     </div>
 
-    <div class="modules-grid">
-      <div class="mod reveal">
+    <div class="ds-sub">Module tags</div>
+    <div class="ds-demo ds-demo-row">
+      <span class="mod-tag">10 channels</span>
+      <span class="mod-tag">trythat.ai sync</span>
+      <span class="mod-tag">whatsapp drips</span>
+      <span class="mod-tag">2-way trythat sync</span>
+    </div>
+
+    <div class="ds-sub">Hero meta items (trust strip)</div>
+    <div class="ds-demo ds-demo-row">
+      <span class="hero-meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        No more missed follow-ups
+      </span>
+      <span class="hero-meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        Built for live projects
+      </span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       07 · CARDS
+       ============================================================ -->
+  <section class="ds-section" id="cards">
+    <div class="ds-section-head">
+      <div class="ds-section-num">07</div>
+      <h2>Cards</h2>
+      <p class="ds-section-sub">
+        Module cards drive the six-up system grid. Each card binds to one
+        category color through the <span class="ds-chip">--mod-rgb</span> token.
+      </p>
+    </div>
+
+    <div class="ds-sub">Module card</div>
+    <div class="ds-mini-grid">
+      <div class="mod">
         <div class="mod-num"><em>01</em> · Capture</div>
         <div class="mod-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         </div>
         <div class="mod-title">All your leads. <em>One inbox.</em></div>
-        <p class="mod-desc">No more switching tabs or checking multiple platforms. Every lead from WhatsApp, ads, brokers, portals and walk-ins lands in one place, tagged and ready.</p>
+        <p class="mod-desc">Every lead from WhatsApp, ads, brokers, portals and walk-ins lands in one place, tagged and ready.</p>
         <div class="mod-tags">
           <span class="mod-tag">10 channels</span>
-          <span class="mod-tag">trythat.ai sync</span>
           <span class="mod-tag">broker portal</span>
         </div>
       </div>
-
-      <div class="mod reveal">
+      <div class="mod">
         <div class="mod-num"><em>02</em> · Scoring</div>
         <div class="mod-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
         </div>
-        <div class="mod-title">Know who's <em>serious</em>, instantly.</div>
-        <p class="mod-desc">Not all leads are equal. Trythat.ai scores every lead on capture and highlights the ones most likely to convert, so your team works the right pipeline first.</p>
+        <div class="mod-title">Know who’s <em>serious</em>, instantly.</div>
+        <p class="mod-desc">Trythat.ai scores every lead on capture and highlights the ones most likely to convert.</p>
         <div class="mod-tags">
           <span class="mod-tag">auto-score</span>
-          <span class="mod-tag">duplicate merge</span>
           <span class="mod-tag">hot/warm/cold</span>
         </div>
       </div>
-
-      <div class="mod reveal">
+      <div class="mod">
         <div class="mod-num"><em>03</em> · Follow-up</div>
         <div class="mod-icon">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-8-3 18-6-7-9-3z"/></svg>
         </div>
         <div class="mod-title">Never miss a <em>follow-up.</em></div>
-        <p class="mod-desc">Automated reminders, WhatsApp drips on the official Business API, and daily call lists make sure every lead gets worked properly, not just the ones your team remembers.</p>
+        <p class="mod-desc">WhatsApp drips, daily call lists, and reminders so every lead gets worked.</p>
         <div class="mod-tags">
           <span class="mod-tag">whatsapp drips</span>
           <span class="mod-tag">slot booking</span>
-          <span class="mod-tag">re-engagement</span>
         </div>
       </div>
+    </div>
+    <pre class="ds-code">&lt;div class="mod"&gt;
+  &lt;div class="mod-num"&gt;&lt;em&gt;01&lt;/em&gt; · Capture&lt;/div&gt;
+  &lt;div class="mod-icon"&gt;…&lt;/div&gt;
+  &lt;div class="mod-title"&gt;Title with &lt;em&gt;accent&lt;/em&gt;.&lt;/div&gt;
+  &lt;p class="mod-desc"&gt;…&lt;/p&gt;
+  &lt;div class="mod-tags"&gt;&lt;span class="mod-tag"&gt;…&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
 
-      <div class="mod reveal">
-        <div class="mod-num"><em>04</em> · Inventory</div>
-        <div class="mod-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-4"/><path d="M9 9h.01M9 13h.01M9 17h.01"/></svg>
-        </div>
-        <div class="mod-title">Turn interest <em>into bookings.</em></div>
-        <p class="mod-desc">Live availability inside every lead. Hold a unit for a serious buyer for 24–48 hours. When you mark Booked, legal, payment and Trythat.ai update automatically.</p>
-        <div class="mod-tags">
-          <span class="mod-tag">live availability</span>
-          <span class="mod-tag">soft-block</span>
-          <span class="mod-tag">2-way trythat sync</span>
-        </div>
-      </div>
-
-      <div class="mod mod-feature reveal" aria-label="TryThat.ai for Realtors">
+    <div class="ds-sub" style="margin-top:48px;">Brand-feature card</div>
+    <p class="ds-section-sub" style="margin-bottom:14px;">
+      Variant of the module card with animated rays. Reserved for the
+      bottom-middle slot of the modules grid. Uses the brand-blue token, not
+      a category color.
+    </p>
+    <div style="max-width:380px;border:1px solid var(--line);border-radius:14px;overflow:hidden;">
+      <div class="mod mod-feature" aria-label="TryThat.ai for Realtors">
         <div class="mf-stage">
           <div class="mf-glow"></div>
           <div class="mf-ring mf-ring-1"></div>
@@ -4740,1010 +5076,243 @@
         </div>
         <div class="mf-tagline">Built for <span class="mf-accent">Realtors</span></div>
       </div>
+    </div>
+  </section>
 
-      <div class="mod reveal">
-        <div class="mod-num"><em>05</em> · Visibility</div>
-        <div class="mod-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 6-6"/></svg>
+
+  <!-- ============================================================
+       08 · EYEBROWS
+       ============================================================ -->
+  <section class="ds-section" id="eyebrows">
+    <div class="ds-section-head">
+      <div class="ds-section-num">08</div>
+      <h2>Section Eyebrows</h2>
+      <p class="ds-section-sub">
+        The architect’s stamp marks every major section. A circled clause
+        number, a horizontal rule, and a tick mark — drafted, not designed.
+      </p>
+    </div>
+
+    <div class="ds-sub">Stamps</div>
+    <div class="ds-demo">
+      <div style="display:flex;gap:48px;flex-wrap:wrap;">
+        <div class="section-eyebrow">
+          <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+            <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">01</text>
+            <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+            <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+          </svg>
+          <span class="se-title">The Problem</span>
         </div>
-        <div class="mod-title">From pipeline <em>to revenue.</em></div>
-        <p class="mod-desc">See exactly what's converting and why. Source quality, exec performance, funnel drop-off, sales velocity per project. All on one screen, exportable to Excel.</p>
-        <div class="mod-tags">
-          <span class="mod-tag">owner morning view</span>
-          <span class="mod-tag">source ROI</span>
-          <span class="mod-tag">sales velocity</span>
+        <div class="section-eyebrow">
+          <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+            <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">02</text>
+            <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+            <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+          </svg>
+          <span class="se-title">The System</span>
+        </div>
+        <div class="section-eyebrow">
+          <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
+            <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">04</text>
+            <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
+            <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
+          </svg>
+          <span class="se-title">Pricing</span>
         </div>
       </div>
     </div>
-  </div>
-</section>
+    <pre class="ds-code">&lt;div class="section-eyebrow"&gt;
+  &lt;svg class="se-stamp"&gt;
+    &lt;circle .../&gt;&lt;text&gt;01&lt;/text&gt;
+    &lt;line/&gt;&lt;line/&gt; &lt;!-- horizontal + tick --&gt;
+  &lt;/svg&gt;
+  &lt;span class="se-title"&gt;The Problem&lt;/span&gt;
+&lt;/div&gt;</pre>
+  </section>
 
-<!-- ============================================================
-     FEATURE 1 — LEAD CAPTURE
-     ============================================================ -->
-<section class="feat" id="capture">
-  <div class="feat-aurora"></div>
-  <div class="wrap">
-    <div class="feat-row">
-      <div class="feat-copy">
-        <div class="feat-eyebrow">
-          <div class="section-eyebrow">
-            <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
-              <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
-              <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">03</text>
-              <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
-              <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
-            </svg>
-            <span class="se-title">Capture</span>
-          </div>
-        </div>
-        <h3 class="h3">All your leads.<br>One inbox.</h3>
-        <p class="feat-desc">No more switching tabs. No screenshots forwarded from WhatsApp groups. Leads from ten channels land here within seconds, tagged with project, BHK and budget on the way in.</p>
-        <ul class="feat-list">
-          <li><span class="num">01</span><span><strong>Portals.</strong> Leads from 66 Acres, Jaddu Bricks and NoBroker drop straight in. No manual entry.</span></li>
-          <li><span class="num">02</span><span><strong>WhatsApp and missed calls.</strong> A buyer rings or messages your sales number and a lead record is created with an auto-reply.</span></li>
-          <li><span class="num">03</span><span><strong>Website and Trythat.ai.</strong> Every enquiry from your buyer assistant lands in the inbox the moment it's sent.</span></li>
-          <li><span class="num">04</span><span><strong>Channel partner portal.</strong> Brokers log in to a dedicated workspace. Their leads get tagged for brokerage tracking.</span></li>
-          <li><span class="num">05</span><span><strong>Walk-ins from your phone.</strong> Two taps and the lead is in, with timestamp and location.</span></li>
-        </ul>
-      </div>
 
-      <div class="viz reveal">
-        <div class="viz-head">
-          <div class="viz-title">Lead inbox <small>· last 90 minutes</small></div>
-          <div class="stream-head" style="padding:0;">
-            <span class="live" id="streamLabel">all sources · live</span>
-          </div>
-        </div>
-        <div class="viz-body">
-          <div class="stream stream-animated" id="streamAnim">
-            <div class="stream-row" style="--di:0;--si:0">
-              <span class="src src-tt" aria-label="Trythat.ai"></span>
-              <div class="stream-info">
-                <div class="stream-name">Priya Mehta · 3BHK · Kharadi</div>
-                <div class="stream-meta">trythat.ai · "looking for ready-to-move" · ₹1.2–1.5 Cr</div>
-              </div>
-              <span class="score-pill hot">92 hot</span>
-              <span class="stream-time">2m</span>
-            </div>
-            <div class="stream-row" style="--di:1;--si:3">
-              <span class="src src-web">W</span>
-              <div class="stream-info">
-                <div class="stream-name">Rohan Gupta · 2BHK enquiry</div>
-                <div class="stream-meta">website form · skyline heights · tower B</div>
-              </div>
-              <span class="score-pill warm">74 warm</span>
-              <span class="stream-time">11m</span>
-            </div>
-            <div class="stream-row" style="--di:2;--si:6">
-              <span class="src src-wa">WA</span>
-              <div class="stream-info">
-                <div class="stream-name">+91 98765 ••43 · Missed call</div>
-                <div class="stream-meta">whatsapp · auto-reply sent · awaiting</div>
-              </div>
-              <span class="score-pill cold">55 cold</span>
-              <span class="stream-time">23m</span>
-            </div>
-            <div class="stream-row" style="--di:3;--si:5">
-              <span class="src src-fb">M</span>
-              <div class="stream-info">
-                <div class="stream-name">Anita Sharma · Lead form</div>
-                <div class="stream-meta">meta ads · greenfield · 3BHK · ₹95L–1.1 Cr</div>
-              </div>
-              <span class="score-pill warm">68 warm</span>
-              <span class="stream-time">41m</span>
-            </div>
-            <div class="stream-row" style="--di:4;--si:4">
-              <span class="src src-99">66</span>
-              <div class="stream-info">
-                <div class="stream-name">Sneha Patil · 66 Acres listing</div>
-                <div class="stream-meta">66acres.com · aria · 2BHK · weekend</div>
-              </div>
-              <span class="score-pill warm">70 warm</span>
-              <span class="stream-time">52m</span>
-            </div>
-            <div class="stream-row" style="--di:5;--si:2">
-              <span class="src src-cp">CP</span>
-              <div class="stream-info">
-                <div class="stream-name">Vikram T. · Site visit request</div>
-                <div class="stream-meta">channel partner · weekend slot preferred</div>
-              </div>
-              <span class="score-pill warm">78 warm</span>
-              <span class="stream-time">1h</span>
-            </div>
-            <div class="stream-row" style="--di:6;--si:1">
-              <span class="src src-mb">JB</span>
-              <div class="stream-info">
-                <div class="stream-name">Aditya N. · Jaddu Bricks enquiry</div>
-                <div class="stream-meta">jaddu bricks · skyline · 3BHK · ₹1.3 Cr</div>
-              </div>
-              <span class="score-pill hot">86 hot</span>
-              <span class="stream-time">1h 14m</span>
-            </div>
-            <div class="stream-row" style="--di:7;--si:7">
-              <span class="src src-ig">IG</span>
-              <div class="stream-info">
-                <div class="stream-name">Karan D. · Brochure download</div>
-                <div class="stream-meta">instagram campaign · aria residences</div>
-              </div>
-              <span class="score-pill cold">51 cold</span>
-              <span class="stream-time">1h 22m</span>
-            </div>
-          </div>
-        </div>
+  <!-- ============================================================
+       09 · ICONS
+       ============================================================ -->
+  <section class="ds-section" id="icons">
+    <div class="ds-section-head">
+      <div class="ds-section-num">09</div>
+      <h2>Icons</h2>
+      <p class="ds-section-sub">
+        <strong>Lucide</strong> is the standard icon library. 1,500+ icons,
+        MIT licensed, consistent stroke geometry. Use 2px stroke at 16 / 20 / 24
+        px display sizes. Don&rsquo;t recolor outside <span class="ds-chip">currentColor</span>;
+        let the parent set ink.
+      </p>
+    </div>
+
+    <div class="ds-sub">Install</div>
+    <pre class="ds-code">&lt;!-- CDN (static HTML) --&gt;
+&lt;script src="https://unpkg.com/lucide@latest"&gt;&lt;/script&gt;
+&lt;i data-lucide="check"&gt;&lt;/i&gt;
+&lt;script&gt;lucide.createIcons();&lt;/script&gt;
+
+&lt;!-- React / Next.js --&gt;
+npm install lucide-react
+import { Check, Phone, ArrowRight } from 'lucide-react'
+&lt;Check size={20} strokeWidth={2} /&gt;</pre>
+
+    <div class="ds-sub">Sizes</div>
+    <div class="ds-demo">
+      <div class="ds-icon-sizes">
+        <div><i data-lucide="check" style="width:16px;height:16px;"></i><span class="ds-chip">16px · meta</span></div>
+        <div><i data-lucide="check" style="width:20px;height:20px;"></i><span class="ds-chip">20px · UI default</span></div>
+        <div><i data-lucide="check" style="width:24px;height:24px;"></i><span class="ds-chip">24px · headings</span></div>
+        <div><i data-lucide="check" style="width:32px;height:32px;"></i><span class="ds-chip">32px · feature tiles</span></div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ============================================================
-     PRICING
-     ============================================================ -->
-<section class="pricing" id="pricing">
-  <div class="wrap">
-    <div class="pricing-head">
-      <div class="section-eyebrow" style="justify-content:center;">
-        <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
-          <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
-          <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">04</text>
-          <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
-          <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
-        </svg>
-        <span class="se-title">Pricing</span>
-      </div>
-      <h2>Choose your plan.</h2>
-      <p class="sub">Start with a free POC. Scale as you grow. Every plan includes unlimited listings, multi-channel marketing, and Trythat.ai marketplace distribution.</p>
+    <div class="ds-sub">Actions</div>
+    <div class="ds-icon-grid">
+      <div class="ds-icon-cell"><i data-lucide="plus"></i><code>plus</code></div>
+      <div class="ds-icon-cell"><i data-lucide="x"></i><code>x</code></div>
+      <div class="ds-icon-cell"><i data-lucide="check"></i><code>check</code></div>
+      <div class="ds-icon-cell"><i data-lucide="search"></i><code>search</code></div>
+      <div class="ds-icon-cell"><i data-lucide="settings"></i><code>settings</code></div>
+      <div class="ds-icon-cell"><i data-lucide="filter"></i><code>filter</code></div>
+      <div class="ds-icon-cell"><i data-lucide="edit-3"></i><code>edit-3</code></div>
+      <div class="ds-icon-cell"><i data-lucide="trash-2"></i><code>trash-2</code></div>
+      <div class="ds-icon-cell"><i data-lucide="send"></i><code>send</code></div>
+      <div class="ds-icon-cell"><i data-lucide="download"></i><code>download</code></div>
+      <div class="ds-icon-cell"><i data-lucide="upload"></i><code>upload</code></div>
+      <div class="ds-icon-cell"><i data-lucide="share-2"></i><code>share-2</code></div>
     </div>
 
-    <div class="pricing-grid">
-      <!-- Free POC -->
-      <article class="plan">
-        <div class="plan-name">Free POC</div>
-        <p class="plan-tagline">Test the platform with real AI calling.</p>
-        <div class="plan-price">
-          <span class="price-amount"><span class="price-currency">₹</span>3,000</span>
-          <span class="price-period">One-time · 3 months phone rental</span>
-        </div>
-        <ul class="plan-features">
-          <li><span class="feature-label">AI calling credits</span><span class="feature-value">6,000 sec</span></li>
-          <li><span class="feature-label">Users / seats</span><span class="feature-value">1</span></li>
-          <li><span class="feature-label">Property listings</span><span class="feature-value">Unlimited</span></li>
-          <li><span class="feature-label">Marketing channels</span><span class="feature-value">All included</span></li>
-          <li><span class="feature-label">Data terminal</span><span class="feature-value">45 days</span></li>
-          <li><span class="feature-label">CRM integration</span><span class="feature-value">✓</span></li>
-        </ul>
-        <a href="#cta" class="plan-cta">
-          Start free POC
-          <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-      </article>
-
-      <!-- Starter -->
-      <article class="plan">
-        <div class="plan-name">Starter</div>
-        <p class="plan-tagline">For solo agents and small teams.</p>
-        <div class="plan-price">
-          <span class="price-amount"><span class="price-currency">₹</span>50,000</span>
-          <span class="price-period">Per year</span>
-        </div>
-        <ul class="plan-features">
-          <li><span class="feature-label">AI calling credits</span><span class="feature-value">50,000 sec/yr</span></li>
-          <li><span class="feature-label">WhatsApp messages</span><span class="feature-value">1,200/yr</span></li>
-          <li><span class="feature-label">SMS messages</span><span class="feature-value">12,000/yr</span></li>
-          <li><span class="feature-label">Users / seats</span><span class="feature-value">3</span></li>
-          <li><span class="feature-label">Property listings</span><span class="feature-value">Unlimited</span></li>
-          <li><span class="feature-label">Data terminal</span><span class="feature-value">3 months + 1 report</span></li>
-        </ul>
-        <a href="#cta" class="plan-cta">
-          Choose Starter
-          <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-      </article>
-
-      <!-- Pro (Featured) -->
-      <article class="plan featured">
-        <span class="plan-badge">Most Popular</span>
-        <div class="plan-name">Pro</div>
-        <p class="plan-tagline">For growing brokerages.</p>
-        <div class="plan-price">
-          <span class="price-amount"><span class="price-currency">₹</span>1,20,000</span>
-          <span class="price-period">Per year</span>
-        </div>
-        <ul class="plan-features">
-          <li><span class="feature-label">AI calling credits</span><span class="feature-value">1,80,000 sec/yr</span></li>
-          <li><span class="feature-label">WhatsApp messages</span><span class="feature-value">3,600/yr</span></li>
-          <li><span class="feature-label">SMS messages</span><span class="feature-value">36,000/yr</span></li>
-          <li><span class="feature-label">Users / seats</span><span class="feature-value">10</span></li>
-          <li><span class="feature-label">Credit carryforward</span><span class="feature-value">1 year</span></li>
-          <li><span class="feature-label">Data terminal</span><span class="feature-value">1 yr + 4 reports</span></li>
-        </ul>
-        <a href="#cta" class="plan-cta">
-          Choose Pro
-          <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-      </article>
-
-      <!-- Ultimate -->
-      <article class="plan">
-        <div class="plan-name">Ultimate</div>
-        <p class="plan-tagline">For large developers and enterprises.</p>
-        <div class="plan-price">
-          <span class="price-amount"><span class="price-currency">₹</span>2,40,000</span>
-          <span class="price-period">Per year</span>
-        </div>
-        <ul class="plan-features">
-          <li><span class="feature-label">AI calling credits</span><span class="feature-value">4,00,000 sec/yr</span></li>
-          <li><span class="feature-label">WhatsApp messages</span><span class="feature-value">12,000/yr</span></li>
-          <li><span class="feature-label">SMS messages</span><span class="feature-value">1,20,000/yr</span></li>
-          <li><span class="feature-label">Users / seats</span><span class="feature-value">Up to 100</span></li>
-          <li><span class="feature-label">Credit carryforward</span><span class="feature-value">2 years</span></li>
-          <li><span class="feature-label">Data terminal</span><span class="feature-value">1 yr + 12 reports</span></li>
-        </ul>
-        <a href="#cta" class="plan-cta">
-          Choose Ultimate
-          <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-      </article>
+    <div class="ds-sub">Communication</div>
+    <div class="ds-icon-grid">
+      <div class="ds-icon-cell"><i data-lucide="phone"></i><code>phone</code></div>
+      <div class="ds-icon-cell"><i data-lucide="phone-call"></i><code>phone-call</code></div>
+      <div class="ds-icon-cell"><i data-lucide="mail"></i><code>mail</code></div>
+      <div class="ds-icon-cell"><i data-lucide="message-circle"></i><code>message-circle</code></div>
+      <div class="ds-icon-cell"><i data-lucide="message-square"></i><code>message-square</code></div>
+      <div class="ds-icon-cell"><i data-lucide="mic"></i><code>mic</code></div>
+      <div class="ds-icon-cell"><i data-lucide="headphones"></i><code>headphones</code></div>
+      <div class="ds-icon-cell"><i data-lucide="bell"></i><code>bell</code></div>
     </div>
 
-    <!-- Notes -->
-    <div class="pricing-notes">
-      <h4>What you need to know</h4>
-      <ul>
-        <li><strong>All plans include</strong> full AI chat &amp; calling setup, unlimited property listings, multi-channel marketing distribution, Trythat.ai marketplace inclusion, and integration with your existing CRM.</li>
-        <li><strong>Pay-as-you-go top-ups</strong> are available below — AI calling at ₹0.14 / sec, WhatsApp at ₹1.05 / msg, SMS at ₹0.18 / msg.</li>
-        <li><strong>No hidden fees.</strong> What you see is what you pay. Credits are consumed as you use them, with monthly allocation for budgeting.</li>
-        <li><strong>Upgrade anytime.</strong> Start small, scale as you grow. Unused credits in Pro &amp; Ultimate carry forward.</li>
-      </ul>
+    <div class="ds-sub">Data &amp; Status</div>
+    <div class="ds-icon-grid">
+      <div class="ds-icon-cell"><i data-lucide="bar-chart-3"></i><code>bar-chart-3</code></div>
+      <div class="ds-icon-cell"><i data-lucide="trending-up"></i><code>trending-up</code></div>
+      <div class="ds-icon-cell"><i data-lucide="pie-chart"></i><code>pie-chart</code></div>
+      <div class="ds-icon-cell"><i data-lucide="activity"></i><code>activity</code></div>
+      <div class="ds-icon-cell"><i data-lucide="zap"></i><code>zap</code></div>
+      <div class="ds-icon-cell"><i data-lucide="sparkles"></i><code>sparkles</code></div>
+      <div class="ds-icon-cell"><i data-lucide="flame"></i><code>flame</code></div>
+      <div class="ds-icon-cell"><i data-lucide="alert-circle"></i><code>alert-circle</code></div>
     </div>
 
-    <!-- Pay-as-you-go consumables -->
-    <div class="pricing-consumables">
-      <div class="pricing-consumables-head">
-        <h3>Pay as you go.</h3>
-        <p>Need more than your plan includes? Top up additional credits anytime.</p>
-      </div>
-      <div class="consumables-grid">
-        <div class="consumable">
-          <span class="consumable-label">AI Calling</span>
-          <span class="consumable-price"><span class="c-cur">₹</span>0.14</span>
-          <span class="consumable-unit">per second</span>
-        </div>
-        <div class="consumable">
-          <span class="consumable-label">WhatsApp</span>
-          <span class="consumable-price"><span class="c-cur">₹</span>1.05</span>
-          <span class="consumable-unit">per message</span>
-        </div>
-        <div class="consumable">
-          <span class="consumable-label">SMS</span>
-          <span class="consumable-price"><span class="c-cur">₹</span>0.18</span>
-          <span class="consumable-unit">per message</span>
-        </div>
-      </div>
+    <div class="ds-sub">Real-estate &amp; Sales</div>
+    <div class="ds-icon-grid">
+      <div class="ds-icon-cell"><i data-lucide="building"></i><code>building</code></div>
+      <div class="ds-icon-cell"><i data-lucide="building-2"></i><code>building-2</code></div>
+      <div class="ds-icon-cell"><i data-lucide="home"></i><code>home</code></div>
+      <div class="ds-icon-cell"><i data-lucide="map-pin"></i><code>map-pin</code></div>
+      <div class="ds-icon-cell"><i data-lucide="calendar"></i><code>calendar</code></div>
+      <div class="ds-icon-cell"><i data-lucide="clock"></i><code>clock</code></div>
+      <div class="ds-icon-cell"><i data-lucide="user"></i><code>user</code></div>
+      <div class="ds-icon-cell"><i data-lucide="users"></i><code>users</code></div>
+      <div class="ds-icon-cell"><i data-lucide="file-text"></i><code>file-text</code></div>
+      <div class="ds-icon-cell"><i data-lucide="key"></i><code>key</code></div>
+      <div class="ds-icon-cell"><i data-lucide="handshake"></i><code>handshake</code></div>
+      <div class="ds-icon-cell"><i data-lucide="indian-rupee"></i><code>indian-rupee</code></div>
     </div>
-  </div>
-</section>
 
-<!-- ============================================================
-     TESTIMONIAL
-     ============================================================ -->
-<section class="testi">
-  <div class="testi-aurora"></div>
-  <div class="wrap testi-content">
-    <div class="section-eyebrow" style="justify-content:center;">
-      <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
-        <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
-        <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">05</text>
-        <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
-        <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
-      </svg>
-      <span class="se-title">What Changed</span>
+    <div class="ds-sub">Navigation</div>
+    <div class="ds-icon-grid">
+      <div class="ds-icon-cell"><i data-lucide="arrow-right"></i><code>arrow-right</code></div>
+      <div class="ds-icon-cell"><i data-lucide="arrow-left"></i><code>arrow-left</code></div>
+      <div class="ds-icon-cell"><i data-lucide="chevron-right"></i><code>chevron-right</code></div>
+      <div class="ds-icon-cell"><i data-lucide="chevron-down"></i><code>chevron-down</code></div>
+      <div class="ds-icon-cell"><i data-lucide="external-link"></i><code>external-link</code></div>
+      <div class="ds-icon-cell"><i data-lucide="menu"></i><code>menu</code></div>
+      <div class="ds-icon-cell"><i data-lucide="more-horizontal"></i><code>more-horizontal</code></div>
+      <div class="ds-icon-cell"><i data-lucide="more-vertical"></i><code>more-vertical</code></div>
     </div>
-    <p class="testi-quote">
-      &ldquo;We were running three projects on six WhatsApp groups and one Excel sheet.<br>
-      Now Monday starts with <span class="hi">one screen</span>. Every lead, every miss, every rupee of ad spend in one place.&rdquo;
+
+    <p class="ds-section-sub" style="margin-top:24px;">
+      Full catalogue: <a href="https://lucide.dev/icons" style="color:var(--brand);">lucide.dev/icons</a>.
+      Search by keyword, copy the SVG or the React component name.
     </p>
-    <div class="testi-author">
-      <span class="av">AS</span>
-      <div class="info">
-        <div class="nm">Aakash Shah</div>
-        <div class="tl">director · shah realty · pune · 3 projects</div>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============================================================
-     FINAL CTA
-     ============================================================ -->
-<section class="cta" id="cta">
-  <div class="cta-noise"></div>
-  <div class="wrap cta-content">
-    <div class="section-eyebrow" style="justify-content:center; margin-bottom: 24px;">
-      <svg class="se-stamp" viewBox="0 0 72 22" fill="none" aria-hidden="true">
-        <circle cx="11" cy="11" r="9.4" stroke="currentColor" stroke-width="1.3"/>
-        <text x="11" y="14.4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="currentColor" letter-spacing="-0.02em">06</text>
-        <line x1="22.5" y1="11" x2="64" y2="11" stroke="currentColor" stroke-width="1"/>
-        <line x1="64" y1="7" x2="64" y2="15" stroke="currentColor" stroke-width="1"/>
-      </svg>
-      <span class="se-title">Your Numbers</span>
-    </div>
-    <h2 class="h2 display">
-      If your leads are scattered,<br>
-      your revenue is too.
-    </h2>
-    <p class="cta-sub">Bring structure to your sales process. Close more without increasing spend. Twenty minutes on a call, connected to your real lead sources and inventory, and you'll see how it runs.</p>
-    <div class="cta-actions">
-      <a href="#" class="btn btn-pri btn-lg">
-        See Trythat.ai in action
-        <svg class="arrow-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-      </a>
-      <a href="#" class="btn btn-ghost btn-lg">Book a demo
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-    <p class="cta-fineprint">no credit card<span class="dot">·</span>live in 14 days<span class="dot">·</span>your data exports anytime</p>
-  </div>
-</section>
 
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-<footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div class="foot-brand">
-        <a href="#" class="brand foot-brand-link" aria-label="TryThat.ai for Realtors — home">
-          <img class="brand-logo brand-logo-foot" src="images/trythat-logo-wordmark.svg" alt="TryThat.ai for Realtors" />
-          <span class="foot-brand-aud">for <strong>Realtors</strong></span>
-        </a>
-        <p class="foot-tag">An execution engine for real estate sales teams running multiple projects. Built in India by AltRr Software Services.</p>
+  <!-- ============================================================
+       10 · VOICE
+       ============================================================ -->
+  <section class="ds-section" id="voice">
+    <div class="ds-section-head">
+      <div class="ds-section-num">10</div>
+      <h2>Voice &amp; Tone</h2>
+      <p class="ds-section-sub">
+        Write the way an experienced builder talks. Plain English, specific
+        nouns, no marketing fog. Confident, not loud.
+      </p>
+    </div>
+
+    <div class="ds-voice">
+      <div class="ds-voice-card yes">
+        <h6>Do</h6>
+        <p>“Every lead from WhatsApp, ads, brokers and portals lands in one place.”</p>
+        <p>“By the time your team logs in, every lead is ranked.”</p>
+        <p>“Live in 14 days · your data exports anytime.”</p>
       </div>
-      <div class="foot-col">
-        <h6>Product</h6>
-        <ul>
-          <li><a href="#capture">Lead capture</a></li>
-          <li><a href="#scoring">Scoring</a></li>
-          <li><a href="#pipeline">Pipeline</a></li>
-          <li><a href="#inventory">Inventory</a></li>
-          <li><a href="#reporting">Reporting</a></li>
-        </ul>
-      </div>
-      <div class="foot-col">
-        <h6>Integrations</h6>
-        <ul>
-          <li><a href="#">WhatsApp Business</a></li>
-          <li><a href="#">Meta &amp; Google Ads</a></li>
-          <li><a href="#">66 Acres / Jaddu Bricks</a></li>
-          <li><a href="#">Channel Partners</a></li>
-          <li><a href="#">Telephony &amp; SIP</a></li>
-        </ul>
-      </div>
-      <div class="foot-col">
-        <h6>Company</h6>
-        <ul>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Customers</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Privacy</a></li>
-          <li><a href="terms.html">Terms</a></li>
-        </ul>
+      <div class="ds-voice-card no">
+        <h6>Don’t</h6>
+        <p>“Revolutionize your funnel with our AI-powered next-gen platform.”</p>
+        <p>“Unlock unparalleled insights through our cutting-edge solution.”</p>
+        <p>“Empower your sales journey with intelligent automation.”</p>
       </div>
     </div>
 
-    <div class="foot-bottom">
-      <span>© 2026 TryThat.ai · for Realtors</span>
-      <span><span class="live">●</span> all systems operational · v1.0 deployed 04 May 2026</span>
-    </div>
-  </div>
+    <div class="ds-sub" style="margin-top:32px;">Rules of thumb</div>
+    <ul style="line-height:1.7;color:var(--fg-2);max-width:720px;">
+      <li>Lead with the buyer’s reality, not a feature claim.</li>
+      <li>Specific nouns over abstract verbs. “WhatsApp drips,” not “smart engagement.”</li>
+      <li>No em-dashes for stylistic pauses. Use a period or a comma.</li>
+      <li>Numerals in product copy, never spelled out: <em>92 hot</em>, not <em>ninety-two hot</em>.</li>
+      <li>“TryThat.ai” is the wordmark. “Trythat.ai” in body text is acceptable.</li>
+      <li>“for Realtors” always appears with “Realtors” in brand blue.</li>
+    </ul>
+  </section>
 
-  <div class="foot-wordmark" aria-hidden="true"><span class="fw-text">TryThat</span><span class="fw-ai">.ai</span></div>
-</footer>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="ds-foot">
+    <p>TryThat.ai for Realtors · Design System v1.0 · 11 May 2026</p>
+    <p style="margin-top:6px;">Open this file in any browser. No build step required.</p>
+  </footer>
+
+</main>
 
 <script>
-  /* Theme toggle — initial state already set inline in <head> to prevent FOUC */
+  // Theme toggle for the DS doc — independent from the product theme key
   (function() {
-    const tog = document.querySelector('.theme-toggle');
-    if (!tog) return;
-    tog.addEventListener('click', () => {
+    const btn = document.getElementById('dsThemeBtn');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
       const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
       document.documentElement.dataset.theme = next;
-      try { localStorage.setItem('trythat-theme', next); } catch (e) {}
+      try { localStorage.setItem('trythat-ds-theme', next); } catch (e) {}
     });
   })();
+</script>
 
-  /* Reveal-on-scroll */
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-  /* Animate score bars when in view */
-  const barsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        const w = e.target.dataset.w;
-        e.target.style.width = w + '%';
-        barsObserver.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.6 });
-  document.querySelectorAll('.lc-bar-fill[data-w]').forEach(el => barsObserver.observe(el));
-
-  /* Capture — score-cluster cycle.
-     Toggle the .sorted class on the lead-inbox stream every few
-     seconds so the rows animate between chronological and
-     grouped-by-score order. Only runs when the inbox is in view. */
-  (function initStreamCluster() {
-    const stream = document.getElementById('streamAnim');
-    const label  = document.getElementById('streamLabel');
-    if (!stream) return;
-
-    const HOLD_DEFAULT = 4500;   // ms in chronological state
-    const HOLD_SORTED  = 4500;   // ms in score-grouped state
-    const TRANSITION   = 1000;   // matches CSS transform transition
-
-    /* Measure the actual distance between consecutive rows so the
-       FLIP transform lands exactly on the grid. Uses offsetTop
-       (layout-flow position, ignores transforms) so it reads
-       correctly even mid-transition. Re-measures on every resize
-       and theme switch. */
-    const measureRowHeight = () => {
-      const rows = stream.querySelectorAll('.stream-row');
-      if (rows.length < 2) return;
-      const top1 = rows[0].offsetTop;
-      const top2 = rows[1].offsetTop;
-      const rowH = top2 - top1;
-      if (rowH > 0) stream.style.setProperty('--row-h', rowH + 'px');
-    };
-
-    const tickToSorted = () => {
-      measureRowHeight();
-      stream.classList.add('sorted');
-      if (label) label.textContent = 'sorted by score';
-      setTimeout(tickToDefault, HOLD_SORTED + TRANSITION);
-    };
-    const tickToDefault = () => {
-      stream.classList.remove('sorted');
-      if (label) label.textContent = 'all sources · live';
-      setTimeout(tickToSorted, HOLD_DEFAULT + TRANSITION);
-    };
-
-    // Initial measurement (lays the var --row-h before any animation runs)
-    requestAnimationFrame(measureRowHeight);
-
-    // Re-measure on resize and theme change (theme changes row spacing)
-    window.addEventListener('resize', measureRowHeight);
-    new MutationObserver(measureRowHeight).observe(document.documentElement, {
-      attributes: true, attributeFilter: ['data-theme']
-    });
-
-    // Start the cycle once the inbox enters the viewport
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver((entries, obs) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            setTimeout(tickToSorted, HOLD_DEFAULT);
-            obs.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.4 });
-      io.observe(stream);
-    } else {
-      setTimeout(tickToSorted, HOLD_DEFAULT);
-    }
-  })();
-
-  /* Hero — Convergence choreography.
-     25 channel-tagged lead cards drift in from the viewport edges,
-     converge on the journey panel which solidifies, then runs the
-     5-stage cycle. Booking toast appears at stage 5. Cards re-emerge
-     and fly outward to reset. Loops continuously while in view.
-
-     Phase timing (per cycle):
-       0     – 3000ms   cards converge in (staggered)
-       3500ms           panel solidifies, stage 1
-       5000ms           stage 2
-       6500ms           stage 3
-       8000ms           stage 4
-       9500ms           stage 5 + booking toast
-       13500ms          reset begins (panel hides, cards fly out)
-       16000ms          loop restarts
-  */
-  (function initConvergence() {
-    const particles = document.getElementById('heroParticles');
-    const panel     = document.getElementById('heroPanel');
-    const toast     = document.getElementById('bookingToast');
-    const stageEls  = panel ? panel.querySelectorAll('.stage-card') : [];
-    const stepEls   = panel ? panel.querySelectorAll('.stage-step') : [];
-    const jhText    = panel ? panel.querySelector('.jh-text') : null;
-    const jhCursor  = panel ? panel.querySelector('.jh-cursor') : null;
-    if (!particles || !panel || !stageEls.length) return;
-
-    // Typewriter effect for the panel header — types "one lead ·
-    // fully handled" character by character with slight randomness,
-    // mimicking LLM streaming output. The cursor blinks during
-    // typing and fades 1.2s after the text completes.
-    let typewriterTimers = [];
-    function runHeaderTypewriter() {
-      if (!jhText || !jhCursor) return;
-      typewriterTimers.forEach(t => clearTimeout(t));
-      typewriterTimers = [];
-      const fullText = 'Every Lead Fully Handled';
-      jhText.textContent = '';
-      jhCursor.classList.add('active');
-      let i = 0;
-      function tick() {
-        if (i < fullText.length) {
-          jhText.textContent = fullText.substring(0, i + 1);
-          i++;
-          typewriterTimers.push(setTimeout(tick, 45 + Math.random() * 30));
-        } else {
-          typewriterTimers.push(setTimeout(() => {
-            jhCursor.classList.remove('active');
-          }, 1200));
-        }
-      }
-      tick();
-    }
-
-    // Channel-tagged lead seeds. Mix reflects the audience: WhatsApp +
-    // Trythat heaviest, with portals and partners sprinkled in.
-    const seeds = [
-      { ch: 'wa',  src: 'whatsapp',    name: 'Priya M.' },
-      { ch: 'wa',  src: 'whatsapp',    name: 'Aditya N.' },
-      { ch: 'wa',  src: 'whatsapp',    name: 'Karan D.' },
-      { ch: 'wa',  src: 'whatsapp',    name: 'Anita S.' },
-      { ch: 'wa',  src: 'whatsapp',    name: 'Sneha P.' },
-      { ch: 'tt',  src: 'trythat',     name: 'Rohan G.' },
-      { ch: 'tt',  src: 'trythat',     name: 'Vikram T.' },
-      { ch: 'tt',  src: 'trythat',     name: 'Megha R.' },
-      { ch: 'tt',  src: 'trythat',     name: 'Arjun K.' },
-      { ch: 'fb',  src: 'meta ads',    name: 'Tanvi I.' },
-      { ch: 'fb',  src: 'meta ads',    name: 'Yash B.' },
-      { ch: 'fb',  src: 'meta ads',    name: 'Riya A.' },
-      { ch: 'go',  src: 'google',      name: 'Devansh K.' },
-      { ch: 'go',  src: 'google',      name: 'Saanvi R.' },
-      { ch: 'go',  src: 'google',      name: 'Aaryan P.' },
-      { ch: 'ac',  src: '66 Acres',     name: 'Ishaan G.' },
-      { ch: 'ac',  src: '66 Acres',     name: 'Pooja S.' },
-      { ch: 'ac',  src: '66 Acres',     name: 'Mehul J.' },
-      { ch: 'mb',  src: 'jaddu bricks', name: 'Niharika V.' },
-      { ch: 'mb',  src: 'jaddu bricks', name: 'Tejas M.' },
-      { ch: 'cp',  src: 'partner',     name: 'Aryan H.' },
-      { ch: 'cp',  src: 'partner',     name: 'Kabir L.' },
-      { ch: 'ig',  src: 'instagram',   name: 'Naina O.' },
-      { ch: 'ig',  src: 'instagram',   name: 'Vihaan U.' },
-      { ch: 'wi',  src: 'walk-in',     name: 'Reyansh F.' },
-    ];
-
-    const cardEls = seeds.map(s => {
-      const el = document.createElement('div');
-      el.className = 'hero-card';
-      el.innerHTML = `
-        <span class="hc-icon ${s.ch}">${s.src.charAt(0).toUpperCase()}</span>
-        <span><span class="hc-src">${s.src}</span> · <span class="hc-name">${s.name}</span></span>
-      `;
-      el.style.opacity = '0';
-      particles.appendChild(el);
-      return el;
-    });
-
-    const setStage = (target) => {
-      stageEls.forEach(c => {
-        const n = +c.dataset.stage;
-        c.classList.toggle('on', n === target);
-        c.classList.toggle('past', n < target);
-      });
-      stepEls.forEach(s => {
-        const n = +s.dataset.stage;
-        s.classList.toggle('on', n === target);
-        s.classList.toggle('past', n < target);
-      });
-    };
-
-    const clearStages = () => {
-      stageEls.forEach(c => c.classList.remove('on', 'past'));
-      stepEls.forEach(s => s.classList.remove('on', 'past'));
-    };
-
-    const edgePoint = () => {
-      const r = particles.getBoundingClientRect();
-      const margin = 120;
-      const edge = Math.floor(Math.random() * 4);
-      switch (edge) {
-        case 0: return { x: Math.random() * r.width,  y: -margin };
-        case 1: return { x: r.width + margin,         y: Math.random() * r.height };
-        case 2: return { x: Math.random() * r.width,  y: r.height + margin };
-        default: return { x: -margin,                 y: Math.random() * r.height };
-      }
-    };
-
-    const panelCenter = () => {
-      const pR = panel.getBoundingClientRect();
-      const partR = particles.getBoundingClientRect();
-      return {
-        x: pR.left - partR.left + pR.width / 2,
-        y: pR.top  - partR.top  + pR.height / 2
-      };
-    };
-
-    let timers = [];
-    const after = (ms, fn) => { const id = setTimeout(fn, ms); timers.push(id); return id; };
-    const cancelAll = () => { timers.forEach(t => clearTimeout(t)); timers = []; };
-
-    const cycle = () => {
-      cancelAll();
-      const target = panelCenter();
-
-      // Phase 1 — converge in, staggered
-      cardEls.forEach((el, i) => {
-        const start = edgePoint();
-        const midX = start.x + (target.x - start.x) * 0.55 + (Math.random() - 0.5) * 80;
-        const midY = start.y + (target.y - start.y) * 0.45 + (Math.random() - 0.5) * 80;
-        const delay = i * 110;
-
-        el.animate([
-          { transform: `translate(${start.x}px, ${start.y}px) scale(0.85)`, opacity: 0 },
-          { transform: `translate(${start.x}px, ${start.y}px) scale(0.95)`, opacity: 1, offset: 0.10 },
-          { transform: `translate(${midX}px, ${midY}px) scale(0.98)`, opacity: 1, offset: 0.55 },
-          { transform: `translate(${target.x}px, ${target.y}px) scale(0.6)`, opacity: 0, offset: 1 }
-        ], {
-          duration: 2400,
-          delay: delay,
-          fill: 'forwards',
-          easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
-        });
-      });
-
-      // Phase 2 — panel solidifies as cards arrive
-      after(3500, () => {
-        panel.classList.remove('hidden-pre');
-        panel.classList.add('solid');
-        clearStages();
-        setStage(1);
-        runHeaderTypewriter();
-      });
-
-      // Phase 3 — stages 2-5
-      after(5000,  () => setStage(2));
-      after(6500,  () => setStage(3));
-      after(8000,  () => setStage(4));
-      after(9500,  () => { setStage(5); toast.classList.add('show'); });
-
-      // Phase 4 — reset: hide toast, dissolve panel, outflow cards
-      after(13500, () => {
-        toast.classList.remove('show');
-        panel.classList.remove('solid');
-        panel.classList.add('hidden-pre');
-      });
-
-      after(13700, () => {
-        const exitTarget = panelCenter();
-        cardEls.forEach((el, i) => {
-          const exit = edgePoint();
-          el.animate([
-            { transform: `translate(${exitTarget.x}px, ${exitTarget.y}px) scale(0.6)`, opacity: 0 },
-            { transform: `translate(${exitTarget.x}px, ${exitTarget.y}px) scale(0.95)`, opacity: 1, offset: 0.15 },
-            { transform: `translate(${exit.x}px, ${exit.y}px) scale(0.85)`, opacity: 0, offset: 1 }
-          ], {
-            duration: 1600,
-            delay: i * 50,
-            fill: 'forwards',
-            easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
-          });
-        });
-      });
-
-      // Phase 5 — onComplete callback at ~15.5s (just before reset finishes)
-      after(15500, () => {
-        if (typeof currentOnDone === 'function') {
-          const cb = currentOnDone;
-          currentOnDone = null;
-          cb();
-        }
-      });
-    };
-
-    // Initial state — panel hidden, cards offscreen
-    setStage(1);
-
-    // Expose runOneCycle for the master slider controller
-    let currentOnDone = null;
-    window.runConvergenceOnce = function(onDone) {
-      currentOnDone = onDone;
-      cycle();
-    };
-    window.resetConvergence = function() {
-      cancelAll();
-      panel.classList.remove('solid');
-      panel.classList.add('hidden-pre');
-      toast.classList.remove('show');
-      cardEls.forEach(el => {
-        el.getAnimations().forEach(a => a.cancel());
-        el.style.opacity = '0';
-        el.style.transform = '';
-      });
-      setStage(1);
-      currentOnDone = null;
-    };
-  })();
-
-  /* ============================================================
-     CLOSE-IN PANEL ANIMATION (Slide B)
-     Story:
-       0.0s  Panel solidifies, header types in
-       1.0s  Knowledge base section pulses
-       2.0s  AI calls each lead in sequence (1.1s per lead × 4)
-       6.4s  Scores count up + labels change (casual -> hot/warm/cold)
-       8.0s  Leads FLIP-sort by score (Priya bubbles to top)
-       9.5s  Top lead glows + action bar slides in
-       12s   Hold + onComplete callback
-       12.5s Reset
-  */
-  (function initCloseIn() {
-    const panel = document.getElementById('closeInPanel');
-    if (!panel) return;
-    const ciText  = panel.querySelector('.ci-text');
-    const ciCursor= panel.querySelector('.ci-cursor');
-    const ciKb    = panel.querySelector('#ciKb');
-    const leadsEl = panel.querySelector('#ciLeads');
-    const action  = panel.querySelector('#ciAction');
-    const leads   = Array.from(panel.querySelectorAll('.ci-lead'));
-    const originalLeadOrder = leads.slice();
-
-    let timers = [];
-    let typeTimers = [];
-    let currentOnDone = null;
-    const after = (ms, fn) => { const id = setTimeout(fn, ms); timers.push(id); return id; };
-    const cancelAll = () => {
-      timers.forEach(t => clearTimeout(t));
-      typeTimers.forEach(t => clearTimeout(t));
-      timers = []; typeTimers = [];
-    };
-
-    function typeHeader(text) {
-      ciText.textContent = '';
-      ciCursor.classList.add('active');
-      let i = 0;
-      function tick() {
-        if (i < text.length) {
-          ciText.textContent = text.substring(0, i + 1);
-          i++;
-          typeTimers.push(setTimeout(tick, 45 + Math.random() * 30));
-        } else {
-          typeTimers.push(setTimeout(() => ciCursor.classList.remove('active'), 1200));
-        }
-      }
-      tick();
-    }
-
-    function resetState() {
-      cancelAll();
-      panel.classList.remove('solid');
-      panel.classList.add('hidden-pre');
-      ciText.textContent = '';
-      ciCursor.classList.remove('active');
-      ciKb.classList.remove('pulsing');
-      action.classList.remove('show');
-      // Restore original DOM order so next cycle starts fresh
-      originalLeadOrder.forEach(el => leadsEl.appendChild(el));
-      leads.forEach(el => {
-        el.classList.remove('calling', 'priority');
-        el.style.transform = '';
-        const num = el.querySelector('.ci-score-num');
-        const labelEl = el.querySelector('.ci-score-label');
-        const scoreEl = el.querySelector('.ci-score');
-        num.textContent = '0';
-        labelEl.textContent = 'casual';
-        scoreEl.classList.remove('hot', 'warm', 'cold');
-      });
-      currentOnDone = null;
-    }
-
-    function tweenScore(numEl, labelEl, scoreEl, finalNum, finalLabel, duration) {
-      const startTime = performance.now();
-      const startNum = parseInt(numEl.textContent, 10) || 0;
-      function frame() {
-        const elapsed = performance.now() - startTime;
-        const t = Math.min(elapsed / duration, 1);
-        const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
-        const value = Math.round(startNum + (finalNum - startNum) * eased);
-        numEl.textContent = String(value);
-        if (t < 1) requestAnimationFrame(frame);
-      }
-      requestAnimationFrame(frame);
-      // Update label + color near the end
-      setTimeout(() => {
-        labelEl.textContent = finalLabel;
-        scoreEl.classList.remove('hot', 'warm', 'cold');
-        if (finalLabel === 'hot') scoreEl.classList.add('hot');
-        else if (finalLabel === 'warm') scoreEl.classList.add('warm');
-        else if (finalLabel === 'cold') scoreEl.classList.add('cold');
-      }, duration * 0.6);
-    }
-
-    function flipSort() {
-      // Measure current positions
-      const before = new Map();
-      leads.forEach(el => { before.set(el, el.getBoundingClientRect().top); });
-      // Reorder DOM: by data-rank ascending (rank 0 first)
-      const sorted = [...leads].sort((a, b) => +a.dataset.rank - +b.dataset.rank);
-      sorted.forEach(el => leadsEl.appendChild(el));
-      // Measure new positions, apply inverse transforms
-      sorted.forEach(el => {
-        const after = el.getBoundingClientRect().top;
-        const before_ = before.get(el);
-        const delta = before_ - after;
-        if (delta) {
-          el.style.transform = `translateY(${delta}px)`;
-          // Force reflow then animate to translateY(0)
-          requestAnimationFrame(() => {
-            el.style.transform = '';
-          });
-        }
-      });
-    }
-
-    function cycle() {
-      cancelAll();
-
-      // Phase 1: Panel solidifies + type header (0 - 0.7s)
-      after(0, () => {
-        panel.classList.remove('hidden-pre');
-        panel.classList.add('solid');
-        typeHeader('close in · ai qualifying');
-      });
-
-      // Phase 2: Knowledge base pulses (1.0s)
-      after(1000, () => ciKb.classList.add('pulsing'));
-      after(2200, () => ciKb.classList.remove('pulsing'));
-
-      // Phase 3: AI calls each lead in sequence (2.0s start, 1.1s each × 4)
-      const callOrder = leads; // current display order
-      callOrder.forEach((el, i) => {
-        const start = 2200 + i * 1100;
-        after(start, () => el.classList.add('calling'));
-        after(start + 950, () => el.classList.remove('calling'));
-      });
-
-      // Phase 4: Scores animate up (after all calls done)
-      const scoreStart = 2200 + leads.length * 1100 + 200;
-      leads.forEach(el => {
-        const num = el.querySelector('.ci-score-num');
-        const labelEl = el.querySelector('.ci-score-label');
-        const scoreEl = el.querySelector('.ci-score');
-        const finalNum = +el.dataset.final;
-        const finalLabel = el.dataset.finalLabel;
-        after(scoreStart, () => tweenScore(num, labelEl, scoreEl, finalNum, finalLabel, 1100));
-      });
-
-      // Phase 5: FLIP sort by score (after scores settled)
-      after(scoreStart + 1300, flipSort);
-
-      // Phase 6: Highlight priority + slide in action bar
-      after(scoreStart + 2400, () => {
-        const priority = leads.find(l => l.dataset.rank === '0');
-        if (priority) priority.classList.add('priority');
-      });
-      after(scoreStart + 2700, () => action.classList.add('show'));
-
-      // Phase 7: Hold, then onComplete
-      const holdEnd = scoreStart + 2700 + 2200;
-      after(holdEnd, () => {
-        if (typeof currentOnDone === 'function') {
-          const cb = currentOnDone;
-          currentOnDone = null;
-          cb();
-        }
-      });
-    }
-
-    resetState();
-
-    // Expose runOneCycle for the master slider controller
-    window.runCloseInOnce = function(onDone) {
-      resetState();
-      currentOnDone = onDone;
-      // Tiny delay to let reset state apply before starting
-      setTimeout(cycle, 50);
-    };
-    window.resetCloseIn = resetState;
-  })();
-
-  /* ============================================================
-     HERO SLIDER MASTER CONTROLLER
-     Coordinates the two slides (Convergence + Close-In). Each
-     animation runs ONE cycle then calls back; the controller
-     transitions to the next slide and triggers its cycle.
-     Loops continuously while in view.
-  */
-  (function heroSlider() {
-    const sliderEl = document.getElementById('heroSlider');
-    if (!sliderEl) return;
-    const slideA = sliderEl.querySelector('[data-slide="a"]');
-    const slideB = sliderEl.querySelector('[data-slide="b"]');
-    const dots = sliderEl.querySelectorAll('.hero-dot');
-    if (!slideA || !slideB) return;
-
-    const TRANSITION_MS = 800;
-    const REST_MS = 700;
-
-    let current = 'a';
-
-    function setDot(target) {
-      dots.forEach(d => d.classList.toggle('active', d.dataset.target === target));
-    }
-
-    function showSlide(target) {
-      if (target === current) return;
-      const out = current === 'a' ? slideA : slideB;
-      const inn = target === 'a' ? slideA : slideB;
-      out.classList.remove('active');
-      out.classList.add('exiting');
-      inn.classList.add('active');
-      setDot(target);
-      current = target;
-      setTimeout(() => out.classList.remove('exiting'), TRANSITION_MS);
-    }
-
-    function startA() {
-      if (typeof window.resetCloseIn === 'function') window.resetCloseIn();
-      showSlide('a');
-      setTimeout(() => {
-        if (typeof window.runConvergenceOnce !== 'function') return;
-        window.runConvergenceOnce(() => {
-          setTimeout(startB, REST_MS);
-        });
-      }, TRANSITION_MS);
-    }
-    function startB() {
-      if (typeof window.resetConvergence === 'function') window.resetConvergence();
-      showSlide('b');
-      setTimeout(() => {
-        if (typeof window.runCloseInOnce !== 'function') return;
-        window.runCloseInOnce(() => {
-          setTimeout(startA, REST_MS);
-        });
-      }, TRANSITION_MS);
-    }
-
-    // Manual dot click — jump to that slide. Cancels current cycle and
-    // re-starts the chosen slide's cycle.
-    dots.forEach(d => {
-      d.addEventListener('click', () => {
-        const target = d.dataset.target;
-        if (target === current) return;
-        if (typeof window.resetConvergence === 'function') window.resetConvergence();
-        if (typeof window.resetCloseIn === 'function') window.resetCloseIn();
-        if (target === 'a') startA();
-        else startB();
-      });
-    });
-
-    // Wait for hero to be in view before starting the loop
-    if ('IntersectionObserver' in window) {
-      const io = new IntersectionObserver((entries, obs) => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            obs.unobserve(e.target);
-            // Slide A starts immediately (already active in DOM)
-            if (typeof window.runConvergenceOnce === 'function') {
-              window.runConvergenceOnce(() => {
-                setTimeout(startB, REST_MS);
-              });
-            }
-          }
-        });
-      }, { threshold: 0.15 });
-      io.observe(slideA);
-    }
-  })();
+<!-- Lucide Icons — rendered into every <i data-lucide="..."> element below -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  if (window.lucide) window.lucide.createIcons();
 </script>
 
 </body>
